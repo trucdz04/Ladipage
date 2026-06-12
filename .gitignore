@@ -1,0 +1,20 @@
+# Secrets — never commit real values
+.env
+.env.local
+*.local
+
+# Playwright MCP artifacts
+.playwright-mcp/
+
+# Node
+node_modules/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Vendored third-party repo (có .git riêng — không thuộc project này)
+ECC/
+
+# Claude Code local settings (cá nhân, không commit)
+.claude/settings.local.json

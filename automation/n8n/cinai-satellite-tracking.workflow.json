@@ -1,0 +1,210 @@
+{
+  "name": "CinAI — Satellite Landing Tracking (Template)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cinai-track",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "11111111-1111-4111-8111-111111111111",
+      "name": "Webhook Track",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [-120, 300],
+      "webhookId": "cinai-track",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// === NORMALIZE + HASH (EMQ) ===\n// Yeu cau env: bat NODE_FUNCTION_ALLOW_BUILTIN=crypto (n8n self-hosted)\nconst crypto = require('crypto');\nconst sha256 = (v) => v ? crypto.createHash('sha256').update(String(v).trim().toLowerCase()).digest('hex') : undefined;\nconst clean = (o) => Object.fromEntries(Object.entries(o).filter(([,v]) => v !== undefined && v !== '' && !(Array.isArray(v) && v.length === 0)));\n\nconst item = $input.first().json;\nconst b = (item.body && Object.keys(item.body).length) ? item.body : item;\nconst h = item.headers || {};\n\nconst event_name = b.event_name || 'Lead';\nconst event_id = b.event_id || (b.order_id ? String(b.order_id) : ('evt_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8)));\n\nconst user_data = clean({\n  em: b.email ? [sha256(b.email)] : undefined,\n  ph: b.phone ? [sha256(String(b.phone).replace(/[^0-9]/g, ''))] : undefined,\n  external_id: b.user_id ? [sha256(b.user_id)] : undefined,\n  fbp: b.fbp || undefined,\n  fbc: b.fbc || undefined,\n  client_ip_address: (h['x-forwarded-for'] ? String(h['x-forwarded-for']).split(',')[0].trim() : (h['x-real-ip'] || undefined)),\n  client_user_agent: h['user-agent'] || undefined\n});\n\nconst custom_data = clean({\n  currency: b.currency || undefined,\n  value: (b.value !== undefined && b.value !== null) ? Number(b.value) : undefined,\n  content_ids: b.content_ids || (b.plan ? [b.plan] : undefined),\n  content_type: b.content_type || (b.plan ? 'product' : undefined)\n});\n\nconst out = {\n  event_name,\n  event_id,\n  event_time: Math.floor(Date.now() / 1000),\n  event_source_url: b.event_source_url || b.url || '',\n  site: b.site || 'intro.cinai.tv',\n  email: b.email || '',\n  name: b.name || '',\n  phone: b.phone || '',\n  user_data,\n  custom_data,\n  utm_source: b.utm_source || '',\n  utm_medium: b.utm_medium || '',\n  utm_campaign: b.utm_campaign || '',\n  utm_content: b.utm_content || '',\n  utm_term: b.utm_term || ''\n};\nreturn [{ json: out }];"
+      },
+      "id": "22222222-2222-4222-8222-222222222222",
+      "name": "Normalize + Hash",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [100, 300]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+                "conditions": [
+                  { "id": "c-lead", "leftValue": "={{ $json.event_name }}", "rightValue": "Lead", "operator": { "type": "string", "operation": "equals", "name": "filter.operator.equals" } }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "lead"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+                "conditions": [
+                  { "id": "c-reg", "leftValue": "={{ $json.event_name }}", "rightValue": "CompleteRegistration", "operator": { "type": "string", "operation": "equals", "name": "filter.operator.equals" } }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "register"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+                "conditions": [
+                  { "id": "c-pur", "leftValue": "={{ $json.event_name }}", "rightValue": "Purchase", "operator": { "type": "string", "operation": "equals", "name": "filter.operator.equals" } }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "purchase"
+            }
+          ]
+        },
+        "options": { "fallbackOutput": "extra", "renameFallbackOutput": "other" }
+      },
+      "id": "33333333-3333-4333-8333-333333333333",
+      "name": "Route by Event",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [320, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "conditions": [
+            { "id": "c-email", "leftValue": "={{ $json.email }}", "rightValue": "", "operator": { "type": "string", "operation": "notEmpty", "singleValue": true } }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "44444444-4444-4444-8444-444444444444",
+      "name": "Has Email?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [560, 140]
+    },
+    {
+      "parameters": {
+        "fromEmail": "no-reply@cinai.tv",
+        "toEmail": "={{ $json.email }}",
+        "subject": "Chào mừng bạn đến với CinAI 🎬",
+        "emailFormat": "html",
+        "html": "<p>Xin chào {{ $json.name || 'bạn' }},</p><p>Cảm ơn bạn đã quan tâm tới <b>CinAI</b>. Nhấn vào nút bên dưới để bắt đầu dùng thử miễn phí:</p><p><a href=\"https://cinai.tv/signup?utm_source={{ $json.utm_source }}&utm_medium={{ $json.utm_medium }}&utm_campaign={{ $json.utm_campaign }}&fbp={{ $json.user_data.fbp }}&fbc={{ $json.user_data.fbc }}\">Bắt đầu ngay →</a></p>",
+        "options": {}
+      },
+      "id": "55555555-5555-4555-8555-555555555555",
+      "name": "Send Welcome Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [800, 60],
+      "onError": "continueRegularOutput",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// === BUILD META CAPI PAYLOAD ===\nconst d = $input.first().json;\nconst clean = (o) => Object.fromEntries(Object.entries(o || {}).filter(([,v]) => v !== undefined && v !== '' && !(Array.isArray(v) && v.length === 0)));\nconst payload = {\n  data: [\n    clean({\n      event_name: d.event_name,\n      event_time: d.event_time,\n      event_id: d.event_id,\n      action_source: 'website',\n      event_source_url: d.event_source_url,\n      user_data: clean(d.user_data),\n      custom_data: clean(d.custom_data)\n    })\n  ]\n  // test_event_code: 'TESTxxxxx'  // bo comment khi test trong Events Manager\n};\nreturn [{ json: { ...d, capi: payload } }];"
+      },
+      "id": "66666666-6666-4666-8666-666666666666",
+      "name": "Build CAPI Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [800, 360]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $env.META_PIXEL_ID }}/events",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "access_token", "value": "={{ $env.META_CAPI_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.capi) }}",
+        "options": {}
+      },
+      "id": "77777777-7777-4777-8777-777777777777",
+      "name": "Meta CAPI Send",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [1040, 360],
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ app_id: $env.LARK_APP_ID, app_secret: $env.LARK_APP_SECRET }) }}",
+        "options": {}
+      },
+      "id": "88888888-8888-4888-8888-888888888888",
+      "name": "Lark Get Token",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [1280, 240],
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://open.larksuite.com/open-apis/bitable/v1/apps/{{ $env.LARK_BITABLE_APP_TOKEN }}/tables/{{ $env.LARK_BITABLE_TABLE_ID }}/records",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "=Bearer {{ $json.tenant_access_token }}" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ fields: { 'Event': $('Normalize + Hash').item.json.event_name, 'Email': $('Normalize + Hash').item.json.email, 'Name': $('Normalize + Hash').item.json.name, 'Phone': $('Normalize + Hash').item.json.phone, 'Plan': ($('Normalize + Hash').item.json.custom_data.content_ids || []).join(','), 'Value': $('Normalize + Hash').item.json.custom_data.value || 0, 'Currency': $('Normalize + Hash').item.json.custom_data.currency || '', 'Site': $('Normalize + Hash').item.json.site, 'UTM Campaign': $('Normalize + Hash').item.json.utm_campaign, 'Event ID': $('Normalize + Hash').item.json.event_id } }) }}",
+        "options": {}
+      },
+      "id": "99999999-9999-4999-8999-999999999999",
+      "name": "Lark Save Record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [1500, 240],
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3
+    }
+  ],
+  "connections": {
+    "Webhook Track": { "main": [[{ "node": "Normalize + Hash", "type": "main", "index": 0 }]] },
+    "Normalize + Hash": { "main": [[{ "node": "Route by Event", "type": "main", "index": 0 }]] },
+    "Route by Event": {
+      "main": [
+        [{ "node": "Has Email?", "type": "main", "index": 0 }],
+        [{ "node": "Build CAPI Payload", "type": "main", "index": 0 }],
+        [{ "node": "Build CAPI Payload", "type": "main", "index": 0 }],
+        [{ "node": "Lark Get Token", "type": "main", "index": 0 }]
+      ]
+    },
+    "Has Email?": {
+      "main": [
+        [{ "node": "Send Welcome Email", "type": "main", "index": 0 }],
+        [{ "node": "Lark Get Token", "type": "main", "index": 0 }]
+      ]
+    },
+    "Send Welcome Email": { "main": [[{ "node": "Lark Get Token", "type": "main", "index": 0 }]] },
+    "Build CAPI Payload": { "main": [[{ "node": "Meta CAPI Send", "type": "main", "index": 0 }]] },
+    "Meta CAPI Send": { "main": [[{ "node": "Lark Get Token", "type": "main", "index": 0 }]] },
+    "Lark Get Token": { "main": [[{ "node": "Lark Save Record", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" }
+}

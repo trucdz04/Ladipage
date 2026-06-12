@@ -1,0 +1,278 @@
+{
+  "name": "CinAI — Lead Nurture Sequence (Template)",
+  "nodes": [
+    {
+      "parameters": { "httpMethod": "POST", "path": "cinai-nurture", "responseMode": "onReceived", "options": {} },
+      "id": "a0000000-0000-4000-8000-000000000001",
+      "name": "Webhook Nurture",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [-360, 320],
+      "webhookId": "cinai-nurture",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first().json;\nconst b = (item.body && Object.keys(item.body).length) ? item.body : item;\nreturn [{ json: {\n  name: b.name || 'bạn',\n  email: (b.email||'').trim().toLowerCase(),\n  gift: b.gift || b.content_name || 'tai_lieu',\n  campaign: b.campaign || b.utm_campaign || 'nurture_default',\n  utm_source: b.utm_source || 'n8n_email',\n  fbp: b.fbp || '', fbc: b.fbc || ''\n} }];"
+      },
+      "id": "a0000000-0000-4000-8000-000000000002",
+      "name": "Normalize",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-160, 320]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal",
+        "sendBody": true, "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ app_id: $env.LARK_APP_ID, app_secret: $env.LARK_APP_SECRET }) }}",
+        "options": {}
+      },
+      "id": "a0000000-0000-4000-8000-000000000003",
+      "name": "Lark Token",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [40, 320],
+      "onError": "continueRegularOutput", "retryOnFail": true, "maxTries": 3
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://open.larksuite.com/open-apis/bitable/v1/apps/{{ $env.LARK_BITABLE_APP_TOKEN }}/tables/{{ $env.LARK_LEADS_TABLE_ID }}/records",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [ { "name": "Authorization", "value": "=Bearer {{ $('Lark Token').item.json.tenant_access_token }}" } ] },
+        "sendBody": true, "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ fields: { 'Name': $('Normalize').item.json.name, 'Email': $('Normalize').item.json.email, 'Gift': $('Normalize').item.json.gift, 'Campaign': $('Normalize').item.json.campaign, 'Status': 'nurturing', 'Source': $('Normalize').item.json.utm_source } }) }}",
+        "options": {}
+      },
+      "id": "a0000000-0000-4000-8000-000000000004",
+      "name": "Lark Save Lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [240, 320],
+      "onError": "continueRegularOutput", "retryOnFail": true, "maxTries": 3
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://open.larksuite.com/open-apis/bitable/v1/apps/{{ $env.LARK_BITABLE_APP_TOKEN }}/tables/{{ $env.LARK_CONTENT_TABLE_ID }}/records?page_size=50",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [ { "name": "Authorization", "value": "=Bearer {{ $('Lark Token').item.json.tenant_access_token }}" } ] },
+        "options": {}
+      },
+      "id": "a0000000-0000-4000-8000-000000000005",
+      "name": "Lark Get Content",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [440, 320],
+      "onError": "continueRegularOutput", "retryOnFail": true, "maxTries": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build noi dung email tu Lark Content (loc theo Campaign), co fallback mac dinh.\nconst lead = $('Normalize').item.json;\nconst recs = (($input.first().json || {}).data || {}).items || [];\n\n// DEFAULT (dung khi Lark chua co noi dung) — chinh sua chinh thuc tren Lark.\nconst DEFAULT = {\n  email_0: { subject: 'Quà của bạn đây, {{name}} 🎁', body: '<p>Chào {{name}},</p><p>Đây là tài liệu/quà bạn vừa yêu cầu. Trải nghiệm nhanh CinAI để biến nó thành kết quả thật.</p>', cta_text: 'Dùng thử CinAI miễn phí', cta_path: '/signup' },\n  email_1: { subject: '{{name}} ơi, mất hàng giờ làm video?', body: '<p>Chào {{name}},</p><p>Làm nội dung/video thủ công vừa lâu vừa tốn. CinAI giúp bạn tạo nhanh chỉ trong vài phút.</p>', cta_text: 'Xem CinAI làm việc đó thế nào', cta_path: '/signup' },\n  email_2: { subject: 'Người khác đã làm được, còn bạn?', body: '<p>Chào {{name}},</p><p>Nhiều người dùng đã rút ngắn 80% thời gian sản xuất nhờ CinAI. Bạn chỉ cần 1 lần thử.</p>', cta_text: 'Tạo sản phẩm đầu tiên', cta_path: '/signup' },\n  email_3: { subject: 'Mẹo tuần này cho {{name}}', body: '<p>Chào {{name}},</p><p>Một mẹo nhỏ giúp bạn dùng CinAI hiệu quả hơn. Đăng nhập để thử ngay.</p>', cta_text: 'Vào CinAI', cta_path: '/signup' }\n};\n\nconst fromLark = {};\nfor (const r of recs) {\n  const f = r.fields || {};\n  const step = f.Step || f.step;\n  if (!step) continue;\n  if (f.Campaign && f.Campaign !== lead.campaign) continue;\n  fromLark[step] = { subject: f.Subject||'', body: f.Body||'', cta_text: f['CTA Text']||'', cta_path: f['CTA Path']||'/signup' };\n}\n\nconst BASE = 'https://cinai.tv';\nfunction fill(s){ return String(s||'').split('{{name}}').join(lead.name); }\nfunction build(step){\n  const c = Object.assign({}, DEFAULT[step], fromLark[step]||{});\n  const url = BASE + (c.cta_path||'/signup') + '?utm_source=n8n_email&utm_medium=email&utm_campaign=' + encodeURIComponent(lead.campaign) + '&utm_content=' + step + '&email=' + encodeURIComponent(lead.email);\n  const cta = '<p style=\"margin:24px 0\"><a href=\"' + url + '\" style=\"background:#6d28d9;color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:600\">' + (c.cta_text||'Vào CinAI') + ' →</a></p>';\n  const html = '<div style=\"font-family:sans-serif;font-size:16px;line-height:1.6;color:#1a1a1a\">' + fill(c.body) + cta + '<p style=\"font-size:12px;color:#888\">Bạn nhận email này vì đã để lại thông tin tại CinAI. <a href=\"' + BASE + '/unsubscribe?email=' + encodeURIComponent(lead.email) + '\">Huỷ nhận</a>.</p></div>';\n  return { subject: fill(c.subject), html };\n}\n\nreturn [{ json: { ...lead, content: { email_0: build('email_0'), email_1: build('email_1'), email_2: build('email_2'), email_3: build('email_3') } } }];"
+      },
+      "id": "a0000000-0000-4000-8000-000000000006",
+      "name": "Build Emails",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [640, 320]
+    },
+    {
+      "parameters": {
+        "fromEmail": "no-reply@cinai.tv",
+        "toEmail": "={{ $('Normalize').item.json.email }}",
+        "subject": "={{ $('Build Emails').item.json.content.email_0.subject }}",
+        "emailFormat": "html",
+        "html": "={{ $('Build Emails').item.json.content.email_0.html }}",
+        "options": {}
+      },
+      "id": "a0000000-0000-4000-8000-000000000007",
+      "name": "Email 0 (ngay)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [840, 320],
+      "onError": "continueRegularOutput", "retryOnFail": true, "maxTries": 2
+    },
+    {
+      "parameters": { "resume": "specificTime", "dateTime": "={{ $now.plus({ days: 1 }).set({ hour: 9, minute: 0, second: 0 }).toISO() }}", "options": {} },
+      "id": "a0000000-0000-4000-8000-000000000008",
+      "name": "Wait +1d 9AM",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1040, 320],
+      "webhookId": "wait-1d"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.CINAI_CHECK_URL }}?email={{ $('Normalize').item.json.email }}",
+        "options": {}
+      },
+      "id": "a0000000-0000-4000-8000-000000000009",
+      "name": "Check Registered 1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [1240, 320],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "conditions": [ { "id": "r1", "leftValue": "={{ $json.registered }}", "rightValue": true, "operator": { "type": "boolean", "operation": "true", "singleValue": true } } ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a0000000-0000-4000-8000-000000000010",
+      "name": "Registered? 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1440, 320]
+    },
+    {
+      "parameters": {
+        "fromEmail": "no-reply@cinai.tv",
+        "toEmail": "={{ $('Normalize').item.json.email }}",
+        "subject": "={{ $('Build Emails').item.json.content.email_1.subject }}",
+        "emailFormat": "html",
+        "html": "={{ $('Build Emails').item.json.content.email_1.html }}",
+        "options": {}
+      },
+      "id": "a0000000-0000-4000-8000-000000000011",
+      "name": "Email 1 (+1d)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1640, 420],
+      "onError": "continueRegularOutput", "retryOnFail": true, "maxTries": 2
+    },
+    {
+      "parameters": { "resume": "specificTime", "dateTime": "={{ $now.plus({ days: 2 }).set({ hour: 9, minute: 0, second: 0 }).toISO() }}", "options": {} },
+      "id": "a0000000-0000-4000-8000-000000000012",
+      "name": "Wait +2d 9AM",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1840, 420],
+      "webhookId": "wait-2d"
+    },
+    {
+      "parameters": { "method": "GET", "url": "={{ $env.CINAI_CHECK_URL }}?email={{ $('Normalize').item.json.email }}", "options": {} },
+      "id": "a0000000-0000-4000-8000-000000000013",
+      "name": "Check Registered 2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [2040, 420],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "conditions": [ { "id": "r2", "leftValue": "={{ $json.registered }}", "rightValue": true, "operator": { "type": "boolean", "operation": "true", "singleValue": true } } ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a0000000-0000-4000-8000-000000000014",
+      "name": "Registered? 2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [2240, 420]
+    },
+    {
+      "parameters": {
+        "fromEmail": "no-reply@cinai.tv",
+        "toEmail": "={{ $('Normalize').item.json.email }}",
+        "subject": "={{ $('Build Emails').item.json.content.email_2.subject }}",
+        "emailFormat": "html",
+        "html": "={{ $('Build Emails').item.json.content.email_2.html }}",
+        "options": {}
+      },
+      "id": "a0000000-0000-4000-8000-000000000015",
+      "name": "Email 2 (+3d)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [2440, 520],
+      "onError": "continueRegularOutput", "retryOnFail": true, "maxTries": 2
+    },
+    {
+      "parameters": { "resume": "specificTime", "dateTime": "={{ $now.plus({ days: 7 }).set({ hour: 9, minute: 0, second: 0 }).toISO() }}", "options": {} },
+      "id": "a0000000-0000-4000-8000-000000000016",
+      "name": "Wait +7d 9AM",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [2640, 520],
+      "webhookId": "wait-7d"
+    },
+    {
+      "parameters": { "method": "GET", "url": "={{ $env.CINAI_CHECK_URL }}?email={{ $('Normalize').item.json.email }}", "options": {} },
+      "id": "a0000000-0000-4000-8000-000000000017",
+      "name": "Check Registered 3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [2840, 520],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "conditions": [ { "id": "r3", "leftValue": "={{ $json.registered }}", "rightValue": true, "operator": { "type": "boolean", "operation": "true", "singleValue": true } } ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a0000000-0000-4000-8000-000000000018",
+      "name": "Registered? 3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [3040, 520]
+    },
+    {
+      "parameters": {
+        "fromEmail": "no-reply@cinai.tv",
+        "toEmail": "={{ $('Normalize').item.json.email }}",
+        "subject": "={{ $('Build Emails').item.json.content.email_3.subject }}",
+        "emailFormat": "html",
+        "html": "={{ $('Build Emails').item.json.content.email_3.html }}",
+        "options": {}
+      },
+      "id": "a0000000-0000-4000-8000-000000000019",
+      "name": "Email 3 (hàng tuần)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [3240, 620],
+      "onError": "continueRegularOutput", "retryOnFail": true, "maxTries": 2
+    },
+    {
+      "parameters": {},
+      "id": "a0000000-0000-4000-8000-000000000020",
+      "name": "Stop (Đã chuyển đổi)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1640, 200]
+    }
+  ],
+  "connections": {
+    "Webhook Nurture": { "main": [[{ "node": "Normalize", "type": "main", "index": 0 }]] },
+    "Normalize": { "main": [[{ "node": "Lark Token", "type": "main", "index": 0 }]] },
+    "Lark Token": { "main": [[{ "node": "Lark Save Lead", "type": "main", "index": 0 }]] },
+    "Lark Save Lead": { "main": [[{ "node": "Lark Get Content", "type": "main", "index": 0 }]] },
+    "Lark Get Content": { "main": [[{ "node": "Build Emails", "type": "main", "index": 0 }]] },
+    "Build Emails": { "main": [[{ "node": "Email 0 (ngay)", "type": "main", "index": 0 }]] },
+    "Email 0 (ngay)": { "main": [[{ "node": "Wait +1d 9AM", "type": "main", "index": 0 }]] },
+    "Wait +1d 9AM": { "main": [[{ "node": "Check Registered 1", "type": "main", "index": 0 }]] },
+    "Check Registered 1": { "main": [[{ "node": "Registered? 1", "type": "main", "index": 0 }]] },
+    "Registered? 1": { "main": [[{ "node": "Stop (Đã chuyển đổi)", "type": "main", "index": 0 }], [{ "node": "Email 1 (+1d)", "type": "main", "index": 0 }]] },
+    "Email 1 (+1d)": { "main": [[{ "node": "Wait +2d 9AM", "type": "main", "index": 0 }]] },
+    "Wait +2d 9AM": { "main": [[{ "node": "Check Registered 2", "type": "main", "index": 0 }]] },
+    "Check Registered 2": { "main": [[{ "node": "Registered? 2", "type": "main", "index": 0 }]] },
+    "Registered? 2": { "main": [[{ "node": "Stop (Đã chuyển đổi)", "type": "main", "index": 0 }], [{ "node": "Email 2 (+3d)", "type": "main", "index": 0 }]] },
+    "Email 2 (+3d)": { "main": [[{ "node": "Wait +7d 9AM", "type": "main", "index": 0 }]] },
+    "Wait +7d 9AM": { "main": [[{ "node": "Check Registered 3", "type": "main", "index": 0 }]] },
+    "Check Registered 3": { "main": [[{ "node": "Registered? 3", "type": "main", "index": 0 }]] },
+    "Registered? 3": { "main": [[{ "node": "Stop (Đã chuyển đổi)", "type": "main", "index": 0 }], [{ "node": "Email 3 (hàng tuần)", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" }
+}

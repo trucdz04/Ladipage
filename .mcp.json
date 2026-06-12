@@ -1,0 +1,45 @@
+{
+  "mcpServers": {
+    "firecrawl": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
+      }
+    },
+    "chrome-devtools": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "chrome-devtools-mcp@latest"]
+    },
+    "playwright": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@playwright/mcp@latest"]
+    },
+    "magic": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@21st-dev/magic@latest", "API_KEY=\"${MAGIC_API_KEY}\""]
+    },
+    "n8n": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "n8n-mcp"],
+      "env": {
+        "MCP_MODE": "stdio",
+        "LOG_LEVEL": "error",
+        "DISABLE_CONSOLE_OUTPUT": "true"
+      }
+    },
+    "lark": {
+      "command": "cmd",
+      "args": [
+        "/c", "npx", "-y", "@larksuiteoapi/lark-mcp", "mcp",
+        "--app-id", "${LARK_APP_ID}",
+        "--app-secret", "${LARK_APP_SECRET}",
+        "--domain", "https://open.larksuite.com",
+        "--token-mode", "tenant_access_token",
+        "--mode", "stdio",
+        "--tools", "preset.default",
+        "--language", "en"
+      ]
+    }
+  }
+}

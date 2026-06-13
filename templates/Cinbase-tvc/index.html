@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CinBase — Sản xuất TVC &amp; Video AI cho doanh nghiệp | Nền tảng cinAI.tv OS</title>
+  <meta name="description" content="CinBase sản xuất TVC, video bán hàng và video social trên nền tảng cinAI.tv OS — hệ AI khép kín end-to-end. Giảm 80% chi phí, X3 biến thể Ads. Giá từ 79.000đ/video 30s khi cam kết dài hạn. Đăng ký book demo trực tiếp." />
+  <meta name="theme-color" content="#09090B" />
+  <link rel="icon" href="assets/cinbase/cinbase-logo.svg" />
+  <!-- OG -->
+  <meta property="og:title" content="CinBase — Sản xuất TVC & Video AI cho doanh nghiệp" />
+  <meta property="og:description" content="Hệ sản xuất video AI khép kín trên nền tảng cinAI.tv OS — giảm 80% chi phí, X3 biến thể Ads, từ 79.000đ/video 30s. Đăng ký book demo trực tiếp." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/cinai/og-image.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap&subset=vietnamese,latin" rel="stylesheet" />
+
+  <!-- Tokens + global -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/global.css" />
+
+  <!-- Tailwind CDN (map vào token) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: 'hsl(var(--background) / <alpha-value>)',
+            'bg-elevated': 'hsl(var(--background-elevated) / <alpha-value>)',
+            'bg-subtle': 'hsl(var(--background-subtle) / <alpha-value>)',
+            foreground: 'hsl(var(--foreground) / <alpha-value>)',
+            muted: { DEFAULT: 'hsl(var(--muted) / <alpha-value>)', foreground: 'hsl(var(--muted-foreground) / <alpha-value>)' },
+            card: 'hsl(var(--card) / <alpha-value>)',
+            primary: { DEFAULT: 'hsl(var(--primary) / <alpha-value>)', foreground: 'hsl(var(--primary-foreground) / <alpha-value>)' },
+            accent: { DEFAULT: 'hsl(var(--accent) / <alpha-value>)', hover: 'hsl(var(--accent-hover) / <alpha-value>)' },
+            border: 'hsl(var(--border) / <alpha-value>)',
+            'border-strong': 'hsl(var(--border-strong) / <alpha-value>)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          maxWidth: { 'screen-2xl': '1536px' },
+          borderRadius: { DEFAULT: 'var(--radius)', lg: 'var(--radius-lg)', xl: 'var(--radius-xl)', '2xl': 'var(--radius-2xl)' },
+        }
+      }
+    }
+  </script>
+
+  <!-- Tracking (Meta Pixel + CAPI qua n8n) -->
+  <script src="scripts/tracking-config.js"></script>
+  <script src="scripts/tracking.js"></script>
+</head>
+<body class="font-sans bg-background text-foreground antialiased">
+
+  <!-- ══════════════ 00 ANNOUNCEMENT BAR ══════════════ -->
+  <div id="announcement-bar" class="relative z-[60] bg-primary text-[#333]">
+    <div class="mx-auto flex min-h-12 w-full max-w-screen-xl flex-wrap items-center justify-center gap-2 px-4 py-2 sm:py-0 lg:px-8">
+      <p class="text-sm font-medium">Gói TVC doanh nghiệp — video AI từ 79.000đ/video 30s khi cam kết dài hạn · Đăng ký nhận demo + báo giá</p>
+      <div class="flex w-full items-center justify-between gap-2 sm:ml-auto sm:w-fit">
+        <span class="w-8 sm:hidden"></span>
+        <a href="#lead-magnet" data-cta="consult" data-track="ClickAnnouncement" class="inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-md bg-[#1a1a1d] px-3 text-xs font-semibold text-white transition hover:bg-black">
+          Nhận báo giá
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <button id="announcement-close" class="grid h-8 w-8 place-items-center rounded-md text-[#333]/70 transition hover:bg-black/10" aria-label="Dismiss announcement">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ 01 HEADER ══════════════ -->
+  <header id="site-header" class="fixed top-12 z-50 w-full transition-colors duration-300">
+    <div class="mx-auto flex h-[76px] w-full max-w-screen-xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <!-- left group: logo + nav pill -->
+      <div class="flex items-center gap-2">
+        <a href="#top" class="flex shrink-0 items-center pr-3" aria-label="CinBase">
+          <img src="assets/cinbase/cinbase-logo.svg" alt="" class="h-8 w-8" />
+          <span class="font-display text-xl font-bold leading-none tracking-tight -ml-0.5"><span class="text-[#5BB8F5]">in</span><span class="text-[#A78BFA]">Bas</span><span class="relative inline-block text-[#A78BFA]">e<svg class="absolute -right-3.5 -top-2 h-4 w-6 text-[#A78BFA]" viewBox="0 0 24 16" fill="currentColor" aria-hidden="true"><path d="M1 15l4.2-1.1L20 1.6 22.4 4 8.2 16.2 4 17.3 1 15z" transform="scale(0.9)"/><path d="M20 1.6 22.4 4 24 0.5 20 1.6z"/></svg></span></span>
+        </a>
+        <!-- nav pill -->
+        <nav aria-label="Main navigation" class="hidden items-center justify-center gap-4 rounded-md bg-background/60 px-6 py-3 text-[15px] text-foreground/80 lg:flex">
+          <a href="#features" class="transition hover:text-foreground">Dịch vụ</a>
+          <a href="#use-cases" class="transition hover:text-foreground">Ngành nghề</a>
+          <a href="#process" class="transition hover:text-foreground">Quy trình</a>
+          <a href="#pricing" class="transition hover:text-foreground">Bảng giá TVC</a>
+          <a href="#faq" class="transition hover:text-foreground">Hỏi đáp</a>
+        </nav>
+      </div>
+      <!-- actions (right) -->
+      <div class="flex items-center gap-3">
+        <a href="#pricing" data-track="ClickHeaderPricing" class="btn-ghost btn h-10 text-sm" data-cta="pricing">Xem Báo Giá</a>
+        <a href="#lead-magnet" data-track="ClickHeaderConsult" class="btn-primary btn h-10 text-sm hidden sm:inline-flex" data-cta="consult">Nhận Tư Vấn Miễn Phí</a>
+        <button id="nav-toggle" class="grid h-10 w-10 place-items-center rounded-lg border border-border-strong lg:hidden" aria-label="Open menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+  <!-- ══════════════ 02 HERO ══════════════ -->
+  <section class="relative overflow-hidden px-4 pt-44 pb-16 sm:px-6">
+    <!-- glow -->
+    <div aria-hidden="true" class="pointer-events-none absolute left-1/2 top-24 h-[480px] w-[820px] max-w-full -translate-x-1/2 rounded-full bg-primary/10 blur-[140px]"></div>
+    <div class="container-2xl relative">
+      <div class="mx-auto max-w-5xl text-center" data-reveal>
+        <h1 class="font-display text-[clamp(2.4rem,1rem+6vw,4.5rem)] font-semibold leading-[1.08] text-white">
+          <span class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            <span>Sản xuất TVC</span>
+            <span class="hidden h-16 w-36 shrink-0 overflow-hidden rounded-full ring-1 ring-white/10 md:inline-flex">
+              <video class="h-16 w-36 rounded-full object-cover" poster="assets/cinai/out-kinetic.webp" muted loop playsinline autoplay preload="auto" aria-label="TVC sản phẩm"><source src="assets/media/cin-vid-2.mp4" type="video/mp4" /></video>
+            </span>
+            <span>&amp; video marketing</span>
+          </span>
+          <span class="mt-1 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            <span>bằng AI cho</span>
+            <span class="hidden h-16 w-36 shrink-0 overflow-hidden rounded-full ring-1 ring-white/10 md:inline-flex">
+              <video class="h-16 w-36 rounded-full object-cover" poster="assets/cinai/out-helmet.png" muted loop playsinline autoplay preload="auto" aria-label="Video AI Marketing"><source src="assets/media/cin-vid-4.mp4" type="video/mp4" /></video>
+            </span>
+            <span class="hero-serif">doanh nghiệp</span>
+          </span>
+        </h1>
+        <p class="mx-auto mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
+          CinBase vận hành trên nền tảng <span class="text-foreground/90">cinAI.tv OS</span> — hệ sản xuất video AI khép kín (end-to-end): kịch bản, storyboard, dựng cảnh và hậu kỳ ngay trên trình duyệt. <span class="text-foreground/90">Stop prompting. Start directing.</span> — bạn chỉ đạo, AI sản xuất.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <a href="#lead-magnet" class="btn btn-primary" data-cta="consult" data-track="ClickHeroCTA" data-cta-type="hot">Nhận 3 Video Demo Miễn Phí</a>
+          <a href="#pricing" class="btn btn-ghost" data-cta="pricing" data-track="ClickHeroCTA" data-cta-type="cold">Xem Bảng Giá &amp; Cam Kết</a>
+        </div>
+        <div class="mx-auto mt-10 flex max-w-2xl flex-wrap items-center justify-center gap-x-10 gap-y-4 border-t border-border/40 pt-6">
+          <div class="flex flex-col items-center"><span class="font-display text-2xl font-bold text-white">−80%</span><span class="text-xs text-muted-foreground">Chi phí sản xuất</span></div>
+          <div class="flex flex-col items-center"><span class="font-display text-2xl font-bold text-white">X3</span><span class="text-xs text-muted-foreground">Biến thể Ads để A/B</span></div>
+          <div class="flex flex-col items-center"><span class="font-display text-2xl font-bold text-white">−70%</span><span class="text-xs text-muted-foreground">Thời gian hậu kỳ</span></div>
+          <div class="flex flex-col items-center"><span class="font-display text-2xl font-bold text-white">500+</span><span class="text-xs text-muted-foreground">Video AI / tháng</span></div>
+        </div>
+      </div>
+
+      <!-- 3 feature cards — accordion mở rộng khi hover -->
+      <div class="mx-auto mt-14 flex max-w-screen-2xl flex-col gap-2 md:h-[21rem] md:flex-row" data-hero-cards>
+        <article class="hero-card is-active" data-hero-card data-img="assets/cinai/out-kinetic.webp" tabindex="0">
+          <video class="hero-card__media" poster="assets/cinai/tpl-tvc.jpg" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cinai-tvc.mp4" type="video/mp4" /></video>
+          <div class="hero-card__overlay"></div>
+          <a class="hero-card__preview" href="https://cinai.tv/template/69ea23aa083ef11050000003" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="tvc" aria-label="Xem preview workflow TVC trên cinAI.tv"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</a>
+          <div class="hero-card__body">
+            <h3 class="font-display text-xl font-semibold text-white">TVC Quảng Cáo</h3>
+            <div class="hero-card__reveal">
+              <p class="mt-2 max-w-sm text-sm text-white/70">TVC 15–30s chuẩn chạy ads: kịch bản theo thương hiệu, hình ảnh điện ảnh, voice-over chuyên nghiệp.</p>
+              <a href="#pricing" data-cta="pricing" data-track="ClickHeroCardCTA" class="mt-4 inline-flex w-fit items-center gap-1.5 rounded-lg bg-white/95 px-4 py-2 text-sm font-semibold text-[#1a1a1d] transition hover:bg-white">Xem gói TVC →</a>
+            </div>
+          </div>
+        </article>
+        <article class="hero-card" data-hero-card data-img="assets/cinai/out-game.png" tabindex="0">
+          <video class="hero-card__media" poster="assets/cinai/tpl-banhang.jpg" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cinai-banhang.mp4" type="video/mp4" /></video>
+          <div class="hero-card__overlay"></div>
+          <a class="hero-card__preview" href="https://cinai.tv/template/6a1598f0548b47a9db00004e" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="ban-hang" aria-label="Xem preview workflow Video bán hàng &amp; social trên cinAI.tv"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</a>
+          <div class="hero-card__body">
+            <h3 class="font-display text-xl font-semibold text-white">Video Bán Hàng &amp; Social</h3>
+            <div class="hero-card__reveal">
+              <p class="mt-2 max-w-sm text-sm text-white/70">Video sản phẩm, TikTok/Reels theo lô — batch cả tháng nội dung trong một lần đặt, phong cách nhất quán.</p>
+              <a href="#lead-magnet" data-cta="consult" data-track="ClickHeroCardCTA" class="mt-4 inline-flex w-fit items-center gap-1.5 rounded-lg bg-white/95 px-4 py-2 text-sm font-semibold text-[#1a1a1d] transition hover:bg-white">Nhận báo giá →</a>
+            </div>
+          </div>
+        </article>
+        <article class="hero-card" data-hero-card data-img="assets/cinai/out-helmet.png" tabindex="0">
+          <video class="hero-card__media" poster="assets/cinai/tpl-thuonghieu.jpg" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cinai-thuonghieu.mp4" type="video/mp4" /></video>
+          <div class="hero-card__overlay"></div>
+          <a class="hero-card__preview" href="https://cinai.tv/template/6a28c3c6b4a8e852dd000007" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="thuong-hieu" aria-label="Xem preview workflow Video thương hiệu &amp; đào tạo trên cinAI.tv"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</a>
+          <div class="hero-card__body">
+            <h3 class="font-display text-xl font-semibold text-white">Video Thương Hiệu &amp; Đào Tạo</h3>
+            <div class="hero-card__reveal">
+              <p class="mt-2 max-w-sm text-sm text-white/70">Phim giới thiệu doanh nghiệp, video đào tạo nội bộ — hiệu ứng 3D, diễn viên/MC ở gói Chuyên Nghiệp.</p>
+              <a href="#pricing" data-cta="pricing" data-track="ClickHeroCardCTA" class="mt-4 inline-flex w-fit items-center gap-1.5 rounded-lg bg-white/95 px-4 py-2 text-sm font-semibold text-[#1a1a1d] transition hover:bg-white">Xem gói video →</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 02c PROBLEM AGITATION ══════════════ -->
+  <section class="container-2xl px-4 py-16 sm:py-20" data-reveal>
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="eyebrow">Bài toán sản xuất video 2026</span>
+      <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold leading-tight text-white">Lãng phí ngân sách hay đánh cược với lỗi kỹ thuật?</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-muted-foreground">Doanh nghiệp cần video liên tục để chạy ads, nhưng hai lối đi quen thuộc đều có cái giá riêng.</p>
+    </div>
+    <div class="mx-auto mt-10 grid max-w-5xl gap-5 md:grid-cols-2" data-stagger>
+      <article class="surface flex flex-col gap-4 p-7" data-reveal>
+        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-red-500/10 text-red-400"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
+        <h3 class="font-display text-lg font-semibold text-white">Sản xuất truyền thống</h3>
+        <ul class="space-y-2.5 text-sm text-muted-foreground">
+          <li class="flex gap-2"><span class="mt-0.5 text-red-400/80">✕</span> Chi phí nhân sự &amp; ê-kíp quay cao</li>
+          <li class="flex gap-2"><span class="mt-0.5 text-red-400/80">✕</span> Hậu kỳ kéo dài hàng tuần cho mỗi video</li>
+          <li class="flex gap-2"><span class="mt-0.5 text-red-400/80">✕</span> Không thể linh hoạt scale-up số lượng khi cần chạy nhiều ads</li>
+        </ul>
+      </article>
+      <article class="surface flex flex-col gap-4 p-7" data-reveal>
+        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-500/10 text-amber-400"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <h3 class="font-display text-lg font-semibold text-white">Dùng tool AI cơ bản</h3>
+        <ul class="space-y-2.5 text-sm text-muted-foreground">
+          <li class="flex gap-2"><span class="mt-0.5 text-amber-400/80">✕</span> <span><span class="font-semibold text-foreground/90">80% video gặp lỗi</span> méo mặt, lệch khung hình</span></li>
+          <li class="flex gap-2"><span class="mt-0.5 text-amber-400/80">✕</span> Mất tính nhất quán nhân vật giữa các cảnh</li>
+          <li class="flex gap-2"><span class="mt-0.5 text-amber-400/80">✕</span> Đoán mò kết quả từng prompt — không kiểm soát được</li>
+        </ul>
+      </article>
+    </div>
+    <p class="mx-auto mt-8 max-w-2xl text-center text-base text-foreground/90">CinBase trên nền tảng cinAI.tv OS giải quyết cả hai: <span class="font-semibold text-white">kiểm soát 100% chuẩn điện ảnh</span>, sản xuất hàng loạt mà vẫn nhất quán.</p>
+  </section>
+
+  <!-- ══════════════ 03 CLIENTS STRIP ══════════════ -->
+  <section id="models" class="container-2xl px-4 py-10" data-reveal="fade">
+    <p class="text-center text-sm uppercase tracking-wider text-muted-foreground">Engine AI điện ảnh hàng đầu · Xuất bản chuẩn mọi nền tảng</p>
+    <div class="marquee mt-6" style="--gap:4rem;--speed:28s">
+      <div class="marquee__track">
+        <span class="logo-pill"><img src="assets/brands/gemini.svg" alt="" class="logo-pill__img"/>Gemini</span><span class="logo-pill"><img src="assets/brands/openai.svg" alt="" class="logo-pill__img"/>GPT-4o</span><span class="logo-pill">Veo 3</span><span class="logo-pill">Seedance 2.0 &amp; Omni</span>
+        <span class="logo-pill"><img src="assets/brands/youtube.svg" alt="" class="logo-pill__img"/>YouTube</span><span class="logo-pill"><img src="assets/brands/tiktok.svg" alt="" class="logo-pill__img"/>TikTok</span><span class="logo-pill"><img src="assets/brands/facebook.svg" alt="" class="logo-pill__img"/>Facebook</span><span class="logo-pill"><img src="assets/brands/instagram.svg" alt="" class="logo-pill__img"/>Instagram</span>
+      </div>
+      <div class="marquee__track" aria-hidden="true">
+        <span class="logo-pill"><img src="assets/brands/gemini.svg" alt="" class="logo-pill__img"/>Gemini</span><span class="logo-pill"><img src="assets/brands/openai.svg" alt="" class="logo-pill__img"/>GPT-4o</span><span class="logo-pill">Veo 3</span><span class="logo-pill">Seedance 2.0 &amp; Omni</span>
+        <span class="logo-pill"><img src="assets/brands/youtube.svg" alt="" class="logo-pill__img"/>YouTube</span><span class="logo-pill"><img src="assets/brands/tiktok.svg" alt="" class="logo-pill__img"/>TikTok</span><span class="logo-pill"><img src="assets/brands/facebook.svg" alt="" class="logo-pill__img"/>Facebook</span><span class="logo-pill"><img src="assets/brands/instagram.svg" alt="" class="logo-pill__img"/>Instagram</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 04 TOOLS OVERVIEW ══════════════ -->
+  <section class="container-2xl px-4 py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 class="font-display text-[clamp(2rem,1.2rem+3vw,3rem)] font-semibold leading-tight text-white">Một pipeline,<br class="sm:hidden"/> đủ mọi định dạng video.</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-muted-foreground">Từ TVC quảng cáo đến video social và đào tạo nội bộ — cùng một quy trình sản xuất, đổi định dạng theo mục tiêu chiến dịch của bạn.</p>
+    </div>
+    <!-- tabs (segmented control trong khối bg-muted) -->
+    <div role="tablist" aria-label="Định dạng video" class="mx-auto mt-10 flex w-fit max-w-full gap-2 overflow-x-auto rounded-lg bg-muted p-2 md:justify-center" data-tabs="tools">
+      <button role="tab" class="seg-tab" aria-selected="true" data-track="SelectModule" data-module="tvc">TVC 30s</button>
+      <button role="tab" class="seg-tab" aria-selected="false" data-track="SelectModule" data-module="ban-hang">Video bán hàng</button>
+      <button role="tab" class="seg-tab" aria-selected="false" data-track="SelectModule" data-module="social">Social / Reels</button>
+      <button role="tab" class="seg-tab" aria-selected="false" data-track="SelectModule" data-module="san-pham">Video sản phẩm</button>
+      <button role="tab" class="seg-tab" aria-selected="false" data-track="SelectModule" data-module="thuong-hieu">Video thương hiệu</button>
+      <button role="tab" class="seg-tab" aria-selected="false" data-track="SelectModule" data-module="dao-tao">Đào tạo nội bộ</button>
+      <button role="tab" class="seg-tab" aria-selected="false" data-track="SelectModule" data-module="viral">Viral content</button>
+    </div>
+    <!-- video preview — mỗi tab 1 video -->
+    <div class="mx-auto mt-8 max-w-5xl" data-reveal="scale">
+      <div role="tabpanel" data-tabs="tools" class="preview-host overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/tpl-tvc.jpg" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cinai-tvc.mp4" type="video/mp4"/></video><a class="video-preview" href="https://cinai.tv/template/69ea23aa083ef11050000003" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="tvc" aria-label="Xem preview workflow TVC 30s trên cinAI.tv"><span class="video-preview-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</span></a></div>
+      <div role="tabpanel" data-tabs="tools" hidden class="preview-host overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/tpl-banhang.jpg" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cinai-banhang.mp4" type="video/mp4"/></video><a class="video-preview" href="https://cinai.tv/template/6a1598f0548b47a9db00004e" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="ban-hang" aria-label="Xem preview workflow Video bán hàng trên cinAI.tv"><span class="video-preview-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</span></a></div>
+      <div role="tabpanel" data-tabs="tools" hidden class="preview-host overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/tpl-beauty.webp" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cinai-beauty.mp4" type="video/mp4"/></video><a class="video-preview" href="https://cinai.tv/template/69ff39b1e9b66898df000007" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="social" aria-label="Xem preview workflow Social / Reels trên cinAI.tv"><span class="video-preview-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</span></a></div>
+      <div role="tabpanel" data-tabs="tools" hidden class="preview-host overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/tpl-ecommerce.png" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cinai-ecommerce.mp4" type="video/mp4"/></video><a class="video-preview" href="https://cinai.tv/template/6a0789b282337d8759000e3b" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="san-pham" aria-label="Xem preview workflow Video sản phẩm trên cinAI.tv"><span class="video-preview-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</span></a></div>
+      <div role="tabpanel" data-tabs="tools" hidden class="preview-host overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/tpl-thuonghieu.jpg" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cinai-thuonghieu.mp4" type="video/mp4"/></video><a class="video-preview" href="https://cinai.tv/template/6a28c3c6b4a8e852dd000007" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="thuong-hieu" aria-label="Xem preview workflow Video thương hiệu trên cinAI.tv"><span class="video-preview-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</span></a></div>
+      <div role="tabpanel" data-tabs="tools" hidden class="preview-host overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/tpl-thuonghieu.jpg" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cinai-thuonghieu.mp4" type="video/mp4"/></video><a class="video-preview" href="https://cinai.tv/template/6a28c3c6b4a8e852dd000007" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="dao-tao" aria-label="Xem preview workflow Đào tạo nội bộ trên cinAI.tv"><span class="video-preview-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</span></a></div>
+      <div role="tabpanel" data-tabs="tools" hidden class="preview-host overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/tpl-bds.jpg" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cinai-bds.mp4" type="video/mp4"/></video><a class="video-preview" href="https://cinai.tv/template/6a14313af02b7477be000015" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="viral" aria-label="Xem preview workflow Viral content trên cinAI.tv"><span class="video-preview-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</span></a></div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 05 VERTICAL FEATURE LIST (STICKY crossfade) ══════════════ -->
+  <section id="use-cases" class="relative" data-vfl style="height:520vh">
+    <div class="vfl-sticky-full">
+      <!-- glow trang trí -->
+      <div aria-hidden="true" class="pointer-events-none absolute left-1/2 top-10 -z-10 hidden h-44 w-[50rem] max-w-full -translate-x-1/2 rounded-full bg-primary/10 blur-[120px] lg:block"></div>
+      <!-- lens trang trí (lệch trái) + vòng số orbit quanh vành -->
+      <div aria-hidden="true" class="pointer-events-none absolute top-1/2 left-[2rem] hidden -translate-y-1/2 lg:block">
+        <!-- lens: tâm tại điểm này, lệch trái nửa ngoài màn -->
+        <img data-vfl-lens src="assets/images/lence.webp" alt="" class="absolute left-1/2 top-1/2 h-[40rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 opacity-80" style="filter:hue-rotate(100deg) saturate(1.1);max-width:none" />
+        <!-- vòng số: cùng tâm với lens, các số nằm trên vành -->
+        <div class="vfl-num-ring" data-vfl-numbers>
+          <span class="vfl-num">1</span><span class="vfl-num">2</span><span class="vfl-num">3</span><span class="vfl-num">4</span><span class="vfl-num">5</span>
+        </div>
+      </div>
+      <!-- panels chồng tuyệt đối, chỉ active hiện -->
+      <div class="container-2xl relative flex h-full items-center justify-center px-4 lg:justify-end">
+        <article class="vfl-panel-abs is-active" data-vfl-panel data-i="0" data-track="ViewUseCase" data-industry="ecommerce">
+          <div class="vfl-card"><video class="vfl-video" poster="assets/cinai/tpl-ecommerce.png" muted loop playsinline autoplay preload="metadata" data-vfl-video><source src="assets/media/cinai-ecommerce.mp4" type="video/mp4"/></video><a class="vfl-preview" href="https://cinai.tv/template/6a0789b282337d8759000e3b" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="ecommerce" aria-label="Xem preview workflow ngành E-commerce trên cinAI.tv"><span class="vfl-preview-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</span></a></div>
+          <h3 class="vfl-heading">E-commerce &amp; Bán lẻ</h3>
+          <p class="vfl-desc">Video sản phẩm và TVC ads chuẩn chuyển đổi: nhiều biến thể để test, xuất đúng tỉ lệ từng nền tảng — batch cả tháng nội dung trong một lần đặt.</p>
+          <a href="#lead-magnet" data-cta="lead-magnet" data-track="ClickVflCTA" class="vfl-cta">Nhận 3 demo video + workflow miễn phí<svg class="vfl-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+        <article class="vfl-panel-abs" data-vfl-panel data-i="1" data-track="ViewUseCase" data-industry="fnb">
+          <div class="vfl-card"><video class="vfl-video" poster="assets/cinai/tpl-fnb.jpg" muted loop playsinline autoplay preload="metadata" data-vfl-video><source src="assets/media/cinai-fnb.mp4" type="video/mp4"/></video><a class="vfl-preview" href="https://cinai.tv/template/6a28c3c6b4a8e852dd000007" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="fnb" aria-label="Xem preview workflow ngành F&amp;B trên cinAI.tv"><span class="vfl-preview-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</span></a></div>
+          <h3 class="vfl-heading">F&amp;B &amp; Nhà hàng</h3>
+          <p class="vfl-desc">Làm món nào cũng trông hấp dẫn: TVC món ăn, video menu và clip promo ngắn — đủ nhanh cho chiến dịch khuyến mãi hàng tuần.</p>
+          <a href="#lead-magnet" data-cta="lead-magnet" data-track="ClickVflCTA" class="vfl-cta">Nhận 3 demo video + workflow miễn phí<svg class="vfl-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+        <article class="vfl-panel-abs" data-vfl-panel data-i="2" data-track="ViewUseCase" data-industry="bat-dong-san">
+          <div class="vfl-card"><video class="vfl-video" poster="assets/cinai/tpl-bds.jpg" muted loop playsinline autoplay preload="metadata" data-vfl-video><source src="assets/media/cinai-bds.mp4" type="video/mp4"/></video><a class="vfl-preview" href="https://cinai.tv/template/6a14313af02b7477be000015" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="bat-dong-san" aria-label="Xem preview workflow ngành Bất động sản trên cinAI.tv"><span class="vfl-preview-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</span></a></div>
+          <h3 class="vfl-heading">Bất động sản</h3>
+          <p class="vfl-desc">Phim giới thiệu dự án với góc quay điện ảnh, voice-over chuyên nghiệp — gây ấn tượng với khách hàng trước cả khi đến xem thực tế.</p>
+          <a href="#lead-magnet" data-cta="lead-magnet" data-track="ClickVflCTA" class="vfl-cta">Nhận 3 demo video + workflow miễn phí<svg class="vfl-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+        <article class="vfl-panel-abs" data-vfl-panel data-i="3" data-track="ViewUseCase" data-industry="beauty">
+          <div class="vfl-card"><video class="vfl-video" poster="assets/cinai/tpl-beauty.webp" muted loop playsinline autoplay preload="metadata" data-vfl-video><source src="assets/media/cinai-beauty.mp4" type="video/mp4"/></video><a class="vfl-preview" href="https://cinai.tv/template/69ff39b1e9b66898df000007" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="beauty" aria-label="Xem preview workflow ngành Mỹ phẩm &amp; Làm đẹp trên cinAI.tv"><span class="vfl-preview-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</span></a></div>
+          <h3 class="vfl-heading">Mỹ phẩm &amp; Làm đẹp</h3>
+          <p class="vfl-desc">Video UGC-style và TVC sản phẩm làm đẹp: nhiều góc máy, nhiều phong cách để test quảng cáo — không phải tổ chức quay lại mỗi chiến dịch.</p>
+          <a href="#lead-magnet" data-cta="lead-magnet" data-track="ClickVflCTA" class="vfl-cta">Nhận 3 demo video + workflow miễn phí<svg class="vfl-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+        <article class="vfl-panel-abs" data-vfl-panel data-i="4" data-track="ViewUseCase" data-industry="giao-duc">
+          <div class="vfl-card"><video class="vfl-video" poster="assets/cinai/tpl-giaoduc.png" muted loop playsinline autoplay preload="metadata" data-vfl-video><source src="assets/media/cinai-giaoduc.mp4" type="video/mp4"/></video><a class="vfl-preview" href="https://cinai.tv/template/6a05b8638d418f3db5000004" target="_blank" rel="noopener" data-track="ClickPreviewWorkflow" data-industry="giao-duc" aria-label="Xem preview workflow ngành Giáo dục &amp; Đào tạo trên cinAI.tv"><span class="vfl-preview-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Preview Workflow</span></a></div>
+          <h3 class="vfl-heading">Giáo dục &amp; Đào tạo</h3>
+          <p class="vfl-desc">Video khoá học, video tuyển sinh và đào tạo nội bộ — voice-over rõ ràng, hình ảnh minh hoạ nhất quán cho cả bộ chương trình.</p>
+          <a href="#lead-magnet" data-cta="lead-magnet" data-track="ClickVflCTA" class="vfl-cta">Nhận 3 demo video + workflow miễn phí<svg class="vfl-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 05b 3 TRỤ CỘT CÔNG NGHỆ ══════════════ -->
+  <section class="container-2xl px-4 py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="eyebrow">Giải bài toán Scale-up</span>
+      <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold leading-tight text-white">3 trụ cột công nghệ — sản xuất hàng loạt mà vẫn nhất quán</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-muted-foreground">Đây là điểm khác biệt giữa một hệ sản xuất điện ảnh và các công cụ AI thông thường.</p>
+    </div>
+    <div class="mx-auto mt-12 grid max-w-6xl gap-5 md:grid-cols-3" data-stagger>
+      <article class="surface glow-card flex flex-col p-7" data-reveal>
+        <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/><path d="m19 8 2 2-2 2"/></svg></div>
+        <h3 class="mt-5 font-display text-lg font-semibold text-white">Tính nhất quán nhân vật</h3>
+        <p class="mt-2 flex-1 text-sm text-muted-foreground">Giữ nguyên khuôn mặt, trang phục và bối cảnh xuyên suốt mọi khung hình — đúng nhân vật, đúng thương hiệu.</p>
+        <span class="mt-5 inline-flex w-fit rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-accent">→ Bảo vệ hình ảnh nguyên bản của thương hiệu</span>
+      </article>
+      <article class="surface glow-card flex flex-col p-7" data-reveal>
+        <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+        <h3 class="mt-5 font-display text-lg font-semibold text-white">Biến thể hàng loạt (One-click)</h3>
+        <p class="mt-2 flex-1 text-sm text-muted-foreground">Tạo hàng chục phiên bản Ads khác nhau chỉ từ một kịch bản gốc — đổi thông điệp, đổi bối cảnh trong một cú click.</p>
+        <span class="mt-5 inline-flex w-fit rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-accent">→ Tăng X3 hiệu suất thử nghiệm quảng cáo</span>
+      </article>
+      <article class="surface glow-card flex flex-col p-7" data-reveal>
+        <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h8M8 11h6"/></svg></div>
+        <h3 class="mt-5 font-display text-lg font-semibold text-white">Thư viện Workflow</h3>
+        <p class="mt-2 flex-1 text-sm text-muted-foreground">Kho kịch bản và tư duy marketing dựng sẵn theo từng ngành — bắt đầu nhanh, không phải nghĩ từ con số 0.</p>
+        <span class="mt-5 inline-flex w-fit rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-accent">→ Giảm 80% thời gian lên ý tưởng tiền kỳ</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- ══════════════ 06 PLATFORM FEATURES ══════════════ -->
+  <section id="features" class="container-2xl px-4 py-16 sm:py-20 lg:py-24">
+    <div class="max-w-2xl" data-reveal>
+      <span class="eyebrow">Năng lực pipeline</span>
+      <h2 class="mt-3 font-display text-[clamp(2rem,1.2rem+3vw,3rem)] font-semibold leading-tight text-white">Pipeline sản xuất video vận hành như nhà máy</h2>
+      <p class="mt-4 text-muted-foreground">Mỗi công đoạn — kịch bản, giọng đọc, dựng cảnh, xuất bản — đều được tự động hoá, nên giá rẻ hơn quay truyền thống nhiều lần mà tốc độ tính bằng ngày.</p>
+      <a href="#pricing" data-cta="pricing" data-track="ClickFeaturesPricing" class="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-accent transition hover:gap-2">Xem bảng giá TVC →</a>
+    </div>
+    <div class="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12" data-stagger>
+      <!-- AI Script Generation — card lớn (7 cột × 2 hàng) -->
+      <a href="#" class="feature-card sm:col-span-2 lg:col-span-7 lg:row-span-2" data-reveal>
+        <div class="feature-card__glow"></div>
+        <div class="relative z-10 flex h-full flex-col">
+          <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 4v5h5M8 13h8M8 17h5"/></svg></div>
+          <span class="feature-badge">End-to-end</span>
+          <h3 class="mt-4 font-display text-2xl font-semibold text-white">Pipeline tự động từ brief đến video lên sóng</h3>
+          <p class="mt-2 max-w-md text-sm text-muted-foreground">Bạn gửi brief — pipeline lo phần còn lại: AI viết kịch bản theo thương hiệu, chia storyboard, thu voice-over, dựng cảnh, lồng nhạc và render. Sản xuất hàng loạt vẫn giữ phong cách nhất quán từng khung hình.</p>
+          <span class="feature-link mt-auto pt-6">Kịch bản → Voice → Dựng cảnh → Xuất bản →</span>
+        </div>
+      </a>
+      <!-- AI Image (5) -->
+      <a href="#" class="feature-card lg:col-span-5" data-reveal>
+        <div class="feature-card__glow"></div>
+        <div class="relative z-10 flex h-full flex-col">
+          <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></div>
+          <span class="feature-badge">Theo thương hiệu</span>
+          <h3 class="mt-4 font-display text-xl font-semibold text-white">Kịch bản &amp; storyboard AI</h3>
+          <p class="mt-2 flex-1 text-sm text-muted-foreground">AI viết kịch bản đúng giọng thương hiệu, chia cảnh và gợi ý hình ảnh — duyệt trước khi sản xuất.</p>
+          <span class="feature-link mt-4">Xem thêm →</span>
+        </div>
+      </a>
+      <!-- AI Video (5) -->
+      <a href="#" class="feature-card lg:col-span-5" data-reveal>
+        <div class="feature-card__glow"></div>
+        <div class="relative z-10 flex h-full flex-col">
+          <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 9 6-3v12l-6-3"/></svg></div>
+          <span class="feature-badge">Đa giọng</span>
+          <h3 class="mt-4 font-display text-xl font-semibold text-white">Voice-over &amp; nhạc bản quyền</h3>
+          <p class="mt-2 flex-1 text-sm text-muted-foreground">Giọng đọc tự nhiên nhiều ngôn ngữ, đồng bộ cảm xúc — kèm nhạc bản quyền ở gói Nâng Cao trở lên.</p>
+          <span class="feature-link mt-4">Xem gói →</span>
+        </div>
+      </a>
+      <!-- Voice & Narration (7) -->
+      <a href="#" class="feature-card lg:col-span-7" data-reveal>
+        <div class="feature-card__glow"></div>
+        <div class="relative z-10 flex h-full flex-col">
+          <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg></div>
+          <span class="feature-badge">Điện ảnh</span>
+          <h3 class="mt-4 font-display text-xl font-semibold text-white">Dựng cảnh với Veo · Kling · Seedance</h3>
+          <p class="mt-2 flex-1 text-sm text-muted-foreground">Text-to-video, image-to-video chất lượng cao — góc máy, ánh sáng chỉnh theo yêu cầu, regenerate nhanh.</p>
+          <span class="feature-link mt-4">Xem thêm →</span>
+        </div>
+      </a>
+      <!-- Sound Design (5) -->
+      <a href="#" class="feature-card lg:col-span-5" data-reveal>
+        <div class="feature-card__glow"></div>
+        <div class="relative z-10 flex h-full flex-col">
+          <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h3l3-8 4 16 3-8h5"/></svg></div>
+          <span class="feature-badge">Theo lịch</span>
+          <h3 class="mt-4 font-display text-xl font-semibold text-white">Xuất bản tự động đa nền tảng</h3>
+          <p class="mt-2 flex-1 text-sm text-muted-foreground">Render hàng loạt, đăng lên YouTube, TikTok, Facebook theo lịch — đúng tỉ lệ khung hình từng kênh.</p>
+          <span class="feature-link mt-4">Xem thêm →</span>
+        </div>
+      </a>
+      <!-- Visual Storyboarding (12, full) -->
+      <div class="feature-card sm:col-span-2 lg:col-span-12" data-reveal>
+        <div class="feature-card__glow"></div>
+        <div class="relative z-10 flex h-full flex-col md:flex-row md:items-center md:gap-6">
+          <div class="md:flex-1">
+            <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="7" height="7" rx="1"/><rect x="14" y="4" width="7" height="7" rx="1"/><rect x="3" y="15" width="7" height="5" rx="1"/><rect x="14" y="15" width="7" height="5" rx="1"/></svg></div>
+            <span class="feature-badge mt-4">Hệ sinh thái CinBase</span>
+            <h3 class="mt-4 font-display text-xl font-semibold text-white">Cần Base/Lark hoặc n8n Automation?</h3>
+            <p class="mt-2 text-sm text-muted-foreground">CinBase còn thiết kế nền dữ liệu Lark Base và tự động hoá quy trình với n8n — hai dịch vụ này có trang riêng với báo giá chi tiết.</p>
+          </div>
+          <span class="flex flex-wrap gap-4 mt-4 md:mt-0">
+            <a href="{{BASE_LP_URL}}" data-cta="base-lp" data-track="ClickBaseLP" class="feature-link">Landing Base/Lark →</a>
+            <a href="{{N8N_LP_URL}}" data-cta="n8n-lp" data-track="ClickN8nLP" class="feature-link">Landing n8n →</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 07 QUY TRÌNH 3 BƯỚC ══════════════ -->
+  <section id="process" class="container-2xl px-4 py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[minmax(260px,360px)_1fr]">
+      <!-- left: heading + vertical tabs -->
+      <div>
+        <span class="eyebrow">Quy trình</span>
+        <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold leading-tight text-white">Quy trình khép kín — toàn bộ trên trình duyệt web</h2>
+        <div role="tablist" aria-label="Quy trình sản xuất" class="mt-8 flex flex-col gap-2" data-tabs="guided">
+          <button role="tab" class="guided-tab" aria-selected="true" data-track="SelectGuided" data-guided="scripting">
+            <span class="guided-tab__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 4v5h5M8 13h8M8 17h5"/></svg></span>
+            <span>01 · AI Scripting &amp; Storyboard</span>
+          </button>
+          <button role="tab" class="guided-tab" aria-selected="false" data-track="SelectGuided" data-guided="editing">
+            <span class="guided-tab__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m15 4 5 5M3 21l4-1 12-12-3-3L4 17l-1 4z"/></svg></span>
+            <span>02 · Interactive Editing</span>
+          </button>
+          <button role="tab" class="guided-tab" aria-selected="false" data-track="SelectGuided" data-guided="previs">
+            <span class="guided-tab__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+            <span>03 · Batch Pre-visualization</span>
+          </button>
+          <button role="tab" class="guided-tab" aria-selected="false" data-track="SelectGuided" data-guided="cloud-edit">
+            <span class="guided-tab__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 9 6-3v12l-6-3"/></svg></span>
+            <span>04 · Cloud AI Video Editing</span>
+          </button>
+        </div>
+        <p class="mt-6 max-w-sm text-sm text-muted-foreground">AI viết kịch bản, chia phân cảnh &amp; đề xuất góc máy chuẩn điện ảnh → bạn tùy chỉnh trực tiếp theo ý đồ đạo diễn → render demo hàng loạt để duyệt trước → dựng, cắt ghép &amp; xuất file thành phẩm ngay trên website.</p>
+      </div>
+      <!-- right: video panels -->
+      <div>
+        <div role="tabpanel" data-tabs="guided" class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+          <video class="aspect-video w-full object-cover" poster="assets/cinai/out-kinetic.webp" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-2.mp4" type="video/mp4"/></video>
+        </div>
+        <div role="tabpanel" data-tabs="guided" hidden class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+          <video class="aspect-video w-full object-cover" poster="assets/cinai/out-helmet.png" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-4.mp4" type="video/mp4"/></video>
+        </div>
+        <div role="tabpanel" data-tabs="guided" hidden class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+          <video class="aspect-video w-full object-cover" poster="assets/cinai/out-storyboard.png" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-1.mp4" type="video/mp4"/></video>
+        </div>
+        <div role="tabpanel" data-tabs="guided" hidden class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+          <video class="aspect-video w-full object-cover" poster="assets/cinai/out-game.png" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-3.mp4" type="video/mp4"/></video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 08 HORIZONTAL CAROUSEL ══════════════ -->
+  <section class="overflow-hidden py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="container-2xl px-4">
+      <div class="flex items-end justify-between gap-4">
+        <div>
+          <span class="eyebrow">Thư viện kết quả</span>
+          <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold text-white">Video AI Marketing do CinBase sản xuất</h2>
+        </div>
+        <div class="hidden gap-2 sm:flex">
+          <button class="grid h-11 w-11 place-items-center rounded-full border border-border-strong transition hover:bg-bg-subtle" data-car-prev aria-label="Previous"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button class="grid h-11 w-11 place-items-center rounded-full border border-border-strong transition hover:bg-bg-subtle" data-car-next aria-label="Next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+        </div>
+      </div>
+      <div class="carousel-track mt-8 pb-2" data-carousel>
+        <article class="carousel-card"><div class="overflow-hidden rounded-3xl border border-border/50 bg-card/70 p-3"><div class="relative aspect-square overflow-hidden rounded-2xl"><div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/40 to-transparent"></div><img src="assets/cinai/out-kinetic.webp" alt="Kinetic product visual" loading="lazy" class="h-full w-full object-cover"/></div><div class="px-2 py-4"><h3 class="font-display text-lg font-semibold text-white">TVC sản phẩm cao cấp</h3><p class="mt-2 text-sm text-muted-foreground">Video quảng cáo sản phẩm sản xuất bằng pipeline AI — từ kịch bản đến bản dựng hoàn chỉnh.</p></div></div></article>
+        <article class="carousel-card"><div class="overflow-hidden rounded-3xl border border-border/50 bg-card/70 p-3"><div class="relative aspect-square overflow-hidden rounded-2xl"><div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/40 to-transparent"></div><img src="assets/cinai/out-toycity.jpg" alt="Stylized brand world" loading="lazy" class="h-full w-full object-cover"/></div><div class="px-2 py-4"><h3 class="font-display text-lg font-semibold text-white">Thế giới thương hiệu nhất quán</h3><p class="mt-2 text-sm text-muted-foreground">Bộ nhận diện hình ảnh đồng bộ từng khung hình cho chiến dịch và nội dung social của doanh nghiệp.</p></div></div></article>
+        <article class="carousel-card"><div class="overflow-hidden rounded-3xl border border-border/50 bg-card/70 p-3"><div class="relative aspect-square overflow-hidden rounded-2xl"><div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/40 to-transparent"></div><img src="assets/cinai/out-storyboard.png" alt="Storyboard AI" loading="lazy" class="h-full w-full object-cover"/></div><div class="px-2 py-4"><h3 class="font-display text-lg font-semibold text-white">Kịch bản &amp; storyboard AI</h3><p class="mt-2 text-sm text-muted-foreground">AI viết kịch bản theo thương hiệu, chia cảnh và gợi ý hình ảnh — nền tảng cho mỗi video.</p></div></div></article>
+        <article class="carousel-card"><div class="overflow-hidden rounded-3xl border border-border/50 bg-card/70 p-3"><div class="relative aspect-square overflow-hidden rounded-2xl"><div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/40 to-transparent"></div><img src="assets/cinai/out-helmet.png" alt="Product launch concept" loading="lazy" class="h-full w-full object-cover"/></div><div class="px-2 py-4"><h3 class="font-display text-lg font-semibold text-white">Concept ra mắt sản phẩm</h3><p class="mt-2 text-sm text-muted-foreground">Concept film cho chiến dịch launch — thử ánh sáng, góc máy bằng AI trước khi sản xuất thật.</p></div></div></article>
+        <article class="carousel-card"><div class="overflow-hidden rounded-3xl border border-border/50 bg-card/70 p-3"><div class="relative aspect-square overflow-hidden rounded-2xl"><div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/40 to-transparent"></div><img src="assets/cinai/out-game.png" alt="Character action visual" loading="lazy" class="h-full w-full object-cover"/></div><div class="px-2 py-4"><h3 class="font-display text-lg font-semibold text-white">Nội dung giải trí &amp; đào tạo</h3><p class="mt-2 text-sm text-muted-foreground">Video nhân vật, hoạt hình cho nội dung số, đào tạo nội bộ — phong cách nhất quán cả bộ.</p></div></div></article>
+        <article class="carousel-card"><div class="overflow-hidden rounded-3xl border border-border/50 bg-card/70 p-3"><div class="relative aspect-square overflow-hidden rounded-2xl"><div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/40 to-transparent"></div><img src="assets/cinai/out-conservation.jpg" alt="Campaign hero visual" loading="lazy" class="h-full w-full object-cover"/></div><div class="px-2 py-4"><h3 class="font-display text-lg font-semibold text-white">Visual chiến dịch chỉn chu</h3><p class="mt-2 text-sm text-muted-foreground">Hình ảnh hero sẵn sàng để duyệt, làm deck và chạy quảng cáo — sản xuất hàng loạt theo lịch.</p></div></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 09 ROI + PROOF ══════════════ -->
+  <section class="container-2xl px-4 py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="eyebrow">Chuyển đổi số workflow</span>
+      <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold text-white">Tối đa hóa ROI — số liệu nói thay chúng tôi</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-muted-foreground">So sánh trực tiếp giữa quy trình sản xuất truyền thống và hệ điều hành cinAI.tv OS.</p>
+    </div>
+
+    <!-- bảng so sánh ROI -->
+    <div class="mx-auto mt-12 max-w-4xl overflow-hidden rounded-2xl border border-border" data-reveal>
+      <div class="grid grid-cols-3 bg-card/60 text-sm font-semibold">
+        <div class="p-4 text-muted-foreground sm:p-5">Tiêu chí</div>
+        <div class="border-l border-border p-4 text-center text-muted-foreground sm:p-5">Truyền thống</div>
+        <div class="border-l border-primary/40 bg-primary/10 p-4 text-center text-accent sm:p-5">cinAI.tv OS</div>
+      </div>
+      <div class="grid grid-cols-3 border-t border-border text-sm">
+        <div class="p-4 text-foreground/80 sm:p-5">Chi phí sản xuất</div>
+        <div class="border-l border-border p-4 text-center text-muted-foreground sm:p-5">Cao</div>
+        <div class="border-l border-primary/40 bg-primary/5 p-4 text-center font-semibold text-white sm:p-5">Giảm 80% ngân sách</div>
+      </div>
+      <div class="grid grid-cols-3 border-t border-border text-sm">
+        <div class="p-4 text-foreground/80 sm:p-5">Thời gian hậu kỳ</div>
+        <div class="border-l border-border p-4 text-center text-muted-foreground sm:p-5">1 tuần</div>
+        <div class="border-l border-primary/40 bg-primary/5 p-4 text-center font-semibold text-white sm:p-5">Vài giờ</div>
+      </div>
+      <div class="grid grid-cols-3 border-t border-border text-sm">
+        <div class="p-4 text-foreground/80 sm:p-5">Khả năng scale creative</div>
+        <div class="border-l border-border p-4 text-center text-muted-foreground sm:p-5">Bị giới hạn</div>
+        <div class="border-l border-primary/40 bg-primary/5 p-4 text-center font-semibold text-white sm:p-5">Không giới hạn (Batch)</div>
+      </div>
+    </div>
+
+    <!-- 3 số liệu kết quả -->
+    <div class="mx-auto mt-10 grid max-w-4xl gap-5 sm:grid-cols-3" data-stagger>
+      <div class="stat-card text-center" data-reveal><span class="stat-glow"></span><h3 class="stat-title">3 tháng</h3><p class="stat-desc">Triển khai &amp; đưa vào vận hành thực tế.</p></div>
+      <div class="stat-card text-center" data-reveal><span class="stat-glow"></span><h3 class="stat-title">−70%</h3><p class="stat-desc">Tiết kiệm chi phí khâu hậu kỳ (post-production).</p></div>
+      <div class="stat-card text-center" data-reveal><span class="stat-glow"></span><h3 class="stat-title">X3</h3><p class="stat-desc">Số lượng creative Ad variations để chạy A/B Testing.</p></div>
+    </div>
+
+    <!-- testimonial -->
+    <figure class="mx-auto mt-10 max-w-3xl rounded-2xl border border-primary/30 bg-primary/[0.06] p-8 text-center" data-reveal>
+      <svg class="mx-auto h-7 w-7 text-primary/50" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.5 7C6.5 7 4 9.5 4 12.5V17h5v-5H6.8c0-1.7 1.2-3 2.7-3V7zm9 0c-3 0-5.5 2.5-5.5 5.5V17h5v-5h-2.2c0-1.7 1.2-3 2.7-3V7z"/></svg>
+      <blockquote class="mt-4 font-display text-lg font-medium leading-relaxed text-white sm:text-xl">"Hệ điều hành cinAI.tv giúp chúng tôi kiểm soát 100% tính nhất quán của nhân vật ảo và workflow nội bộ mà hoàn toàn không phải phụ thuộc vào bất kỳ bên thứ ba nào."</blockquote>
+      <figcaption class="mt-5 text-sm text-muted-foreground">— Marketing Director, Retail Brand</figcaption>
+    </figure>
+
+    <div class="mt-12 flex justify-center">
+      <a href="#lead-magnet" class="btn btn-primary" data-cta="consult" data-track="ClickWhyCTA">Nhận 3 Video Demo Miễn Phí
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════ 10 PRICING — MA TRẬN CAM KẾT ══════════════ -->
+  <section id="pricing" class="container-2xl px-4 py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Triết lý định giá mới</span>
+      <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold text-white">Đối tác dài hạn, chi phí đáy sàn</h2>
+      <p class="mt-4 text-muted-foreground">Chi phí tính trên mỗi video 30s. Càng đồng hành lâu dài, giá sản xuất mỗi video càng giảm sâu.</p>
+    </div>
+
+    <!-- toggle thời gian cam kết -->
+    <div class="mt-8 flex flex-col items-center gap-2">
+      <div role="tablist" aria-label="Thời gian cam kết" class="flex w-fit gap-1 rounded-full bg-muted p-1" data-term-toggle>
+        <button class="term-opt" data-term="1" aria-selected="false">1 tháng</button>
+        <button class="term-opt is-active" data-term="6" aria-selected="true">6 tháng</button>
+        <button class="term-opt" data-term="12" aria-selected="false">12 tháng <span class="ml-1 rounded-full bg-primary/20 px-1.5 py-0.5 text-[10px] font-semibold text-accent">−20%</span></button>
+      </div>
+      <p class="text-xs text-muted-foreground" data-term-note>Giá/video khi cam kết 6 tháng</p>
+    </div>
+
+    <div class="mx-auto mt-10 grid max-w-4xl items-stretch gap-6 md:grid-cols-2" data-stagger>
+      <!-- GÓI CƠ BẢN (Core AI) -->
+      <article class="surface glow-card flex flex-col p-8" data-reveal>
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-xl font-semibold text-white">Gói Cơ Bản</h3>
+          <span class="rounded-full border border-border-strong px-3 py-1 text-xs text-muted-foreground">Core AI</span>
+        </div>
+        <p class="mt-2 text-sm text-muted-foreground">Phù hợp: SME, shop, nội dung social cần ra video nhanh &amp; đều.</p>
+        <div class="mt-6 flex items-end gap-2">
+          <span class="font-display text-4xl font-bold text-white" data-price data-m1="99.000đ" data-m6="89.000đ" data-m12="79.000đ">89.000đ</span>
+          <span class="mb-1 text-base text-muted-foreground line-through decoration-red-400/60" data-anchor data-a1="159.000đ" data-a6="99.000đ" data-a12="99.000đ">99.000đ</span>
+        </div>
+        <p class="mt-1 text-xs text-muted-foreground">/ video 30s · <span data-term-suffix>cam kết 6 tháng</span></p>
+        <ul class="mt-6 flex-1 space-y-3 text-sm text-foreground/80">
+          <li class="flex gap-2"><span class="text-accent">✓</span> Model AI Core — <span class="text-foreground/90">Veo 3 Quality</span></li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> Kịch bản AI &amp; storyboard theo thương hiệu</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> Góc quay &amp; chuyển động tiêu chuẩn</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> Bản quyền thương mại tiêu chuẩn</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> Chứng từ bản điện tử</li>
+        </ul>
+        <a href="#lead-magnet" class="btn btn-ghost mt-8 w-full" data-cta="consult" data-plan="co-ban" data-track="ClickBasicOffer">Nhận 3 Video Demo Miễn Phí</a>
+      </article>
+
+      <!-- GÓI NÂNG CAO (Cinematic AI) — highlight -->
+      <div class="relative flex" data-reveal>
+        <span class="absolute -top-3 left-8 z-10 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground shadow-md">Đề xuất cho Brand &amp; Agency</span>
+        <article class="surface glow-card flex w-full flex-col p-8 ring-1 ring-primary/40">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display text-xl font-semibold text-white">Gói Nâng Cao</h3>
+            <span class="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs text-accent">Cinematic AI</span>
+          </div>
+          <p class="mt-2 text-sm text-muted-foreground">Phù hợp: thương hiệu &amp; agency chạy ads liên tục, cần chất lượng điện ảnh.</p>
+          <div class="mt-6 flex items-end gap-2">
+            <span class="font-display text-4xl font-bold text-white" data-price data-m1="289.000đ" data-m6="269.000đ" data-m12="249.000đ">269.000đ</span>
+            <span class="mb-1 text-base text-muted-foreground line-through decoration-red-400/60" data-anchor data-a1="399.000đ" data-a6="289.000đ" data-a12="289.000đ">289.000đ</span>
+          </div>
+          <p class="mt-1 text-xs text-muted-foreground">/ video 30s · <span data-term-suffix>cam kết 6 tháng</span></p>
+          <ul class="mt-6 flex-1 space-y-3 text-sm text-foreground/80">
+            <li class="flex gap-2"><span class="text-accent">✓</span> Siêu mô hình <span class="text-foreground/90">Seedance 2.0 &amp; Omni</span></li>
+            <li class="flex gap-2"><span class="text-accent">✓</span> Góc quay chuyên nghiệp độc quyền cinAI</li>
+            <li class="flex gap-2"><span class="text-accent">✓</span> Bảo vệ nhãn hiệu từ Bytedance (hợp đồng trực tiếp)</li>
+            <li class="flex gap-2"><span class="text-accent">✓</span> Xuất hóa đơn GTGT công ty đầy đủ</li>
+            <li class="flex gap-2"><span class="text-accent">✓</span> Trọn bộ tính năng gói Cơ Bản</li>
+          </ul>
+          <a href="#lead-magnet" class="btn btn-primary mt-8 w-full" data-cta="consult" data-plan="nang-cao" data-track="ClickProOffer">Nhận 3 Video Demo Miễn Phí</a>
+        </article>
+      </div>
+    </div>
+
+    <!-- ưu đãi khối lượng -->
+    <div class="mx-auto mt-12 max-w-5xl" data-reveal>
+      <p class="text-center text-sm font-semibold uppercase tracking-wider text-accent">Ưu đãi khối lượng — mua càng nhiều, tặng càng sâu</p>
+      <div class="mt-6 grid gap-4 sm:grid-cols-3" data-stagger>
+        <div class="surface flex flex-col gap-2 p-6 text-center" data-reveal>
+          <span class="text-xs uppercase tracking-wide text-muted-foreground">Starter · SME</span>
+          <span class="font-display text-2xl font-bold text-white">Mua 12 tặng 3</span>
+          <span class="text-sm text-accent">= 15 video / tháng</span>
+        </div>
+        <div class="surface relative flex flex-col gap-2 p-6 text-center ring-1 ring-primary/40" data-reveal>
+          <span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground shadow-md">Khuyên dùng</span>
+          <span class="text-xs uppercase tracking-wide text-muted-foreground">Pro · Brand / Agency</span>
+          <span class="font-display text-2xl font-bold text-white">Mua 25 tặng 5</span>
+          <span class="text-sm text-accent">= 30 video / tháng</span>
+        </div>
+        <div class="surface flex flex-col gap-2 p-6 text-center" data-reveal>
+          <span class="text-xs uppercase tracking-wide text-muted-foreground">Unlimited · Franchise / E-com</span>
+          <span class="font-display text-2xl font-bold text-white">Mua 50 tặng 10</span>
+          <span class="text-sm text-accent">= 60 video / tháng</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="mx-auto mt-8 max-w-2xl text-center text-xs text-muted-foreground">Bạn duyệt kịch bản &amp; storyboard <span class="text-foreground/80">trước khi sản xuất</span> · Gói Nâng Cao xuất hóa đơn GTGT đầy đủ · Báo giá chi tiết theo nhu cầu khi đăng ký demo.</p>
+
+  </section>
+
+  <!-- ══════════════ 10a RISK REVERSAL ══════════════ -->
+  <section class="container-2xl px-4 pb-4" data-reveal>
+    <div class="mx-auto grid max-w-5xl gap-4 rounded-2xl border border-border/60 bg-card/40 p-6 sm:grid-cols-3 sm:p-8" data-stagger>
+      <div class="flex items-start gap-3" data-reveal>
+        <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-accent"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        <div><h4 class="text-sm font-semibold text-white">Duyệt trước khi sản xuất</h4><p class="mt-1 text-xs text-muted-foreground">Bạn xem &amp; chốt kịch bản, storyboard trước — không lo "sản phẩm khác mô tả".</p></div>
+      </div>
+      <div class="flex items-start gap-3" data-reveal>
+        <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-accent"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h12l4 4v12a0 0 0 0 1 0 0H4a0 0 0 0 1 0 0z"/><path d="M8 12h8M8 16h5"/></svg></span>
+        <div><h4 class="text-sm font-semibold text-white">Hóa đơn GTGT đầy đủ</h4><p class="mt-1 text-xs text-muted-foreground">Gói Nâng Cao xuất hóa đơn công ty — hợp lệ cho chi phí marketing doanh nghiệp.</p></div>
+      </div>
+      <div class="flex items-start gap-3" data-reveal>
+        <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-accent"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        <div><h4 class="text-sm font-semibold text-white">Bản quyền thương mại</h4><p class="mt-1 text-xs text-muted-foreground">Video an toàn chạy ads; gói Cinematic có bảo vệ nhãn hiệu từ Bytedance (hợp đồng trực tiếp).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 10b LEAD MAGNET FORM ══════════════ -->
+  <section id="lead-magnet" class="container-2xl px-4 py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <!-- left: form -->
+      <div>
+        <span class="eyebrow">Bắt đầu hôm nay</span>
+        <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.5rem)] font-semibold leading-tight text-white">Bắt đầu số hóa workflow sản xuất video của bạn.</h2>
+        <p class="mt-4 max-w-md text-muted-foreground">Để lại thông tin — CinBase liên hệ trong 24h để book demo trực tiếp trên nền tảng cinAI.tv và gửi báo giá theo nhu cầu. Hoàn toàn miễn phí, không ràng buộc.</p>
+        <form class="mt-7 max-w-md space-y-3" data-lead-form data-webhook="{{N8N_WEBHOOK}}" novalidate>
+          <div data-lead-fields class="space-y-3">
+            <input class="lead-field" type="email" name="email" autocomplete="email" placeholder="email@congty.com" required aria-label="Email công ty" />
+            <select class="lead-field" name="industry" required aria-label="Lĩnh vực">
+              <option value="" disabled selected>Lĩnh vực của doanh nghiệp</option>
+              <option value="thuong-mai">Thương mại / Bán lẻ</option>
+              <option value="san-xuat">Sản xuất</option>
+              <option value="dich-vu">Dịch vụ</option>
+              <option value="fnb">F&amp;B / Nhà hàng</option>
+              <option value="bat-dong-san">Bất động sản</option>
+              <option value="giao-duc">Giáo dục / Đào tạo</option>
+              <option value="agency">Agency / Marketing</option>
+              <option value="other">Khác</option>
+            </select>
+            <select class="lead-field" name="goal" required aria-label="Loại video cần làm">
+              <option value="" disabled selected>Loại video bạn cần</option>
+              <option value="tvc">TVC quảng cáo 15–30s</option>
+              <option value="ban-hang">Video bán hàng / sản phẩm</option>
+              <option value="social">Video social (TikTok / Reels)</option>
+              <option value="thuong-hieu">Phim giới thiệu doanh nghiệp</option>
+              <option value="dao-tao">Video đào tạo nội bộ</option>
+              <option value="combo">Combo số lượng lớn theo tháng</option>
+              <option value="chua-ro">Chưa rõ — cần tư vấn</option>
+            </select>
+            <button type="submit" class="btn btn-primary w-full" data-cta="consult" data-track="LeadSubmit">Nhận 3 Video Demo Miễn Phí →</button>
+            <p class="text-xs text-muted-foreground">Hoặc gọi trực tiếp Hotline <span class="text-foreground/80">1900-8888</span> · Thông tin chỉ dùng để tư vấn — không spam, không chia sẻ cho bên thứ ba.</p>
+          </div>
+          <div data-lead-success hidden class="rounded-xl border border-primary/40 bg-primary/10 p-5 text-sm text-foreground">
+            ✓ Đã nhận yêu cầu! CinBase sẽ gửi báo giá + kịch bản mẫu trong vòng 24h.
+          </div>
+        </form>
+      </div>
+      <!-- right: preview Input → Workflow → Output -->
+      <div class="surface glow-card p-6 sm:p-8" data-reveal>
+        <p class="text-xs font-semibold uppercase tracking-wider text-accent">Hành trình một video</p>
+        <div class="mt-5 space-y-3">
+          <div class="rounded-xl border border-border bg-background/50 p-4"><span class="text-xs uppercase tracking-wide text-muted-foreground">Bạn gửi</span><p class="mt-1 text-sm text-white">Brief ngắn + ảnh/thông tin sản phẩm</p></div>
+          <div class="flex justify-center text-accent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+          <div class="rounded-xl border border-border bg-background/50 p-4"><span class="text-xs uppercase tracking-wide text-muted-foreground">CinBase sản xuất</span><p class="mt-1 text-sm text-white">Kịch bản → voice-over → dựng cảnh AI → nhạc &amp; hiệu ứng</p></div>
+          <div class="flex justify-center text-accent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+          <div class="rounded-xl border border-primary/40 bg-primary/10 p-4"><span class="text-xs uppercase tracking-wide text-accent">Bạn nhận</span><p class="mt-1 text-sm text-white">TVC 30s hoàn chỉnh + biến thể đúng tỉ lệ từng nền tảng</p></div>
+        </div>
+        <div class="mt-5 grid grid-cols-3 gap-2">
+          <img src="assets/cinai/out-kinetic.webp" alt="" loading="lazy" class="aspect-square w-full rounded-lg object-cover" />
+          <img src="assets/cinai/out-toycity.jpg" alt="" loading="lazy" class="aspect-square w-full rounded-lg object-cover" />
+          <img src="assets/cinai/out-game.png" alt="" loading="lazy" class="aspect-square w-full rounded-lg object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 11 FAQ ══════════════ -->
+  <section id="faq" class="container-2xl px-4 py-16 sm:py-24 md:py-32">
+    <div class="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+      <!-- trái: heading + CTA (không ảnh) -->
+      <div data-reveal>
+        <span class="eyebrow">Hỏi đáp</span>
+        <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold leading-tight text-white">Câu hỏi trước khi bắt đầu</h2>
+        <p class="mt-4 max-w-md text-muted-foreground">Giải đáp nhanh về giá gói, thời gian sản xuất, bản quyền và cách bắt đầu.</p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="#lead-magnet" class="btn btn-primary" data-cta="consult" data-track="ClickFaqConsult">Nhận Báo Giá TVC</a>
+          <a href="#pricing" class="btn btn-ghost" data-cta="pricing">Xem Bảng Giá</a>
+        </div>
+      </div>
+      <!-- phải: accordion -->
+      <div class="flex flex-col gap-4" data-faq>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">Giá video tính như thế nào?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Giá tính trên mỗi video 30s theo thời gian cam kết — càng dài càng rẻ. Gói Cơ Bản (Core AI): 99.000đ (1 tháng) · 89.000đ (6 tháng) · 79.000đ (12 tháng). Gói Nâng Cao (Cinematic AI): 289.000đ · 269.000đ · 249.000đ tương ứng. Đặt khối lượng lớn còn được tặng thêm video (mua 12 tặng 3, mua 25 tặng 5, mua 50 tặng 10).</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">Một video mất bao lâu?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Gói Cơ Bản (Core AI) và Nâng Cao (Cinematic AI) thường bàn giao trong vài ngày làm việc sau khi duyệt kịch bản. Đặt khối lượng lớn theo tháng được sản xuất theo lịch hàng tuần để đảm bảo tiến độ chạy ads liên tục.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">Có được duyệt kịch bản và yêu cầu chỉnh sửa không?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Có. Bạn duyệt kịch bản + storyboard trước khi sản xuất, và duyệt bản nháp trước khi bàn giao. Mỗi gói có số vòng chỉnh sửa tương ứng — chỉnh nội dung lớn sau khi đã duyệt kịch bản sẽ tính như video mới.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">Tôi chỉ có ảnh sản phẩm, không có footage quay sẵn?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Không sao — đó chính là thế mạnh của pipeline AI. Chỉ cần brief ngắn + ảnh sản phẩm (hoặc mô tả), chúng tôi dựng cảnh bằng Veo/Kling/Seedance: bối cảnh, chuyển động, ánh sáng đều tạo bằng AI, không cần đoàn quay.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">Nhạc và giọng đọc có bản quyền không?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Gói Nâng Cao (Cinematic AI) dùng nhạc bản quyền và bảo vệ nhãn hiệu từ Bytedance (hợp đồng trực tiếp), an toàn khi chạy quảng cáo và đăng đa nền tảng. Voice-over AI được cấp phép sử dụng thương mại; xuất hóa đơn GTGT đầy đủ cho doanh nghiệp.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">CinBase làm được những loại video nào?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">TVC quảng cáo 15–30s, video bán hàng/sản phẩm, video social (TikTok/Reels), phim giới thiệu doanh nghiệp và video đào tạo nội bộ — đầy đủ kịch bản, voice-over, nhạc và hiệu ứng theo gói.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">Video AI có dùng chạy quảng cáo được không?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Được — video bàn giao đạt chuẩn chạy ads trên Meta, TikTok và YouTube, xuất đúng tỉ lệ khung hình từng kênh (16:9, 9:16, 1:1). Nhiều khách đặt combo để có nhiều biến thể test quảng cáo cùng lúc.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">Đặt số lượng lớn có ưu đãi gì?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Có 3 mức ưu đãi khối lượng theo tháng: Starter mua 12 tặng 3 (15 video/tháng), Pro mua 25 tặng 5 (30 video/tháng — phù hợp brand/agency chạy ads liên tục), Unlimited mua 50 tặng 10 (60 video/tháng cho chuỗi/e-commerce). Kết hợp với cam kết dài hạn để có giá/video thấp nhất.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">Bắt đầu như thế nào?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Điền form phía trên với lĩnh vực và loại video bạn cần. Trong 24h, CinBase gửi báo giá chi tiết kèm kịch bản mẫu — duyệt là sản xuất ngay, không ràng buộc trước khi bạn đồng ý.</div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 12 CTA READY TO BUILD ══════════════ -->
+  <section class="px-2 py-16 sm:py-24" data-reveal="scale">
+    <div class="container-2xl px-2">
+      <div class="relative overflow-hidden rounded-3xl border border-border px-6 py-16 sm:px-10 md:px-14 md:py-20">
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0"><video class="h-full w-full object-cover opacity-40" poster="assets/cinai/out-kinetic.webp" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-2.mp4" type="video/mp4"/></video><div class="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/30"></div></div>
+        <div class="relative z-10 max-w-xl">
+          <span class="eyebrow">Sẵn sàng lên sóng?</span>
+          <h3 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold leading-tight text-white">Bắt đầu số hóa workflow sản xuất video ngay hôm nay</h3>
+          <p class="mt-4 text-muted-foreground">Book demo trực tiếp trên nền tảng cinAI.tv, nhận báo giá theo nhu cầu. Từ 79.000đ/video 30s khi cam kết dài hạn — chuẩn chạy ads Meta, TikTok, YouTube.</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#lead-magnet" class="btn btn-primary" data-cta="consult" data-track="ClickFinalCTA" data-cta-type="hot">Nhận 3 Video Demo Miễn Phí</a>
+            <a href="#pricing" class="btn btn-ghost" data-cta="pricing" data-track="ClickFinalCTA" data-cta-type="cold">Xem Bảng Giá</a>
+          </div>
+          <p class="mt-5 text-sm text-muted-foreground">Hotline <span class="font-semibold text-foreground/90">1900-8888</span> · <span class="text-foreground/80">hello@cinai.tv</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 13 MARQUEE STRIP (full-width) ══════════════ -->
+  <section class="px-2 py-10 sm:py-14" aria-hidden="true">
+    <div class="relative overflow-hidden rounded-2xl border border-border/40 bg-card/70 py-4 sm:py-5">
+      <div class="pointer-events-none absolute inset-0"><div class="absolute left-1/2 top-1/2 h-44 w-[38rem] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/20 blur-[130px]"></div></div>
+      <div class="marquee relative z-10" style="--gap:1.5rem;--speed:30s">
+        <div class="marquee__track">
+          <span class="marquee-text">CinBase — TVC &amp; Video AI Marketing cho doanh nghiệp</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+          <span class="marquee-text">CinBase — TVC &amp; Video AI Marketing cho doanh nghiệp</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+          <span class="marquee-text">CinBase — TVC &amp; Video AI Marketing cho doanh nghiệp</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+          <span class="marquee-text">CinBase — TVC &amp; Video AI Marketing cho doanh nghiệp</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+        </div>
+        <div class="marquee__track" aria-hidden="true">
+          <span class="marquee-text">CinBase — TVC &amp; Video AI Marketing cho doanh nghiệp</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+          <span class="marquee-text">CinBase — TVC &amp; Video AI Marketing cho doanh nghiệp</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+          <span class="marquee-text">CinBase — TVC &amp; Video AI Marketing cho doanh nghiệp</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+          <span class="marquee-text">CinBase — TVC &amp; Video AI Marketing cho doanh nghiệp</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- ══════════════ 14 FOOTER ══════════════ -->
+  <footer class="relative overflow-hidden border-t border-border/40 bg-bg-elevated">
+    <!-- top: heading + CTA căn giữa -->
+    <div class="container-2xl px-4 py-20 text-center lg:py-28" data-reveal>
+      <h2 class="mx-auto max-w-3xl font-display text-[clamp(2rem,1.2rem+3vw,3.25rem)] font-semibold text-white">Chiến dịch video tiếp theo bắt đầu tại đây.</h2>
+      <p class="mx-auto mt-4 max-w-xl text-muted-foreground">TVC, video bán hàng, video social — sản xuất trên nền tảng cinAI.tv OS, từ 79.000đ/video 30s khi cam kết dài hạn. Book demo trực tiếp.</p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="#lead-magnet" class="btn btn-primary" data-cta="consult" data-track="ClickFooterCTA">Nhận Báo Giá TVC
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#pricing" class="btn btn-ghost" data-cta="pricing" data-track="ClickFooterCTA">Xem Bảng Giá</a>
+      </div>
+    </div>
+
+    <!-- grid cột: brand + 5 cột link -->
+    <div class="container-2xl px-4 pb-10">
+      <div class="grid grid-cols-2 gap-8 md:grid-cols-7 lg:gap-12">
+        <!-- brand (span 2) -->
+        <div class="col-span-2">
+          <a href="#top" class="flex items-center" aria-label="CinBase">
+            <img src="assets/cinbase/cinbase-logo.svg" alt="" class="h-8 w-8" />
+            <span class="font-display text-xl font-bold leading-none tracking-tight -ml-0.5"><span class="text-[#5BB8F5]">in</span><span class="text-[#A78BFA]">Base</span></span>
+          </a>
+          <p class="mt-4 max-w-xs text-sm text-muted-foreground">Sản xuất TVC &amp; Video AI Marketing cho doanh nghiệp — vận hành trên nền tảng cinAI.tv OS. Từ 79.000đ/video 30s khi cam kết dài hạn.</p>
+          <div class="mt-5 flex items-center gap-3">
+            <a href="#" aria-label="Instagram" class="footer-social"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="#" aria-label="Facebook" class="footer-social"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3a4 4 0 0 0-4 4v2H7v3h3v6h3v-6h3l1-3h-4v-2a1 1 0 0 1 1-1z"/></svg></a>
+            <a href="#" aria-label="Reddit" class="footer-social"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 11.8a2 2 0 0 0-3.4-1.4 9.9 9.9 0 0 0-5-1.4l.9-4 2.8.6a1.5 1.5 0 1 0 .2-1l-3.3-.7-1.2 5.1a9.9 9.9 0 0 0-5 1.4 2 2 0 1 0-2.2 3.3 4 4 0 0 0 0 .7c0 2.8 3.1 5 7 5s7-2.2 7-5a4 4 0 0 0 0-.7 2 2 0 0 0 1.4-1.9zM8.5 13a1.2 1.2 0 1 1 1.2 1.2A1.2 1.2 0 0 1 8.5 13zm6.8 3.4a4.7 4.7 0 0 1-3.3 1 4.7 4.7 0 0 1-3.3-1 .4.4 0 0 1 .6-.6 4 4 0 0 0 2.7.8 4 4 0 0 0 2.7-.8.4.4 0 1 1 .6.6zm-.5-2.2a1.2 1.2 0 1 1 1.2-1.2 1.2 1.2 0 0 1-1.2 1.2z"/></svg></a>
+            <a href="#" aria-label="X" class="footer-social"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 3h3l-7.5 8.6L22 21h-6.3l-4.9-6.4L5 21H2l8-9.2L2 3h6.4l4.5 5.9zm-1.1 16h1.7L7.2 4.8H5.4z"/></svg></a>
+          </div>
+        </div>
+        <div><h4 class="font-display text-sm font-semibold text-white">Gói video</h4><ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+          <li><a href="#pricing" class="transition hover:text-foreground">Gói Cơ Bản — Core AI</a></li><li><a href="#pricing" class="transition hover:text-foreground">Gói Nâng Cao — Cinematic AI</a></li><li><a href="#pricing" class="transition hover:text-foreground">Ưu đãi khối lượng</a></li><li><a href="#pricing" class="transition hover:text-foreground">Cam kết 1 / 6 / 12 tháng</a></li></ul></div>
+        <div><h4 class="font-display text-sm font-semibold text-white">Ngành nghề</h4><ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+          <li><a href="#use-cases" class="transition hover:text-foreground">E-commerce &amp; Bán lẻ</a></li><li><a href="#use-cases" class="transition hover:text-foreground">F&amp;B &amp; Nhà hàng</a></li><li><a href="#use-cases" class="transition hover:text-foreground">Bất động sản</a></li><li><a href="#use-cases" class="transition hover:text-foreground">Mỹ phẩm &amp; Làm đẹp</a></li><li><a href="#use-cases" class="transition hover:text-foreground">Giáo dục &amp; Đào tạo</a></li></ul></div>
+        <div><h4 class="font-display text-sm font-semibold text-white">Hệ sinh thái</h4><ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+          <li><a href="#process" class="transition hover:text-foreground">Quy trình sản xuất</a></li><li><a href="{{BASE_LP_URL}}" class="transition hover:text-foreground">Base / Lark ↗</a></li><li><a href="{{N8N_LP_URL}}" class="transition hover:text-foreground">n8n Automation ↗</a></li><li><a href="#" class="transition hover:text-foreground">Blog</a></li></ul></div>
+        <div><h4 class="font-display text-sm font-semibold text-white">Hỗ trợ</h4><ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+          <li><a href="#faq" class="transition hover:text-foreground">Hỏi đáp</a></li><li><a href="tel:19008888" class="transition hover:text-foreground">Hotline 1900-8888</a></li><li><a href="mailto:hello@cinai.tv" class="transition hover:text-foreground">hello@cinai.tv</a></li></ul></div>
+        <div><h4 class="font-display text-sm font-semibold text-white">Pháp lý</h4><ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+          <li><a href="#" class="transition hover:text-foreground">Chính sách bảo mật</a></li><li><a href="#" class="transition hover:text-foreground">Điều khoản dịch vụ</a></li></ul></div>
+      </div>
+      <div class="mt-12 border-t border-border/40 pt-6 text-sm text-muted-foreground">© 2026 CinBase — vận hành trên nền tảng cinAI.tv OS. Bảo lưu mọi quyền. · Giá tính trên video 30s theo thời gian cam kết, báo giá chính xác theo nhu cầu.</div>
+    </div>
+    <div class="watermark select-none px-2 text-center text-[clamp(4rem,20vw,18rem)] leading-[.8] -mt-4">CINBASE</div>
+  </footer>
+
+  <!-- ══════════════ 99 CHAT WIDGET (placeholder) ══════════════ -->
+  <button id="chat-widget" aria-label="Open chat" class="fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-primary text-primary-foreground shadow-xl transition hover:scale-105">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  </button>
+
+  <script src="scripts/main.js" defer></script>
+</body>
+</html>

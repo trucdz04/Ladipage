@@ -1,0 +1,73 @@
+<section class="section bg-white roi" data-roi>
+  <div class="container container-narrow" style="text-align:center">
+    <div class="roi-badge reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+      <span>ROI Calculator</span>
+    </div>
+    <h2 class="reveal" style="font-size:var(--text-h2);margin-top:.5rem">How Much Could You Be Making?</h2>
+    <p class="reveal lead-muted" style="margin-top:1rem">Drag the sliders. See the math. Then decide if it's worth it.</p>
+  </div>
+
+  <div class="container roi-card reveal">
+    <div class="roi-controls">
+      <label class="roi-field">
+        <span class="roi-label">Videos per day <b data-out-videos-val>1</b></span>
+        <input type="range" data-roi-videos min="1" max="3" step="1" value="1" />
+        <span class="roi-scale"><i>1/day</i><i>2/day</i><i>3/day</i></span>
+      </label>
+      <label class="roi-field">
+        <span class="roi-label">Average views per video <b data-out-views-val>1.0K</b></span>
+        <input type="range" data-roi-views min="1000" max="50000" step="1000" value="1000" />
+        <span class="roi-scale"><i>1K</i><i>25K</i><i>50K</i></span>
+      </label>
+      <label class="roi-field">
+        <span class="roi-label">Viewer-to-buyer rate <b data-out-rate-val>0.1%</b></span>
+        <input type="range" data-roi-rate min="0.1" max="0.5" step="0.05" value="0.1" />
+        <span class="roi-scale"><i>0.1% (conservative)</i><i>0.3%</i><i>0.5%</i></span>
+      </label>
+      <label class="roi-field">
+        <span class="roi-label">Product / commission value <b data-out-value-val>$30</b></span>
+        <input type="range" data-roi-value min="10" max="200" step="5" value="30" />
+        <span class="roi-scale"><i>$10</i><i>$100</i><i>$200</i></span>
+      </label>
+    </div>
+
+    <div class="roi-panel">
+      <div class="roi-metrics">
+        <div><span class="roi-metric-label">Monthly Videos</span><span class="roi-metric-val" data-out-monthly-videos>30</span></div>
+        <div><span class="roi-metric-label">Total Views</span><span class="roi-metric-val" data-out-total-views>30K</span></div>
+        <div><span class="roi-metric-label">Est. Sales</span><span class="roi-metric-val" data-out-est-sales>30</span></div>
+      </div>
+
+      <div class="roi-rule"></div>
+
+      <div class="roi-revenue">
+        <span class="roi-rev-label">Your estimated monthly revenue</span>
+        <span class="roi-rev-num" data-out-revenue>$900/mo</span>
+        <span class="roi-rev-sub">From a $29/month investment</span>
+        <span class="roi-roi" data-out-roi>31.03x return on your investment. 🔥</span>
+      </div>
+
+      <div class="roi-compare">
+        <div class="roi-compare-row"><span>AutoClips cost</span><span>Your revenue</span></div>
+        <div class="roi-compare-bar"><i class="roi-bar-cost" data-bar-cost></i><i class="roi-bar-rev" data-bar-rev></i></div>
+        <div class="roi-compare-row roi-compare-vals"><span>$29</span><span class="is-green" data-out-rev-plain>$900</span></div>
+      </div>
+
+      <div class="roi-mini">
+        <div class="roi-mini-card"><span class="roi-mini-lbl">Cost per video</span><span class="roi-mini-val" data-out-cpv>$0.97</span></div>
+        <div class="roi-mini-card"><span class="roi-mini-lbl">Profit margin</span><span class="roi-mini-val" data-out-margin>97%</span></div>
+      </div>
+    </div>
+
+    <p class="roi-foot">* Viewer-to-buyer rate = % of viewers who end up purchasing. Industry average for social commerce is 0.1-0.5%.</p>
+  </div>
+
+  <div class="container roi-close reveal">
+    <p class="roi-close-text">Even at the absolute minimum — that's a 10x+ return.<br>That's not a subscription. That's an investment.</p>
+    <a href="https://app.autoclips.app/login" class="btn btn-accent btn-lg roi-close-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Start Making Money Now
+    </a>
+  </div>
+</section>

@@ -1,0 +1,190 @@
+/* cinai-override.css — Rebrand layer: ToonBee amber → CinAI dark luxury
+   Load sau tokens.css và style.css để override đúng chỗ.
+   Giữ nguyên layout/structure; chỉ đổi màu brand và font. */
+
+/* ─── Font remapping ──────────────────────────────────────────── */
+/* Body: Outfit → Inter */
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  background-color: #09090b;
+  color: #f4f4f5;
+}
+
+/* Display/heading font classes → Plus Jakarta Sans */
+.syne, .zalando, .wendy {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Handwritten/serif accent → Instrument Serif */
+.gochihand, .merriweather {
+  font-family: "Instrument Serif", Georgia, serif !important;
+  font-style: italic;
+}
+
+/* .outfit stays → Inter (already handled by body) */
+.outfit {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* ─── Amber → CinAI gold color overrides ─────────────────────── */
+
+/* CTA buttons: amber gradient → CinAI gold gradient */
+.mybutton1 a,
+.mybutton1-orange a,
+.mybutton2 a,
+.btn-link a,
+.getlink {
+  background: linear-gradient(180deg, #c4a87a 0%, #e0c9a6 51%, #ffd277 100%) !important;
+  color: #09090b !important;
+  border-color: transparent !important;
+}
+.mybutton1 a:hover,
+.mybutton1-orange a:hover,
+.mybutton2 a:hover,
+.btn-link a:hover {
+  background: linear-gradient(180deg, #b89868 0%, #d4b890 51%, #edc266 100%) !important;
+}
+
+/* Nav CTA */
+a.getlink, a.getlink:hover {
+  background: var(--gradient-gold) !important;
+  color: #09090b !important;
+}
+
+/* Headline highlight spans (inline color #ffd21d / gold) */
+span[style*="#ffd21d"], span[style*="#FFD21D"],
+span[style*="#fed45e"], span[style*="#FED45E"] {
+  color: #e0c9a6 !important;
+}
+
+/* Accent color inline styles using ToonBee amber */
+[style*="#FFBF21"], [style*="#FFD71D"], [style*="#FFAC25"],
+[style*="#ffbf21"], [style*="#ffd71d"], [style*="#ffac25"] {
+  color: #e0c9a6 !important;
+}
+
+/* Badge/pill accent backgrounds */
+.most-title,
+.perfect-for-badge,
+.made-with-badge,
+.banner-pre-subheadline span.w600,
+.section15-cta-emphasis {
+  background: var(--gradient-gold) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: #e0c9a6 !important;
+}
+
+/* Glow animation → CinAI gold glow */
+.glow {
+  box-shadow: 0 0 12px 2px rgba(224,201,166,0.35), 0 0 4px 1px rgba(255,210,119,0.20) !important;
+  animation: cinai-pulse-glow 1.4s infinite alternate !important;
+}
+@keyframes cinai-pulse-glow {
+  0%  { box-shadow: 0 0 7px 1px rgba(224,201,166,0.25), 0 0 2px 0.5px rgba(255,210,119,0.15); }
+  100%{ box-shadow: 0 0 18px 5px rgba(224,201,166,0.45), 0 0 8px 2px rgba(255,210,119,0.30); }
+}
+
+/* Inline red/danger urgency text → CinAI muted red (unchanged, just ensure readable) */
+span[style*="#da3131"], span[style*="#DA3131"] {
+  color: #f87171 !important;
+}
+span[style*="#258f16"], span[style*="#258F16"] {
+  color: #4ade80 !important;
+}
+/* "81% OFF" emphasis → keep green */
+.section15 h3 span[style*="color"] { /* handled above */ }
+
+/* ─── Section backgrounds: light → CinAI dark luxury ─────────── */
+
+/* Sections that previously had white/cream bg */
+.section2,
+.section6,
+.section7,
+.section8,
+.section9,
+.section10,
+.section11,
+.section12 .table-box,
+.section14,
+.faq-section {
+  background-color: #09090b;
+}
+
+/* Light-on-dark text fix for affected sections */
+.section2 p, .section2 h1, .section2 h2, .section2 h3, .section2 h4,
+.section6 p, .section6 h1, .section6 h2, .section6 h3, .section6 h4,
+.section8 p, .section8 h1, .section8 h2, .section8 h3, .section8 h4,
+.section9 p, .section9 h1, .section9 h2, .section9 h3, .section9 h4,
+.section10 p, .section10 h1, .section10 h2, .section10 h3, .section10 h4,
+.section11 p, .section11 h1, .section11 h2, .section11 h3, .section11 h4 {
+  color: #f4f4f5;
+}
+
+/* Dark text on specific elements that should stay dark (on gold bg) */
+.table-box-inn h1, .table-box-inn h2, .table-box-inn p,
+.table-box-inn ul li {
+  color: #09090b !important;
+}
+
+/* Pricing card stays light bg (contrast card) */
+.table-box-inn {
+  background: linear-gradient(135deg, #e0c9a6 0%, #ffd277 100%) !important;
+  border-radius: 20px !important;
+}
+
+/* ─── Logo: ensure SVG renders at proper size ─────────────────── */
+.banner-logo-img,
+.footer-logo {
+  max-height: 52px;
+  width: auto;
+  filter: brightness(0) invert(1); /* white on dark hero bg */
+}
+
+/* Footer logo: white */
+.footer-logo {
+  max-height: 40px;
+  filter: brightness(0) invert(1);
+}
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.site-footer {
+  background-color: #09090b !important;
+  border-top: 1px solid rgba(224,201,166,0.15);
+}
+.site-footer .footer-disclaimer,
+.site-footer .footer-copyright,
+.site-footer .footer-links a {
+  color: #909096 !important;
+}
+.site-footer .footer-links a:hover {
+  color: #e0c9a6 !important;
+}
+
+/* ─── Section3 video box ──────────────────────────────────────── */
+.video-box {
+  background-color: #18181b !important;
+  border: 1px solid rgba(224,201,166,0.12) !important;
+}
+
+/* ─── Accordion ───────────────────────────────────────────────── */
+.accordion_head {
+  color: #f4f4f5 !important;
+  border-bottom-color: rgba(224,201,166,0.15) !important;
+}
+.accordion_body p {
+  color: #d4d4d8 !important;
+}
+
+/* ─── Nav bar override ────────────────────────────────────────── */
+.main-nav {
+  background: rgba(9,9,11,0.95) !important;
+  backdrop-filter: blur(12px);
+}
+.nav-link-inn {
+  color: #d4d4d8 !important;
+}
+.nav-link-inn:hover {
+  color: #e0c9a6 !important;
+}

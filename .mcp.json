@@ -25,7 +25,21 @@
       "env": {
         "MCP_MODE": "stdio",
         "LOG_LEVEL": "error",
-        "DISABLE_CONSOLE_OUTPUT": "true"
+        "DISABLE_CONSOLE_OUTPUT": "true",
+        "N8N_API_URL": "${N8N_API_URL}",
+        "N8N_API_KEY": "${N8N_API_KEY}"
+      }
+    },
+    "meta-ads": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@mikusnuz/meta-ads-mcp"],
+      "env": {
+        "META_ADS_ACCESS_TOKEN": "${META_ADS_ACCESS_TOKEN}",
+        "META_AD_ACCOUNT_ID": "${META_AD_ACCOUNT_ID}",
+        "META_APP_ID": "${META_APP_ID}",
+        "META_APP_SECRET": "${META_APP_SECRET}",
+        "META_BUSINESS_ID": "${META_BUSINESS_ID}",
+        "META_PIXEL_ID": "${META_PIXEL_ID}"
       }
     },
     "lark": {

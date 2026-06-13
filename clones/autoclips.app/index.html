@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autoclips — Generate Viral Shorts with AI (clone)</title>
+  <meta name="description" content="Autoclips is an AI video generator that creates Character Explainer, 3D animated, and faceless narration videos for YouTube Shorts, TikTok, and Instagram Reels. Join 40,000+ creators." />
+  <meta property="og:title" content="Autoclips - Generate Viral TikToks with AI" />
+  <meta property="og:description" content="Create faceless, trending videos in seconds with Autoclips. Join 40,000+ content creators." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Play CDN (clone dùng để tái dụng utility classes của bản gốc) -->
+  <script src="https://cdn.tailwindcss.com?plugins=line-clamp"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { container: false }, // tránh trùng tên với .container tuỳ biến của project
+      theme: {
+        extend: {
+          colors: {
+            accent: { DEFAULT: '#15E49E', 600: '#0FCB8A', soft: '#A7F3D0', ink: '#00110B' },
+            ink: { DEFAULT: '#0A0A0A', 900: '#111827' },
+            surfacealt: '#F9FAFB', mutedbg: '#F3F4F6',
+            dark: '#0F0B17', pinkbg: '#FCF5F8',
+          },
+          fontFamily: { sans: ['Urbanist', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+
+  <!-- Tokens + global -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/global.css" />
+  <link rel="stylesheet" href="styles/sections.css" />
+  <link rel="stylesheet" href="styles/sections-b.css" />
+</head>
+<body class="font-sans text-ink antialiased">
+
+<!-- ===== 00-nav.html ===== -->
+<header data-nav class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo" aria-label="AutoClips home">
+      <span class="nav-logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+          <path d="M12 2l2.2 5.8L20 10l-5.8 2.2L12 18l-2.2-5.8L4 10l5.8-2.2L12 2z" fill="#00110B"/>
+        </svg>
+      </span>
+      <span class="nav-logo-text">Autoclips</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation" data-nav-menu>
+      <a href="/pricing">Pricing</a>
+      <a href="#faqs">FAQs</a>
+      <a href="/roadmap">Roadmap</a>
+      <a href="/changelog">Changelog</a>
+      <div class="nav-mobile-cta">
+        <a href="https://app.autoclips.app/login" class="btn btn-dark" style="width:100%">Login</a>
+        <a href="https://app.autoclips.app/login" class="btn btn-accent" style="width:100%">Get Started For Free</a>
+      </div>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="https://app.autoclips.app/login" class="nav-login">Login</a>
+      <a href="https://app.autoclips.app/login" class="btn btn-accent nav-cta">Get Started For Free</a>
+      <button class="nav-burger" data-nav-toggle aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 01-hero.html ===== -->
+<section class="hero container">
+  <h1>Create Viral Videos with AI</h1>
+  <p class="hero-sub">Create faceless, trending videos in minutes with Autoclips app</p>
+
+  <form class="hero-composer" onsubmit="window.location.href='https://app.autoclips.app/login';return false;">
+    <svg class="hero-composer-icon" viewBox="0 0 28 28" width="26" height="26" fill="currentColor" aria-hidden="true">
+      <path d="M11 3l1.7 4.6L17 9l-4.3 1.4L11 15l-1.7-4.6L5 9l4.3-1.4L11 3z"/>
+      <path d="M19.5 13l1 2.7 2.5.9-2.5.9-1 2.7-1-2.7-2.5-.9 2.5-.9 1-2.7z"/>
+    </svg>
+    <input type="text" placeholder="Your video idea" aria-label="Your video idea" />
+    <button type="submit" class="btn btn-accent hero-composer-btn">Create Video</button>
+  </form>
+
+  <p class="hero-freenote">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    First video is free - No credit card required
+  </p>
+
+  <div class="hero-frame">
+    <video data-lazy data-src="https://www.autoclips.app/autoclips-trailer.mp4"
+      poster="https://www.autoclips.app/video-poster.webp" muted loop playsinline preload="none"></video>
+  </div>
+</section>
+
+<!-- ===== 02-platform.html ===== -->
+<section class="platform">
+  <div class="container" style="text-align:center">
+    <p class="platform-label reveal">Create videos optimized for</p>
+    <div class="platform-logos">
+      <div class="platform-item reveal">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+        <span>TikTok</span>
+      </div>
+      <div class="platform-item reveal">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.1-2.1C19.5 4 12 4 12 4s-7.5 0-9.4.4A3 3 0 0 0 .5 6.5 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.5 3 3 0 0 0 2.1 2.1C4.5 20 12 20 12 20s7.5 0 9.4-.4a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.5zM9.5 15.5v-7l6 3.5z"/></svg>
+        <span>YouTube</span>
+      </div>
+      <div class="platform-item reveal">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58 0 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s0 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58 0-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.16 15.58 2.16 15.2 2.16 12s0-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33 0 7.05.07c-4.35.2-6.78 2.62-6.98 6.98C0 8.33 0 8.74 0 12s0 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 24 8.74 24 12 24s3.67 0 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98C24 15.67 24 15.26 24 12s0-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67 0 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 4-4 4 4 0 0 1-4 4zm6.41-10.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/></svg>
+        <span>Instagram</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 03-stats.html ===== -->
+<section class="stats">
+  <div class="container stats-inner">
+    <div class="stat-item"><div class="stat-num">110,000+</div><div class="stat-label">Videos Created</div></div>
+    <span class="stat-divider"></span>
+    <div class="stat-item"><div class="stat-num">40,000+</div><div class="stat-label">Creators</div></div>
+    <span class="stat-divider"></span>
+    <div class="stat-item"><div class="stat-num">11B+</div><div class="stat-label">Views Generated</div></div>
+  </div>
+</section>
+
+<!-- ===== 04-marquee.html ===== -->
+<section class="niche bg-mutedbg">
+  <div class="container" style="text-align:center">
+    <h2 class="niche-title reveal">Unique videos each time</h2>
+    <p class="niche-sub reveal">Choose a video in any niche</p>
+  </div>
+  <div class="marquee-wrap" aria-label="Video examples across niches">
+    <div class="marquee">
+      <!-- set A (8 tiles) -->
+      <figure class="niche-item">
+        <div class="video-tile niche-tile"><span class="video-views">▶ 83.6k</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/landing-4k-realistic-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/landing-4k-realistic-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: 4K Realistic</figcaption>
+      </figure>
+      <figure class="niche-item">
+        <div class="video-tile niche-tile"><span class="niche-new">NEW</span><span class="video-views">▶ 3.1M</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/talking-objects-2-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/talking-objects-2-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: Talking Objects</figcaption>
+      </figure>
+      <figure class="niche-item">
+        <div class="video-tile niche-tile"><span class="niche-new">NEW</span><span class="video-views">▶ 2.7M</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/the-engraved-watch-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/the-engraved-watch-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: Fruit AI Stories</figcaption>
+      </figure>
+      <figure class="niche-item">
+        <div class="video-tile niche-tile"><span class="niche-new">NEW</span><span class="video-views">▶ 1.2M</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/3d-splinter-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/3d-splinter-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: 3D Animation</figcaption>
+      </figure>
+      <figure class="niche-item">
+        <div class="video-tile niche-tile"><span class="niche-new">NEW</span><span class="video-views">▶ 4.1M</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/creepy-toon-1-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/creepy-toon-1-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: Creepy Toon</figcaption>
+      </figure>
+      <figure class="niche-item">
+        <div class="video-tile niche-tile"><span class="video-views">▶ 162.0k</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/landing-cinematic-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/landing-cinematic-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: Cinematic</figcaption>
+      </figure>
+      <figure class="niche-item">
+        <div class="video-tile niche-tile"><span class="niche-new">NEW</span><span class="video-views">▶ 1.9M</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/the-falling-watermelon-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/the-falling-watermelon-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: Fruit AI Stories</figcaption>
+      </figure>
+      <figure class="niche-item">
+        <div class="video-tile niche-tile"><span class="niche-new">NEW</span><span class="video-views">▶ 892k</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/3d-gym-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/3d-gym-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: 3D Animation</figcaption>
+      </figure>
+
+      <!-- set A' (bản sao y hệt để loop liền mạch) -->
+      <figure class="niche-item" aria-hidden="true">
+        <div class="video-tile niche-tile"><span class="video-views">▶ 83.6k</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/landing-4k-realistic-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/landing-4k-realistic-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: 4K Realistic</figcaption>
+      </figure>
+      <figure class="niche-item" aria-hidden="true">
+        <div class="video-tile niche-tile"><span class="niche-new">NEW</span><span class="video-views">▶ 3.1M</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/talking-objects-2-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/talking-objects-2-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: Talking Objects</figcaption>
+      </figure>
+      <figure class="niche-item" aria-hidden="true">
+        <div class="video-tile niche-tile"><span class="niche-new">NEW</span><span class="video-views">▶ 2.7M</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/the-engraved-watch-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/the-engraved-watch-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: Fruit AI Stories</figcaption>
+      </figure>
+      <figure class="niche-item" aria-hidden="true">
+        <div class="video-tile niche-tile"><span class="niche-new">NEW</span><span class="video-views">▶ 1.2M</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/3d-splinter-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/3d-splinter-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: 3D Animation</figcaption>
+      </figure>
+      <figure class="niche-item" aria-hidden="true">
+        <div class="video-tile niche-tile"><span class="niche-new">NEW</span><span class="video-views">▶ 4.1M</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/creepy-toon-1-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/creepy-toon-1-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: Creepy Toon</figcaption>
+      </figure>
+      <figure class="niche-item" aria-hidden="true">
+        <div class="video-tile niche-tile"><span class="video-views">▶ 162.0k</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/landing-cinematic-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/landing-cinematic-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: Cinematic</figcaption>
+      </figure>
+      <figure class="niche-item" aria-hidden="true">
+        <div class="video-tile niche-tile"><span class="niche-new">NEW</span><span class="video-views">▶ 1.9M</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/the-falling-watermelon-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/the-falling-watermelon-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: Fruit AI Stories</figcaption>
+      </figure>
+      <figure class="niche-item" aria-hidden="true">
+        <div class="video-tile niche-tile"><span class="niche-new">NEW</span><span class="video-views">▶ 892k</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/3d-gym-480p.mp4" poster="https://zayathemes.b-cdn.net/autoclips-videos/videos-carousel/thumbs/3d-gym-480p.jpg" muted loop playsinline preload="none"></video></div>
+        <figcaption class="niche-style">Style: 3D Animation</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 05-what-is.html ===== -->
+<section id="what-is-autoclips" class="section">
+  <div class="container container-narrow" style="text-align:center">
+    <h2 class="reveal whatis-heading">What is Autoclips?</h2>
+    <p class="reveal whatis-lead">
+      Autoclips is an AI video generator that helps you <strong>create viral videos</strong> and <strong>make money</strong> on YouTube,
+      TikTok, and Instagram — without showing your face, without editing skills, and without spending hours
+      on content creation.
+    </p>
+  </div>
+
+  <div class="container whatis-features reveal">
+    <div class="whatis-feat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      <span>Create videos in under 5 minutes</span>
+    </div>
+    <div class="whatis-feat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      <span>Monetize on YouTube, TikTok &amp; Instagram</span>
+    </div>
+    <div class="whatis-feat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      <span>Join 40,000+ creators going viral</span>
+    </div>
+    <div class="whatis-feat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>No camera, no editing skills needed</span>
+    </div>
+  </div>
+
+  <div class="container whatis-grid">
+    <article class="card whatis-card whatis-card-featured reveal">
+      <div class="whatis-iconrow">
+        <div class="whatis-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <span class="whatis-badge">Most Popular</span>
+      </div>
+      <h3>Character Explainer</h3>
+      <p class="whatis-tag">Go viral without showing your face</p>
+      <p class="whatis-desc">Create viral videos with cartoon characters talking over satisfying gameplay. Clone any voice. Perfect for building faceless channels that get millions of views.</p>
+    </article>
+    <article class="card whatis-card reveal">
+      <div class="whatis-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg>
+      </div>
+      <h3>3D Animation Studio</h3>
+      <p class="whatis-tag">Hollywood quality, indie budget</p>
+      <p class="whatis-desc">Create Pixar-quality 3D animated videos that cost $5,000+ from studios — for a fraction of the price. No animation skills needed.</p>
+    </article>
+    <article class="card whatis-card reveal">
+      <div class="whatis-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+      </div>
+      <h3>Faceless Videos</h3>
+      <p class="whatis-tag">Build passive income channels</p>
+      <p class="whatis-desc">Generate complete videos with AI images and professional voiceovers. Build passive income channels without ever being on camera.</p>
+    </article>
+  </div>
+
+  <p class="whatis-trust container" style="text-align:center">
+    ⭐ Trusted by <strong>40,000+ content creators</strong> earning money from viral AI videos
+  </p>
+</section>
+
+<!-- ===== 06-stop-wasting.html ===== -->
+<section class="section stopwaste">
+  <div class="container container-narrow" style="text-align:center">
+    <h2 class="reveal" style="font-size:clamp(1.75rem, 1rem + 1.4vw, 2.25rem)">Stop wasting time on <span class="sw-red">manual video creation</span></h2>
+    <p class="reveal lead-muted" style="margin-top:.75rem">See why 40,000+ creators switched to AutoClips</p>
+  </div>
+
+  <div class="container sw-grid">
+    <!-- LEFT — The Old Way -->
+    <article class="sw-card sw-card-old reveal from-left">
+      <span class="sw-badge sw-badge-old">The Old Way</span>
+      <div class="sw-media">
+        <img src="https://www.autoclips.app/_next/image?url=%2Fve.jpg&w=1200&q=75" alt="Traditional video editing — complex timeline" loading="lazy" width="1200" height="700" />
+      </div>
+      <h3 class="sw-title">Takes too much time</h3>
+      <p class="sw-sublabel sw-sublabel-old">No Automation</p>
+      <ul class="sw-list sw-list-old">
+        <li><span class="sw-ico sw-ico-x">✕</span>Takes hours to create a video</li>
+        <li><span class="sw-ico sw-ico-x">✕</span>Manually creating title, description, tags</li>
+        <li><span class="sw-ico sw-ico-x">✕</span>Manually uploading the video</li>
+        <li><span class="sw-ico sw-ico-x">✕</span>Create limited amount of videos</li>
+        <li><span class="sw-ico sw-ico-x">✕</span>No Captions</li>
+        <li><span class="sw-ico sw-ico-x">✕</span>No Motion Graphics</li>
+        <li><span class="sw-ico sw-ico-x">✕</span>No Sound Effects</li>
+        <li><span class="sw-ico sw-ico-x">✕</span>Low Quality Images</li>
+        <li><span class="sw-ico sw-ico-x">✕</span>Stressed out 😟</li>
+      </ul>
+    </article>
+
+    <!-- RIGHT — The Better Way -->
+    <article class="sw-card sw-card-new reveal from-right">
+      <span class="sw-badge sw-badge-new">✨ The Better Way</span>
+      <div class="sw-media sw-media-new">
+        <img src="https://www.autoclips.app/_next/image?url=%2Fui-screenshot%2Fautoclips-prompt-box.webp&w=1200&q=80" alt="AutoClips — Just type a topic and click Create Video" loading="lazy" width="1200" height="700" />
+      </div>
+      <h3 class="sw-title">Create videos in <span class="sw-mint">seconds</span></h3>
+      <p class="sw-sublabel sw-sublabel-new">AI + Automation</p>
+      <ul class="sw-list sw-list-new">
+        <li><span class="sw-ico sw-ico-check">✓</span>Create a viral video in less than a minute</li>
+        <li><span class="sw-ico sw-ico-check">✓</span>Auto-generates SEO-friendly title, description, tags</li>
+        <li><span class="sw-ico sw-ico-check">✓</span>Auto-posts to YouTube &amp; TikTok</li>
+        <li><span class="sw-ico sw-ico-check">✓</span>Create unlimited videos</li>
+        <li><span class="sw-ico sw-ico-check">✓</span>Auto Captions</li>
+        <li><span class="sw-ico sw-ico-check">✓</span>Motion Graphics</li>
+        <li><span class="sw-ico sw-ico-check">✓</span>Sound Effects</li>
+        <li><span class="sw-ico sw-ico-check">✓</span>High Quality AI Images</li>
+        <li><span class="sw-ico sw-ico-check">✓</span>Chillin 🏖️</li>
+      </ul>
+      <a href="https://app.autoclips.app/login" class="btn btn-accent sw-cta">✨ Try AutoClips Free</a>
+    </article>
+  </div>
+</section>
+
+<!-- ===== 07-comparison.html ===== -->
+<section class="section bg-white comparison">
+  <div class="container container-narrow" style="text-align:center">
+    <h2 class="reveal" style="font-size:clamp(1.75rem, 1rem + 1.4vw, 2.25rem)">Why Other AI Video Tools Fall Short</h2>
+  </div>
+
+  <div class="container cmp-grid">
+    <!-- LEFT: 4 competitor cards -->
+    <div class="cmp-left">
+      <article class="cmp-card reveal from-left">
+        <span class="cmp-x">✕</span>
+        <div><h3>InVideo / Pictory</h3><p>Generic templates that look like everyone else's videos. No viral formula built-in.</p></div>
+      </article>
+      <article class="cmp-card reveal from-left">
+        <span class="cmp-x">✕</span>
+        <div><h3>Opus Clip</h3><p>Only repurposes existing content. Can't create original videos from scratch.</p></div>
+      </article>
+      <article class="cmp-card reveal from-left">
+        <span class="cmp-x">✕</span>
+        <div><h3>Hiring Freelancers</h3><p>$300-500+ per video. Slow turnaround. Communication headaches.</p></div>
+      </article>
+      <article class="cmp-card reveal from-left">
+        <span class="cmp-x">✕</span>
+        <div><h3>3D Animation Studios</h3><p>$5,000-15,000 per minute. Months of back-and-forth. Endless revision cycles.</p></div>
+      </article>
+    </div>
+
+    <!-- RIGHT: AutoClips win card -->
+    <article class="cmp-win reveal from-right">
+      <h3 class="cmp-win-head"><span class="cmp-check">✓</span> AutoClips</h3>
+      <ul class="cmp-win-list">
+        <li><span class="cmp-check">✓</span>Viral scripts based on 1B+ views research</li>
+        <li><span class="cmp-check">✓</span>3D Animation Studio - Pixar-quality in minutes</li>
+        <li><span class="cmp-check">✓</span>Character Explainer - viral format dominating TikTok</li>
+        <li><span class="cmp-check">✓</span>500+ realistic AI voices</li>
+        <li><span class="cmp-check">✓</span>Auto-posting to YouTube, TikTok, Instagram &amp; Facebook</li>
+        <li><span class="cmp-check">✓</span>Starting at $23/month</li>
+      </ul>
+      <div class="cmp-highlight">💡 What costs <s>$5,000+</s> from an animation studio = <strong>from $0.25 with Autoclips</strong></div>
+      <a href="https://app.autoclips.app/login" class="btn btn-accent cmp-cta">Try AutoClips Free</a>
+    </article>
+  </div>
+</section>
+
+<!-- ===== 08-diy-cost.html ===== -->
+<section class="section bg-surfacealt">
+  <div class="container container-narrow" style="text-align:center">
+    <h2 class="reveal" style="font-size:var(--text-h2)">The Real Cost of "Doing It Yourself"</h2>
+    <p class="reveal lead-muted" style="margin-top:1rem">You could piece together 5+ different tools and spend hours every day. Or you could let one platform do everything.</p>
+  </div>
+
+  <div class="container diy-grid" style="margin-inline:auto">
+    <!-- LEFT — The DIY Approach -->
+    <article class="diy-col diy-bad reveal from-left">
+      <h3><svg class="diy-x" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>The DIY Approach</h3>
+      <p class="diy-sub">Multiple tools + hours of manual work</p>
+      <ul class="diy-list">
+        <li class="diy-item-x"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+          <div class="diy-item-body"><div class="diy-item-head"><p>AI Scriptwriting (ChatGPT Plus)</p><span class="diy-price">$20/mo</span></div><p class="diy-item-desc">Still gotta prompt it and edit output</p></div></li>
+        <li class="diy-item-x"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+          <div class="diy-item-body"><div class="diy-item-head"><p>AI Voices (ElevenLabs)</p><span class="diy-price">$29/mo</span></div><p class="diy-item-desc">Per character, limited minutes</p></div></li>
+        <li class="diy-item-x"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+          <div class="diy-item-body"><div class="diy-item-head"><p>AI Images (Midjourney)</p><span class="diy-price">$30/mo</span></div><p class="diy-item-desc">Generate, download, import manually</p></div></li>
+        <li class="diy-item-x"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+          <div class="diy-item-body"><div class="diy-item-head"><p>Video Editor (CapCut Pro / Premiere)</p><span class="diy-price">$20/mo</span></div><p class="diy-item-desc">You do the editing yourself</p></div></li>
+        <li class="diy-item-x"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+          <div class="diy-item-body"><div class="diy-item-head"><p>Posting to 4 Platforms Manually</p><span class="diy-price">1-2 hrs/video</span></div><p class="diy-item-desc">Uploading, titles, descriptions, tags — per platform</p></div></li>
+        <li class="diy-item-x"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+          <div class="diy-item-body"><div class="diy-item-head"><p>Sound Effects &amp; Motion Graphics</p><span class="diy-price">$40/mo</span></div><p class="diy-item-desc">Searching, downloading, syncing every time</p></div></li>
+      </ul>
+      <div class="diy-foot">
+        <div class="diy-foot-row"><span>Total monthly cost</span><span class="diy-foot-val">$139+/mo</span></div>
+        <div class="diy-foot-row"><span>Time per video</span><span class="diy-foot-val">1-2 hours</span></div>
+        <p class="diy-foot-note">That's 30-60 hours/month of manual work. For ONE platform.</p>
+      </div>
+    </article>
+
+    <!-- RIGHT — The AutoClips Way -->
+    <article class="diy-col diy-good reveal from-right">
+      <span class="diy-badge">All-In-One</span>
+      <h3><svg class="diy-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>The AutoClips Way</h3>
+      <p class="diy-sub">Everything included. Zero manual work.</p>
+      <ul class="diy-list">
+        <li class="diy-item-check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+          <div class="diy-item-body"><p>AI writes viral scripts daily</p><p class="diy-item-desc">Trending topics, proven hooks, CTA built in</p></div></li>
+        <li class="diy-item-check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+          <div class="diy-item-body"><p>AI or cloned character voices</p><p class="diy-item-desc">Custom characters, voice cloning, natural emotion, any language</p></div></li>
+        <li class="diy-item-check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+          <div class="diy-item-body"><p>AI images + your brand media</p><p class="diy-item-desc">Smart Mix: AI picks the right visuals per scene</p></div></li>
+        <li class="diy-item-check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+          <div class="diy-item-body"><p>Full video editing &amp; rendering</p><p class="diy-item-desc">Sound effects, music, transitions — done for you</p></div></li>
+        <li class="diy-item-check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+          <div class="diy-item-body"><p>Auto-posts to 4 platforms</p><p class="diy-item-desc">YouTube, TikTok, Instagram &amp; Facebook — titles, descriptions, tags, hashtags all included</p></div></li>
+        <li class="diy-item-check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+          <div class="diy-item-body"><p>SEO titles, descriptions, hashtags</p><p class="diy-item-desc">AI-optimized for each platform automatically</p></div></li>
+      </ul>
+      <div class="diy-foot">
+        <div class="diy-foot-row"><span>Total monthly cost</span><span class="diy-foot-val">Starting at $23/mo</span></div>
+        <div class="diy-foot-row"><span>Time per video</span><span class="diy-foot-val">0 minutes</span></div>
+        <p class="diy-foot-note">Set up once in 10 minutes. Then it runs on autopilot. Forever.</p>
+      </div>
+    </article>
+  </div>
+
+  <p class="diy-closing reveal"><strong>Less money. Less time. Better results.</strong> It's not even close.</p>
+</section>
+
+<!-- ===== 09-3d-studio.html ===== -->
+<section class="section bg-white format">
+  <div class="container container-narrow" style="text-align:center">
+    <h2 class="reveal" style="font-size:var(--text-h2)">3D Animation Studio</h2>
+    <p class="reveal lead-muted" style="margin-top:1rem">Create stunning Pixar-quality 3D animated videos in minutes. No animation skills needed.</p>
+  </div>
+
+  <div class="container format-videos">
+    <figure class="video-tile format-tile reveal">
+      <video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/3d-videos/how-your-body-removes-a-splinter-amazing-3d-animation-720p.mp4" muted loop playsinline preload="none"></video>
+      <figcaption class="format-cap">
+        <span class="format-cap-title">How Your Body Removes a Splinter</span>
+        <span class="format-cap-views">▶ 1.2M views</span>
+      </figcaption>
+    </figure>
+    <figure class="video-tile format-tile reveal">
+      <video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/3d-videos/gym-3d-720p.mp4" muted loop playsinline preload="none"></video>
+      <figcaption class="format-cap">
+        <span class="format-cap-title">Inside the Gym: 3D Anatomy</span>
+        <span class="format-cap-views">▶ 892k views</span>
+      </figcaption>
+    </figure>
+    <figure class="video-tile format-tile reveal">
+      <video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/3d-videos/discover-the-weirdest-friendship-in-nature-720p.mp4" muted loop playsinline preload="none"></video>
+      <figcaption class="format-cap">
+        <span class="format-cap-title">Weirdest Friendship in Nature</span>
+        <span class="format-cap-views">▶ 2.1M views</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="container format-compare reveal">
+    <div class="format-compare-col bad">
+      <h4>Traditional 3D Animation</h4>
+      <ul>
+        <li>$5,000 - $15,000 per minute</li>
+        <li>2-4 weeks turnaround</li>
+        <li>Endless revision cycles</li>
+      </ul>
+    </div>
+    <div class="format-compare-col good">
+      <h4>Autoclips 3D Studio</h4>
+      <ul>
+        <li>700 credits per video</li>
+        <li>Ready in minutes</li>
+        <li>Unlimited revisions</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="format-strip reveal">
+      <div class="format-strip-grid">
+        <span class="format-strip-item">Pixar-style animation</span>
+        <span class="format-strip-item">AI-generated characters</span>
+        <span class="format-strip-item">No animation skills needed</span>
+        <span class="format-strip-item">Full creative control</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="text-align:center; margin-top:2rem">
+    <a href="https://app.autoclips.app/studio" class="btn btn-accent btn-lg">Try 3D Animation Studio</a>
+    <p class="format-credits">700 credits per video · First video free</p>
+  </div>
+</section>
+
+<!-- ===== 10-talking-objects.html ===== -->
+<section class="section format format-orange">
+  <div class="container container-narrow" style="text-align:center">
+    <span class="badge-trending reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>#1 TRENDING FORMAT</span>
+    <h2 class="reveal" style="font-size:var(--text-h2);margin-top:0">Make Any Object Talk. <span class="text-gradient-orange">Go Viral.</span></h2>
+    <p class="reveal lead-muted" style="margin-top:1rem">The content format that's breaking the internet. A sneaker argues with a coffee mug. A carrot roasts a blueberry. Weird? Yes. <strong style="color:#111827">Millions of views?</strong> Absolutely.</p>
+  </div>
+
+  <div class="container format-videos format-videos-4">
+    <figure class="video-tile format-tile reveal"><span class="video-badge"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>Viral</span><button class="video-mute" aria-label="Unmute"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="22" y1="9" x2="16" y2="15"></line><line x1="16" y1="9" x2="22" y2="15"></line></svg></button><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/talking-objects/talking-objects-1-480p.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap"><span class="format-cap-title">Talking Supplements</span><span class="format-cap-views">▶ 2.4M views</span></figcaption></figure>
+    <figure class="video-tile format-tile reveal"><span class="video-badge"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>Viral</span><button class="video-mute" aria-label="Unmute"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="22" y1="9" x2="16" y2="15"></line><line x1="16" y1="9" x2="22" y2="15"></line></svg></button><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/talking-objects/talking-objects-blueberry-480p.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap"><span class="format-cap-title">Blueberry vs Lemon</span><span class="format-cap-views">▶ 1.8M views</span></figcaption></figure>
+    <figure class="video-tile format-tile reveal"><span class="video-badge"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>Viral</span><button class="video-mute" aria-label="Unmute"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="22" y1="9" x2="16" y2="15"></line><line x1="16" y1="9" x2="22" y2="15"></line></svg></button><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/talking-objects/talking-objects-2-480p.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap"><span class="format-cap-title">Talking Objects</span><span class="format-cap-views">▶ 3.1M views</span></figcaption></figure>
+    <figure class="video-tile format-tile reveal"><span class="video-badge"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>Viral</span><button class="video-mute" aria-label="Unmute"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="22" y1="9" x2="16" y2="15"></line><line x1="16" y1="9" x2="22" y2="15"></line></svg></button><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/talking-objects/talking-objects-cinnamon-480p.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap"><span class="format-cap-title">Cinnamon &amp; Zinc</span><span class="format-cap-views">▶ 1.5M views</span></figcaption></figure>
+  </div>
+
+  <div class="container">
+    <p class="format-stat reveal">Creators using Talking Objects are averaging <strong>3-5x more shares</strong> than standard video content</p>
+  </div>
+
+  <div class="container">
+    <div class="format-feats reveal">
+      <div class="format-feat">
+        <span class="format-feat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"></path><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"></path><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"></path></svg></span>
+        <div><p class="format-feat-title">3 quality tiers</p><p class="format-feat-sub">Pro Max · Pro · Lite</p></div>
+      </div>
+      <div class="format-feat">
+        <span class="format-feat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span>
+        <div><p class="format-feat-title">33 languages</p><p class="format-feat-sub">Go viral worldwide</p></div>
+      </div>
+      <div class="format-feat">
+        <span class="format-feat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg></span>
+        <div><p class="format-feat-title">Built-in music</p><p class="format-feat-sub">Add tracks before export</p></div>
+      </div>
+      <div class="format-feat">
+        <span class="format-feat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg></span>
+        <div><p class="format-feat-title">300+ voices</p><p class="format-feat-sub">Find the perfect tone</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="steps-box reveal">
+      <h3 class="steps-box-title">From idea to viral video in 3 steps</h3>
+      <div class="steps-grid">
+        <div class="steps-item"><span class="steps-item-n">1</span><h4>Describe your object</h4><p>A sneaker, a banana, your product — anything.</p></div>
+        <div class="steps-item"><span class="steps-item-n">2</span><h4>Tell it what to say</h4><p>AI writes the script or you type your own.</p></div>
+        <div class="steps-item"><span class="steps-item-n">3</span><h4>Get your viral video</h4><p>Lip-synced, multi-clip, ready to post.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="format-audience reveal">
+      <span class="aud-item">E-commerce brands</span>
+      <span class="aud-item">TikTok creators</span>
+      <span class="aud-item">Marketing agencies</span>
+      <span class="aud-item">Meme pages</span>
+      <span class="aud-item">Product marketers</span>
+    </div>
+  </div>
+
+  <div class="container reveal" style="text-align:center; margin-top:2.5rem">
+    <a href="https://app.autoclips.app/login" class="btn btn-accent btn-lg">Make Your First Talking Object<svg class="cta-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
+    <p class="format-cta-sub">No filming. No editing. No experience needed.</p>
+  </div>
+</section>
+
+<!-- ===== 11-fruit-stories.html ===== -->
+<section class="section format format-pink">
+  <div class="container container-narrow" style="text-align:center">
+    <span class="badge-new reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path><path d="M5 3v4"></path><path d="M19 17v4"></path><path d="M3 5h4"></path><path d="M17 19h4"></path></svg>New · Fruit AI Stories</span>
+    <h2 class="reveal" style="font-size:var(--text-h2);margin-top:0">Make Fruit Tell Stories. <span style="color:#DB2777">People Can't Look Away.</span></h2>
+    <p class="reveal lead-muted" style="margin-top:1rem">A green apple hides a secret. A watermelon lawyer drops the truth. A strawberry mom breaks down in tears. Anthropomorphic fruit characters, lip-synced dialogue, soap-opera drama — the faceless story format racking up <strong style="color:#111827">millions of views</strong>.</p>
+  </div>
+
+  <div class="container format-videos">
+    <figure class="video-tile format-tile reveal"><span class="video-badge is-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path><path d="M5 3v4"></path><path d="M19 17v4"></path><path d="M3 5h4"></path><path d="M17 19h4"></path></svg>Viral</span><button class="video-mute" aria-label="Unmute"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="22" y1="9" x2="16" y2="15"></line><line x1="16" y1="9" x2="22" y2="15"></line></svg></button><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/fruit-stories/the-engraved-watch-480p.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap"><span class="format-cap-title">The Engraved Watch</span><span class="format-cap-views">▶ 2.7M views</span></figcaption></figure>
+    <figure class="video-tile format-tile reveal"><span class="video-badge is-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path><path d="M5 3v4"></path><path d="M19 17v4"></path><path d="M3 5h4"></path><path d="M17 19h4"></path></svg>Viral</span><button class="video-mute" aria-label="Unmute"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="22" y1="9" x2="16" y2="15"></line><line x1="16" y1="9" x2="22" y2="15"></line></svg></button><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/fruit-stories/the-falling-watermelon-480p.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap"><span class="format-cap-title">The Falling Watermelon</span><span class="format-cap-views">▶ 1.9M views</span></figcaption></figure>
+    <figure class="video-tile format-tile reveal"><span class="video-badge is-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path><path d="M5 3v4"></path><path d="M19 17v4"></path><path d="M3 5h4"></path><path d="M17 19h4"></path></svg>Viral</span><button class="video-mute" aria-label="Unmute"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="22" y1="9" x2="16" y2="15"></line><line x1="16" y1="9" x2="22" y2="15"></line></svg></button><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/fruit-stories/the-little-berry-card-480p.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap"><span class="format-cap-title">The Little Berry Card</span><span class="format-cap-views">▶ 2.2M views</span></figcaption></figure>
+  </div>
+
+  <div class="container">
+    <p class="format-stat reveal">Built on the same drama beats as the fruit reels pulling <strong>tens of millions of views</strong> across TikTok &amp; Reels</p>
+  </div>
+
+  <div class="container">
+    <div class="format-feats reveal">
+      <div class="format-feat">
+        <span class="format-feat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+        <div><p class="format-feat-title">Reusable characters</p><p class="format-feat-sub">Create once, cast forever</p></div>
+      </div>
+      <div class="format-feat">
+        <span class="format-feat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"></path><path d="m6.2 5.3 3.1 3.9"></path><path d="m12.4 3.4 3.1 4"></path><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"></path></svg></span>
+        <div><p class="format-feat-title">6 story formats</p><p class="format-feat-sub">Reality show · drama · comedy</p></div>
+      </div>
+      <div class="format-feat">
+        <span class="format-feat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span>
+        <div><p class="format-feat-title">33 languages</p><p class="format-feat-sub">Go viral worldwide</p></div>
+      </div>
+      <div class="format-feat">
+        <span class="format-feat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg></span>
+        <div><p class="format-feat-title">300+ voices</p><p class="format-feat-sub">A voice per character</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="steps-box reveal">
+      <h3 class="steps-box-title">From idea to viral story in 3 steps</h3>
+      <div class="steps-grid">
+        <div class="steps-item"><span class="steps-item-n">1</span><h4>Build your cast</h4><p>Pick fruit characters or design your own — they stay consistent across every scene.</p></div>
+        <div class="steps-item"><span class="steps-item-n">2</span><h4>Choose a plot</h4><p>Reality show, drama, comedy — AI writes the script or you type your own.</p></div>
+        <div class="steps-item"><span class="steps-item-n">3</span><h4>Get your story video</h4><p>Lip-synced, multi-character, ready to post.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="format-audience reveal">
+      <span class="aud-item">Faceless creators</span>
+      <span class="aud-item">Storytime channels</span>
+      <span class="aud-item">Drama &amp; soap pages</span>
+      <span class="aud-item">TikTok &amp; Reels</span>
+      <span class="aud-item">Meme pages</span>
+    </div>
+  </div>
+
+  <div class="container reveal" style="text-align:center; margin-top:2.5rem">
+    <a href="https://app.autoclips.app/login" class="btn btn-accent btn-lg">Create Your First Fruit Story<svg class="cta-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
+    <p class="format-cta-sub">No filming. No animators. No experience needed.</p>
+  </div>
+</section>
+
+<!-- ===== 12-creepy-toon.html ===== -->
+<section class="section format format-dark">
+  <div class="container container-narrow" style="text-align:center">
+    <span class="badge-violet reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>Dark Storytime Format</span>
+    <h2 class="reveal" style="font-size:var(--text-h2);margin-top:0">Scary Stories Hit Different in <span style="color:#A78BFA">Creepy Toon.</span></h2>
+    <p class="reveal lead-dark" style="margin-top:1rem">The unsettling 2D cartoon look behind every viral dark-story video. Pick <strong style="color:#E5E7EB">Creepy Toon</strong>, drop in your script, and every scene comes back as the same eerie hand-drawn horror — narrated, captioned, and ready to post.</p>
+  </div>
+
+  <div class="container format-videos format-videos-4">
+    <figure class="video-tile format-tile reveal"><span class="video-badge is-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="1"></circle><circle cx="15" cy="12" r="1"></circle><path d="M8 20v2h8v-2"></path><path d="m12.5 17-.5-1-.5 1h1z"></path><path d="M16 20a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20"></path></svg>Viral</span><button class="video-mute" aria-label="Unmute"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="22" y1="9" x2="16" y2="15"></line><line x1="16" y1="9" x2="22" y2="15"></line></svg></button><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/creepy-toon/creepy-toon-1-480p.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap"><span class="format-cap-title">The Thing in the Walls</span><span class="format-cap-views">▶ 4.1M views</span></figcaption></figure>
+    <figure class="video-tile format-tile reveal"><span class="video-badge is-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="1"></circle><circle cx="15" cy="12" r="1"></circle><path d="M8 20v2h8v-2"></path><path d="m12.5 17-.5-1-.5 1h1z"></path><path d="M16 20a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20"></path></svg>Viral</span><button class="video-mute" aria-label="Unmute"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="22" y1="9" x2="16" y2="15"></line><line x1="16" y1="9" x2="22" y2="15"></line></svg></button><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/creepy-toon/creepy-toon-2-480p.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap"><span class="format-cap-title">The Camera Roll</span><span class="format-cap-views">▶ 3.4M views</span></figcaption></figure>
+    <figure class="video-tile format-tile reveal"><span class="video-badge is-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="1"></circle><circle cx="15" cy="12" r="1"></circle><path d="M8 20v2h8v-2"></path><path d="m12.5 17-.5-1-.5 1h1z"></path><path d="M16 20a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20"></path></svg>Viral</span><button class="video-mute" aria-label="Unmute"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="22" y1="9" x2="16" y2="15"></line><line x1="16" y1="9" x2="22" y2="15"></line></svg></button><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/creepy-toon/creepy-toon-3-480p.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap"><span class="format-cap-title">Don't Look Under the Bed</span><span class="format-cap-views">▶ 2.8M views</span></figcaption></figure>
+    <figure class="video-tile format-tile reveal"><span class="video-badge is-violet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="1"></circle><circle cx="15" cy="12" r="1"></circle><path d="M8 20v2h8v-2"></path><path d="m12.5 17-.5-1-.5 1h1z"></path><path d="M16 20a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20"></path></svg>Viral</span><button class="video-mute" aria-label="Unmute"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="22" y1="9" x2="16" y2="15"></line><line x1="16" y1="9" x2="22" y2="15"></line></svg></button><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/creepy-toon/creepy-toon-4-480p.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap"><span class="format-cap-title">The 3AM Knock</span><span class="format-cap-views">▶ 3.5M views</span></figcaption></figure>
+  </div>
+
+  <div class="container">
+    <p class="format-stat reveal">The same creepy cartoon aesthetic driving <strong>millions of views</strong> on horror &amp; scary-story channels</p>
+  </div>
+
+  <div class="container">
+    <div class="format-feats reveal">
+      <div class="format-feat">
+        <span class="format-feat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
+        <div><p class="format-feat-title">Signature creepy eyes</p><p class="format-feat-sub">Unsettling by design</p></div>
+      </div>
+      <div class="format-feat">
+        <span class="format-feat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="1"></circle><circle cx="15" cy="12" r="1"></circle><path d="M8 20v2h8v-2"></path><path d="m12.5 17-.5-1-.5 1h1z"></path><path d="M16 20a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20"></path></svg></span>
+        <div><p class="format-feat-title">Horror atmosphere</p><p class="format-feat-sub">Cold light, harsh shadows</p></div>
+      </div>
+      <div class="format-feat">
+        <span class="format-feat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></span>
+        <div><p class="format-feat-title">33 languages</p><p class="format-feat-sub">Creep out the world</p></div>
+      </div>
+      <div class="format-feat">
+        <span class="format-feat-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg></span>
+        <div><p class="format-feat-title">300+ voices</p><p class="format-feat-sub">Find your narrator</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="steps-box reveal">
+      <h3 class="steps-box-title">From scary script to viral video in 3 steps</h3>
+      <div class="steps-grid">
+        <div class="steps-item"><span class="steps-item-n">1</span><h4>Write your story</h4><p>Reddit horror, creepy fact, scary fable — type it or let AI write it.</p></div>
+        <div class="steps-item"><span class="steps-item-n">2</span><h4>Pick Creepy Toon</h4><p>Every scene generates in the same eerie cartoon look — characters stay consistent.</p></div>
+        <div class="steps-item"><span class="steps-item-n">3</span><h4>Get your video</h4><p>Narrated, captioned, music added — ready to post.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="format-audience reveal">
+      <span class="aud-item">Horror storytime</span>
+      <span class="aud-item">Reddit narrations</span>
+      <span class="aud-item">Scary facts</span>
+      <span class="aud-item">True-crime retellings</span>
+      <span class="aud-item">Creepypasta channels</span>
+    </div>
+  </div>
+
+  <div class="container reveal" style="text-align:center; margin-top:2.5rem">
+    <a href="https://app.autoclips.app/login" class="btn btn-white btn-lg">Make a Creepy Toon Video<svg class="cta-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
+    <p class="format-cta-sub">Pick the style. Paste your story. Post in minutes.</p>
+  </div>
+</section>
+
+<!-- ===== 13-cta-band.html ===== -->
+<section class="cta-band">
+  <div class="container" style="text-align:center">
+    <a href="https://app.autoclips.app/login" class="btn btn-accent btn-lg">Try For Free</a>
+  </div>
+</section>
+
+<!-- ===== 14-testimonials.html ===== -->
+<section class="section">
+  <div class="container container-narrow" style="text-align:center">
+    <h2 class="reveal" style="font-size:clamp(1.875rem, 1.4rem + 1.2vw, 2.25rem)">Over 40,000+ content creators use Autoclips</h2>
+  </div>
+  <div class="container testi-grid">
+    <article class="testi-card reveal">
+      <p class="testi-quote">&ldquo;I have been using Autoclips for a while now and on average I am getting 10k to 100k views per video. It is a game-changer! The AI automatically creates viral TikToks that are fun, creative, and perfectly tailored to my audience.&rdquo;</p>
+      <div class="testi-foot">
+        <h3>incredible.creatures</h3>
+        <p class="testi-handle">tiktok.com/@incredible.creatures</p>
+      </div>
+    </article>
+    <article class="testi-card reveal">
+      <p class="testi-quote">&ldquo;Autoclips is amazing! It creates very engaging YT shorts with great hooks automatically. My follower count has soared, and my videos get more likes and shares than ever. Highly recommend!&rdquo;</p>
+      <div class="testi-foot">
+        <h3>Mr Puppi</h3>
+        <p class="testi-handle">tiktok.com/@mrpuppi101</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===== 15-autopilot.html ===== -->
+<section class="section autopilot">
+  <div class="container container-narrow" style="text-align:center">
+    <h2 class="reveal" style="font-size:var(--text-h2);text-transform:uppercase">A Faceless Channel on Autopilot</h2>
+    <p class="reveal autopilot-lead" style="margin-top:1.25rem">Set it up once in 3 simple steps. AutoClips makes and posts your videos every day, while you sleep.</p>
+    <div class="autopilot-platforms reveal">
+      <div class="autopilot-platform">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+        <span>YouTube</span>
+      </div>
+      <div class="autopilot-platform">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"></path></svg>
+        <span>TikTok</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container autopilot-steps">
+    <div class="autopilot-step reveal">
+      <div class="autopilot-text">
+        <span class="autopilot-badge">Step 1</span>
+        <h3>Pick Your Topic</h3>
+        <p>Just tell AutoClips what your channel is about: scary stories, animal facts, motivation, your product, anything. That's the only decision you have to make. No scripting, no filming, no editing. AI takes it from here.</p>
+      </div>
+      <div class="video-tile autopilot-media autopilot-video reveal autopilot-media-reveal"><video data-lazy data-src="https://zayathemes.b-cdn.net/step-1.mp4" muted loop playsinline preload="none"></video></div>
+    </div>
+
+    <div class="autopilot-step reveal">
+      <div class="autopilot-text">
+        <span class="autopilot-badge">Step 2</span>
+        <h3>Set It &amp; Forget It</h3>
+        <p>Choose your style, how many videos you want posted per day, and where they go. Connect your YouTube, TikTok, Instagram, Facebook &amp; X accounts once, then hit go. That's it. No daily work, ever.</p>
+      </div>
+      <div class="video-tile autopilot-media autopilot-video reveal autopilot-media-reveal"><video data-lazy data-src="https://zayathemes.b-cdn.net/step-2.mp4" muted loop playsinline preload="none"></video></div>
+    </div>
+
+    <div class="autopilot-step reveal">
+      <div class="autopilot-text">
+        <span class="autopilot-badge">Step 3</span>
+        <h3>Watch Your Channel Grow</h3>
+        <p>Wake up to fresh videos already posted to every channel, with titles, captions, and hashtags done for you. More videos means more views, more followers, and more money. You set it up once, and it earns while you sleep.</p>
+        <div class="autopilot-social">
+          <svg viewBox="0 0 24 24" fill="#FF0000" aria-label="YouTube"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+          <svg viewBox="0 0 24 24" fill="#010101" aria-label="TikTok"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+          <svg viewBox="0 0 24 24" fill="#1877F2" aria-label="Facebook"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+        </div>
+      </div>
+      <div class="video-tile autopilot-media autopilot-video reveal autopilot-media-reveal"><video data-lazy data-src="https://zayathemes.b-cdn.net/step-3.mp4" muted loop playsinline preload="none"></video></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 16-automations.html ===== -->
+<section class="section bg-white automations">
+  <div class="container container-narrow" style="text-align:center">
+    <span class="badge-mint reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Automations</span>
+    <h2 class="reveal" style="font-size:var(--text-h2);margin-top:0">Put Your Content on Autopilot</h2>
+    <p class="reveal lead-muted" style="margin-top:1rem">Set it up once. AutoClips creates and posts viral videos every single day — more views, more followers, more sales.</p>
+    <p class="auto-posts-label reveal">Posts automatically to</p>
+    <div class="auto-social reveal">
+      <div class="auto-social-item">
+        <span class="auto-social-circle"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"></path></svg></span>
+        TikTok
+      </div>
+      <div class="auto-social-item">
+        <span class="auto-social-circle"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg></span>
+        YouTube
+      </div>
+      <div class="auto-social-item">
+        <span class="auto-social-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></span>
+        Instagram
+      </div>
+      <div class="auto-social-item">
+        <span class="auto-social-circle"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></span>
+        Facebook
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="text-align:center;margin-top:3rem">
+    <p class="auto-pipe-label reveal">What happens every day — automatically</p>
+    <p class="auto-pipe-sub reveal" style="margin-top:.5rem">Watch each step of the automation pipeline in real time</p>
+  </div>
+
+  <div class="container auto-engine reveal">
+    <!-- LEFT: animated pipeline -->
+    <div class="auto-pipe">
+      <div class="auto-pipe-step" data-num="1">
+        <span class="auto-pipe-ico"><svg class="ico-self" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg><svg class="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+        <div class="auto-pipe-text"><p class="auto-pipe-name">Pick topic from pool</p><p class="auto-pipe-status">Waiting...</p></div>
+        <span class="auto-pipe-ind" data-num="1"></span>
+      </div>
+      <div class="auto-pipe-step" data-num="2">
+        <span class="auto-pipe-ico"><svg class="ico-self" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg><svg class="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+        <div class="auto-pipe-text"><p class="auto-pipe-name">Generate viral script</p><p class="auto-pipe-status">Waiting...</p></div>
+        <span class="auto-pipe-ind" data-num="2"></span>
+      </div>
+      <div class="auto-pipe-step" data-num="3">
+        <span class="auto-pipe-ico"><svg class="ico-self" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg><svg class="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+        <div class="auto-pipe-text"><p class="auto-pipe-name">Create voiceover + music</p><p class="auto-pipe-status">Waiting...</p></div>
+        <span class="auto-pipe-ind" data-num="3"></span>
+      </div>
+      <div class="auto-pipe-step" data-num="4">
+        <span class="auto-pipe-ico"><svg class="ico-self" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path><path d="M5 3v4"></path><path d="M19 17v4"></path><path d="M3 5h4"></path><path d="M17 19h4"></path></svg><svg class="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+        <div class="auto-pipe-text"><p class="auto-pipe-name">AI images + brand media</p><p class="auto-pipe-status">Waiting...</p></div>
+        <span class="auto-pipe-ind" data-num="4"></span>
+      </div>
+      <div class="auto-pipe-step" data-num="5">
+        <span class="auto-pipe-ico"><svg class="ico-self" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg><svg class="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+        <div class="auto-pipe-text"><p class="auto-pipe-name">Auto-post everywhere</p><p class="auto-pipe-status">Waiting...</p></div>
+        <span class="auto-pipe-ind" data-num="5"></span>
+      </div>
+      <div class="auto-pipe-step" data-num="6">
+        <span class="auto-pipe-ico"><svg class="ico-self" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg><svg class="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+        <div class="auto-pipe-text"><p class="auto-pipe-name">Watch the results roll in</p><p class="auto-pipe-status">Waiting...</p></div>
+        <span class="auto-pipe-ind" data-num="6"></span>
+      </div>
+      <div class="auto-pipe-step is-restart">
+        <span class="auto-pipe-ico"><svg class="ico-self" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span>
+        <div class="auto-pipe-text"><p class="auto-pipe-name">Restart cycle</p><p class="auto-pipe-status">Waiting for pipeline...</p></div>
+      </div>
+      <div class="auto-pipe-complete">
+        <span class="auto-pipe-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+        <div class="auto-pipe-text">
+          <p class="apc-title">Cycle Complete!</p>
+          <div class="apc-socials">
+            <svg viewBox="0 0 24 24" fill="#fff"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"></path></svg><span class="apc-chk">✓</span>
+            <svg viewBox="0 0 24 24" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg><span class="apc-chk">✓</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg><span class="apc-chk">✓</span>
+            <svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg><span class="apc-chk">✓</span>
+          </div>
+        </div>
+        <span class="apc-next">Next video in 8h</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: results dashboard -->
+    <div class="auto-dash">
+      <div class="auto-dash-bar">
+        <span class="auto-dot"></span><span class="auto-dot"></span><span class="auto-dot"></span>
+        <span class="auto-dash-bartitle">AutoClips — Automation Engine</span>
+      </div>
+      <div class="auto-dash-body">
+        <!-- screen 0: TOPIC POOL -->
+        <div class="auto-screen" data-screen="0">
+          <div class="as-head"><span class="as-title">🎯 Topic Pool</span><span class="as-sub">42 remaining</span></div>
+          <div class="as-topic is-done"><span class="as-dot"></span>I made $4K selling this one product on TikTok</div>
+          <div class="as-topic is-done"><span class="as-dot"></span>Why every gym bro needs this protein brand</div>
+          <div class="as-topic is-pick">This $29 serum cleared my acne in 7 days</div>
+        </div>
+        <!-- screen 1: SCRIPT GENERATION -->
+        <div class="auto-screen" data-screen="1">
+          <div class="as-head"><span class="as-title">📝 Script Generation</span></div>
+          <div class="as-line"><span class="as-tag">HOOK</span><p>"I spent $29 and my skin completely changed..."</p></div>
+          <div class="as-line"><span class="as-tag">BODY</span><p>This serum uses retinol + niacinamide to target acne.</p></div>
+          <div class="as-line"><span class="as-tag">BODY</span><p>After 7 days, my skin was visibly clearer.</p></div>
+          <div class="as-line"><span class="as-tag">CTA</span><p>Link in bio — use code CLIPS20 for 20% off →</p></div>
+          <p class="as-status">Writing<span class="as-dots">...</span></p>
+        </div>
+        <!-- screen 2: AUDIO GENERATION -->
+        <div class="auto-screen" data-screen="2">
+          <div class="as-head"><span class="as-title">🎙️ Audio Generation</span></div>
+          <p class="as-row">AI Voice: <b>Natural Male</b></p>
+          <div class="as-progress"><span class="as-progress-fill"></span></div>
+          <p class="as-time"><span class="as-cur">0:00</span> / 0:45</p>
+          <p class="as-row">Background: <b>Epic Cinematic</b></p>
+        </div>
+        <!-- screen 3: VISUAL ASSEMBLY -->
+        <div class="auto-screen" data-screen="3">
+          <div class="as-head"><span class="as-title">🎬 Visual Assembly</span><span class="as-sub"><b class="as-count">0</b>/4</span></div>
+          <div class="as-scene">Scene 1: Hook</div>
+          <div class="as-scene">Scene 2: Context</div>
+          <div class="as-scene">Scene 3: Reveal</div>
+          <div class="as-scene">Brand: Product Shot</div>
+          <p class="as-status">Smart Mix applied — brand media inserted</p>
+        </div>
+        <!-- screen 4: AUTO-PUBLISHING -->
+        <div class="auto-screen" data-screen="4">
+          <div class="as-head"><span class="as-title">🚀 Auto-Publishing</span></div>
+          <p class="as-row" style="font-weight:600">This $29 serum cleared my acne in 7 days</p>
+          <p class="as-meta">0:45 · AI Voice · Epic Cinematic</p>
+          <div class="as-plat"><span>TikTok</span><span class="as-pstat">Waiting...</span></div>
+          <div class="as-plat"><span>YouTube</span><span class="as-pstat">Waiting...</span></div>
+          <div class="as-plat"><span>Instagram</span><span class="as-pstat">Waiting...</span></div>
+          <div class="as-plat"><span>Facebook</span><span class="as-pstat">Waiting...</span></div>
+        </div>
+        <!-- screen 5: RESULTS DASHBOARD -->
+        <div class="auto-screen" data-screen="5">
+          <p class="auto-dash-title">📊 Results Dashboard</p>
+          <div class="auto-dash-grid">
+            <div class="auto-dash-card"><p class="auto-dash-lbl">Total Views</p><p class="auto-dash-val" data-count="247800" data-suffix="K" data-div="1000" data-dec="1">247.8K</p><p class="auto-dash-delta">↗ +340%</p></div>
+            <div class="auto-dash-card"><p class="auto-dash-lbl">New Followers</p><p class="auto-dash-val" data-count="1842" data-prefix="+">+1,842</p><p class="auto-dash-delta">↗ +180%</p></div>
+            <div class="auto-dash-card"><p class="auto-dash-lbl">Sales</p><p class="auto-dash-val" data-count="36">36</p><p class="auto-dash-delta">↗ +520%</p></div>
+            <div class="auto-dash-card is-revenue"><p class="auto-dash-lbl">↗ Revenue</p><p class="auto-dash-val" data-count="1080" data-prefix="$">$1,080</p><p class="auto-dash-delta-muted">this month</p></div>
+          </div>
+          <div class="auto-dash-chart">
+            <p class="auto-dash-chart-lbl">Views — Last 7 days</p>
+            <div class="auto-dash-bars">
+              <span style="height:28%"></span><span style="height:38%"></span><span style="height:34%"></span><span style="height:52%"></span><span style="height:48%"></span><span style="height:72%"></span><span style="height:100%"></span>
+            </div>
+          </div>
+          <div class="auto-dash-note">↗ All from 1 automation — zero daily effort</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container auto-goals reveal">
+    <p class="auto-goals-eyebrow">Choose your goal</p>
+    <p class="auto-goals-lead">Every automation is goal-driven. Pick what matters to you and the AI optimizes everything for that outcome.</p>
+
+    <div class="goal-toggle" role="tablist">
+      <button class="goal-tab is-active" data-goal="views" role="tab" aria-selected="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Views</span>
+      </button>
+      <button class="goal-tab" data-goal="followers" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Followers</span>
+      </button>
+      <button class="goal-tab" data-goal="sales" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span>Sales</span>
+      </button>
+    </div>
+
+    <div class="goal-grid">
+      <!-- LEFT card (light) — content swaps per goal -->
+      <div class="goal-card">
+        <div class="goal-card-head">
+          <span class="goal-card-ico" data-goal-icon></span>
+          <h3 class="goal-card-title"><span data-goal-emoji></span> <span data-goal-title></span></h3>
+        </div>
+        <p class="goal-card-desc" data-goal-desc></p>
+        <ul class="goal-card-checks" data-goal-checks></ul>
+      </div>
+
+      <!-- RIGHT card (dark) — big metric swaps, stats static -->
+      <div class="goal-dark">
+        <p class="goal-dark-top">With Automations you get</p>
+        <div class="goal-dark-big" data-goal-num></div>
+        <p class="goal-dark-sub" data-goal-sub></p>
+        <div class="goal-dark-rule"></div>
+        <div class="goal-dark-stats">
+          <div class="goal-dark-row"><span>Videos per month</span><strong>Up to 90</strong></div>
+          <div class="goal-dark-row"><span>Topics pre-generated</span><strong>30-90</strong></div>
+          <div class="goal-dark-row"><span>Your daily effort</span><strong class="is-green">0 minutes</strong></div>
+        </div>
+        <div class="goal-dark-rule"></div>
+        <p class="goal-dark-postlbl">Auto-posts to</p>
+        <div class="goal-dark-socials">
+          <span class="goal-soc"><svg viewBox="0 0 24 24" fill="#010101" aria-label="TikTok"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span>
+          <span class="goal-soc"><svg viewBox="0 0 24 24" fill="#FF0000" aria-label="YouTube"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span>
+          <span class="goal-soc"><svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></span>
+          <span class="goal-soc"><svg viewBox="0 0 24 24" fill="#1877F2" aria-label="Facebook"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="text-align:center; margin-top:2.5rem">
+    <a href="https://app.autoclips.app/login" class="btn btn-accent btn-lg">Start Automating for Free</a>
+    <p class="format-credits">No credit card required · Set up your first automation in 5 minutes</p>
+    <div class="auto-cta-socials" aria-label="Posts to TikTok, YouTube, Instagram, Facebook">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-label="TikTok"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-label="YouTube"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-label="Facebook"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 17-roi.html ===== -->
+<section class="section bg-white roi" data-roi>
+  <div class="container container-narrow" style="text-align:center">
+    <div class="roi-badge reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+      <span>ROI Calculator</span>
+    </div>
+    <h2 class="reveal" style="font-size:var(--text-h2);margin-top:.5rem">How Much Could You Be Making?</h2>
+    <p class="reveal lead-muted" style="margin-top:1rem">Drag the sliders. See the math. Then decide if it's worth it.</p>
+  </div>
+
+  <div class="container roi-card reveal">
+    <div class="roi-controls">
+      <label class="roi-field">
+        <span class="roi-label">Videos per day <b data-out-videos-val>1</b></span>
+        <input type="range" data-roi-videos min="1" max="3" step="1" value="1" />
+        <span class="roi-scale"><i>1/day</i><i>2/day</i><i>3/day</i></span>
+      </label>
+      <label class="roi-field">
+        <span class="roi-label">Average views per video <b data-out-views-val>1.0K</b></span>
+        <input type="range" data-roi-views min="1000" max="50000" step="1000" value="1000" />
+        <span class="roi-scale"><i>1K</i><i>25K</i><i>50K</i></span>
+      </label>
+      <label class="roi-field">
+        <span class="roi-label">Viewer-to-buyer rate <b data-out-rate-val>0.1%</b></span>
+        <input type="range" data-roi-rate min="0.1" max="0.5" step="0.05" value="0.1" />
+        <span class="roi-scale"><i>0.1% (conservative)</i><i>0.3%</i><i>0.5%</i></span>
+      </label>
+      <label class="roi-field">
+        <span class="roi-label">Product / commission value <b data-out-value-val>$30</b></span>
+        <input type="range" data-roi-value min="10" max="200" step="5" value="30" />
+        <span class="roi-scale"><i>$10</i><i>$100</i><i>$200</i></span>
+      </label>
+    </div>
+
+    <div class="roi-panel">
+      <div class="roi-metrics">
+        <div><span class="roi-metric-label">Monthly Videos</span><span class="roi-metric-val" data-out-monthly-videos>30</span></div>
+        <div><span class="roi-metric-label">Total Views</span><span class="roi-metric-val" data-out-total-views>30K</span></div>
+        <div><span class="roi-metric-label">Est. Sales</span><span class="roi-metric-val" data-out-est-sales>30</span></div>
+      </div>
+
+      <div class="roi-rule"></div>
+
+      <div class="roi-revenue">
+        <span class="roi-rev-label">Your estimated monthly revenue</span>
+        <span class="roi-rev-num" data-out-revenue>$900/mo</span>
+        <span class="roi-rev-sub">From a $29/month investment</span>
+        <span class="roi-roi" data-out-roi>31.03x return on your investment. 🔥</span>
+      </div>
+
+      <div class="roi-compare">
+        <div class="roi-compare-row"><span>AutoClips cost</span><span>Your revenue</span></div>
+        <div class="roi-compare-bar"><i class="roi-bar-cost" data-bar-cost></i><i class="roi-bar-rev" data-bar-rev></i></div>
+        <div class="roi-compare-row roi-compare-vals"><span>$29</span><span class="is-green" data-out-rev-plain>$900</span></div>
+      </div>
+
+      <div class="roi-mini">
+        <div class="roi-mini-card"><span class="roi-mini-lbl">Cost per video</span><span class="roi-mini-val" data-out-cpv>$0.97</span></div>
+        <div class="roi-mini-card"><span class="roi-mini-lbl">Profit margin</span><span class="roi-mini-val" data-out-margin>97%</span></div>
+      </div>
+    </div>
+
+    <p class="roi-foot">* Viewer-to-buyer rate = % of viewers who end up purchasing. Industry average for social commerce is 0.1-0.5%.</p>
+  </div>
+
+  <div class="container roi-close reveal">
+    <p class="roi-close-text">Even at the absolute minimum — that's a 10x+ return.<br>That's not a subscription. That's an investment.</p>
+    <a href="https://app.autoclips.app/login" class="btn btn-accent btn-lg roi-close-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Start Making Money Now
+    </a>
+  </div>
+</section>
+
+<!-- ===== 18-cta-band.html ===== -->
+<section class="cta-band">
+  <div class="container" style="text-align:center">
+    <a href="https://app.autoclips.app/login" class="btn btn-accent btn-lg">Try For Free</a>
+  </div>
+</section>
+
+<!-- ===== 19-pricing.html ===== -->
+<section class="pricing-wrap" data-pricing data-mode="yearly">
+  <div class="container container-narrow" style="text-align:center">
+    <div class="pricing-badge reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
+      <span>Simple, transparent pricing</span>
+    </div>
+    <h2 class="reveal pricing-h2">Choose the plan that's <span class="text-mint">right for you</span></h2>
+    <p class="reveal lead-muted" style="margin-top:.75rem">Start creating viral videos today. Cancel anytime.</p>
+
+    <div class="pricing-toggle reveal">
+      <button data-billing="yearly" class="active">Yearly <span class="pricing-save">-20%</span></button>
+      <button data-billing="monthly">Monthly</button>
+    </div>
+
+    <div class="pricing-social reveal">
+      <div class="pricing-stars" aria-label="5 out of 5 stars">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <div class="pricing-avatars">
+        <img src="assets/images/avatars/ali.jpeg" alt="Ali Azhar" loading="lazy" width="44" height="44">
+        <img src="assets/images/avatars/believer-yusuf.jpg" alt="Yusuf Azr" loading="lazy" width="44" height="44">
+        <img src="assets/images/avatars/mrpuppi.jpeg" alt="Mr Puppi" loading="lazy" width="44" height="44">
+        <img src="assets/images/avatars/incredible.jpeg" alt="incredible.creatures" loading="lazy" width="44" height="44">
+        <img src="assets/images/avatars/jab.jpg" alt="Jabreel Sagas" loading="lazy" width="44" height="44">
+        <img src="assets/images/avatars/history.jpg" alt="History Hideout" loading="lazy" width="44" height="44">
+      </div>
+    </div>
+
+    <p class="pricing-gift reveal"><span class="pricing-gift-pill">🎁 <b>Save 20%</b> when you pay annually</span></p>
+  </div>
+
+  <div class="container pricing-grid">
+    <!-- Essential -->
+    <article class="card price-card reveal">
+      <h3>Essential</h3>
+      <div class="price-amount">$<span data-price data-yearly="23" data-monthly="29">23</span><small>/ mo</small></div>
+      <p class="price-sub" data-sub data-yearly="$276 billed annually · Save 72 (20% off)" data-monthly="billed monthly">$276 billed annually · Save 72 (20% off)</p>
+      <ul class="price-feats">
+        <li>5,000 credits</li><li>12-50 videos/month</li><li>x1 connected account (YouTube + TikTok)</li>
+        <li>1-Minute Videos</li><li>Character Explainer</li><li>Realistic Voice Narration</li>
+        <li class="locked">Talking Objects <em>Pro+</em></li><li class="locked">Automation <em>Pro+</em></li><li class="locked">3D Animation Studio <em>Pro+</em></li>
+      </ul>
+      <a href="https://app.autoclips.app/login" class="btn btn-dark" style="width:100%">Get Started</a>
+    </article>
+
+    <!-- Pro -->
+    <article class="card price-card price-card-popular reveal">
+      <span class="price-badge">Most Popular</span>
+      <h3>Pro</h3>
+      <div class="price-amount">$<span data-price data-yearly="47" data-monthly="59">47</span><small>/ mo</small></div>
+      <p class="price-sub" data-sub data-yearly="$564 billed annually · Save 144 (20% off)" data-monthly="billed monthly">$564 billed annually · Save 144 (20% off)</p>
+      <ul class="price-feats">
+        <li>12,000 credits</li><li>30-120 videos/month</li><li>x1 account per platform (YT, TikTok, IG, FB, X)</li>
+        <li>Talking Objects</li><li>Fruit AI Stories</li><li>Automation</li>
+        <li>Instagram, Facebook &amp; X</li><li>3-Minute Videos</li><li>3D Animation Studio</li>
+      </ul>
+      <a href="https://app.autoclips.app/login" class="btn btn-accent" style="width:100%">Get Started</a>
+    </article>
+
+    <!-- Advanced -->
+    <article class="card price-card reveal">
+      <h3>Advanced</h3>
+      <div class="price-amount">$<span data-price data-yearly="79" data-monthly="99">79</span><small>/ mo</small></div>
+      <p class="price-sub" data-sub data-yearly="$948 billed annually · Save 240 (20% off)" data-monthly="billed monthly">$948 billed annually · Save 240 (20% off)</p>
+      <ul class="price-feats">
+        <li>25,000 credits</li><li>62-250 videos/month</li><li>x3 connected accounts per platform</li>
+        <li>Everything in Pro</li><li>5/10-Minute Videos</li>
+        <li class="locked">15/20-Minute Videos <em>Enterprise+</em></li><li class="locked">Priority Support <em>Enterprise+</em></li>
+      </ul>
+      <a href="https://app.autoclips.app/login" class="btn btn-dark" style="width:100%">Get Started</a>
+    </article>
+
+    <!-- Enterprise -->
+    <article class="card price-card reveal">
+      <h3>Enterprise</h3>
+      <div class="price-amount">$<span data-price data-yearly="159" data-monthly="199">159</span><small>/ mo</small></div>
+      <p class="price-sub" data-sub data-yearly="$1908 billed annually · Save 480 (20% off)" data-monthly="billed monthly">$1908 billed annually · Save 480 (20% off)</p>
+      <ul class="price-feats">
+        <li>60,000 credits</li><li>150-600 videos/month</li><li>x5 connected accounts per platform</li>
+        <li>Everything in Advanced</li><li>15/20-Minute Videos</li><li>Priority Support</li>
+      </ul>
+      <a href="https://app.autoclips.app/login" class="btn btn-dark" style="width:100%">Get Started</a>
+    </article>
+
+    <!-- Ultra -->
+    <article class="card price-card reveal">
+      <h3>Ultra</h3>
+      <div class="price-amount">$<span data-price data-yearly="319" data-monthly="399">319</span><small>/ mo</small></div>
+      <p class="price-sub" data-sub data-yearly="billed annually · Save 20%" data-monthly="billed monthly">billed annually · Save 20%</p>
+      <ul class="price-feats">
+        <li>150,000 credits</li><li>350-1,500 videos/month</li><li>x10 connected accounts per platform</li>
+        <li>Everything in Enterprise</li><li>Highest priority rendering</li><li>Dedicated support</li>
+      </ul>
+      <a href="https://app.autoclips.app/login" class="btn btn-dark" style="width:100%">Get Started</a>
+    </article>
+  </div>
+
+  <p class="pricing-allinclude reveal">All plans include: AI scripts · 133+ voices in 34 languages · 6 art styles · auto captions &amp; SFX · full commercial rights · cancel anytime</p>
+</section>
+
+<!-- ===== 20-faq.html ===== -->
+<section id="faqs" class="section faq-section">
+  <div class="container container-narrow" style="text-align:center">
+    <h2 class="reveal" style="font-size:var(--text-h2)">Frequently Asked Questions</h2>
+    <p class="reveal lead-muted" style="margin-top:.75rem">Everything you need to know about AutoClips</p>
+  </div>
+
+  <div class="container container-narrow faq-list">
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>What is AutoClips?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>AutoClips is the all-in-one AI video platform that creates, edits, and posts viral videos for you — automatically. Whether you want cinematic story videos, 3D animated content, character explainer videos, or even talking objects, AutoClips handles everything: script, visuals, narration, 500+ sound effects, music, captions, and even posting directly to TikTok, YouTube, Instagram, and Facebook. You don't need editing skills, a camera, or a production team.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>What kinds of videos can I create?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>AutoClips gives you multiple proven formats: <strong>Cinematic Story Videos</strong> in 6 categories (True Crime, Science, History, Mystery, Nature, Viral) with 6 art styles (Pixar, Realistic, Anime, Claymation, Comic, Watercolor) from 1 to 20 minutes; <strong>3D Animation Studio</strong> for Pixar-quality clips; <strong>Character Explainers</strong>; and <strong>Talking Objects</strong> &amp; <strong>Fruit AI Stories</strong>.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>How does Full Automation work? Do I really not have to do anything?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Full Automation is like hiring a content team that works 24/7. Set up once — pick your niche, choose your characters, connect your social accounts — and AutoClips creates AND posts videos for you every single day across TikTok, YouTube, Instagram and Facebook. Up to 3 videos per day on autopilot — that's 90 videos a month you didn't make.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>What is Quick Create?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Quick Create is the fastest way to get a finished video. Configure your settings, hit one button, and walk away — even close your browser. AutoClips builds your entire video in the background: script, images, narration, sound effects, music, captions, everything. If anything stalls, it auto-recovers. It works in both the Cinematic Story Creator and the 3D Animation Studio.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>Can I use my own voice in videos?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Yes! With Voice Cloning, you upload a short audio clip and AutoClips narrates every video in YOUR voice — without you ever recording again. We also offer 133+ premium AI voices in 34 languages. Filter by gender, age, accent, and speaking style, and adjust speech speed (0.75x to 1.5x).</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>Can I post videos directly to social media?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Yes — and it's fully automatic. Connect your TikTok, YouTube, Instagram, Facebook, and X (Twitter) accounts, and AutoClips posts your videos directly. No downloading, no re-uploading. Every video gets auto-generated SEO titles, descriptions, hashtags, and tags optimized for each platform.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>How many social media accounts can I connect?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>It depends on your plan: <strong>Essential</strong> — 1 account (YouTube + TikTok); <strong>Pro</strong> — 1 account per platform (YT, TikTok, IG, FB &amp; X); <strong>Advanced</strong> — up to 3 of each platform; <strong>Enterprise</strong> — up to 5 of each platform.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>What art styles are available?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>6 rebuilt art styles: <strong>Pixar</strong> (3D animated), <strong>Realistic</strong> (photorealistic), <strong>Anime</strong>, <strong>Claymation</strong> (stop-motion clay), <strong>Comic</strong> (bold comic-book), and <strong>Watercolor</strong> (soft, artistic).</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>How long can my videos be?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>From 1 minute up to 20 minutes depending on your plan. Short-form (1-3 min) for TikTok, Reels &amp; Shorts; Mid-form (5-10 min) for YouTube monetization; Long-form (up to 20 min) for full YouTube ad revenue. 3D Animation Studio supports up to 75-second clips.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>Can I edit the videos after they're created?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Absolutely. AutoClips gives you a <strong>Visual Timeline Editor</strong> (drag, drop, fine-tune scenes, narration, SFX, music), <strong>Image Editing</strong> (re-prompt or swap any scene), and <strong>Script Controls</strong> — all with none of the learning curve of pro editors.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>Can I use my own images, music, or sound effects?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Yes to all. Upload your own images, videos, sound effects, and music — plus your brand's logo and product footage, which the AI places into the right scenes. AutoClips also includes 500+ built-in professional sound effects and a curated royalty-free music library.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>Are the videos unique?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Yes, every video is one-of-a-kind. AutoClips uses intelligent filters to ensure it never generates repeated content — unique scripts, unique visuals, unique narration. No two videos are the same.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>Is there a free trial?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Yes! Create your first video for free — no credit card required. The free trial includes a watermark, which is removed on all paid plans.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>Can I monetize AI videos on YouTube, Instagram &amp; TikTok?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Yes, 100%! YouTube does NOT ban AI-generated content — what they restrict is low-effort, mass-produced "inauthentic content." AutoClips videos have original scripts, narration and editing, so they qualify for monetization across all platforms.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>Do I own these videos?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Yes, 100%. Every video you create with AutoClips is yours. Monetize on YouTube, post on TikTok, use for client work, or sell video creation as a service — full commercial rights, no restrictions.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>Do I need an API key or any technical skills?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>No API keys, no coding, no technical skills needed. AutoClips handles everything behind the scenes. If you can type a sentence, you can make a viral video.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>Does the platform support multiple languages?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Yes — 34 languages and over 133 voices, including Arabic, Chinese, Dutch, English, French, German, Hindi, Italian, Japanese, Korean, Portuguese, Russian, Spanish, and more.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>What happens to unused credits?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Credits reset every month and do not roll over to the next billing period. We recommend using your credits within the month to get the most value — and with Full Automation creating up to 3 videos a day, you'll never waste a credit.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>What is AutoClips' refund policy?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>We cannot provide refunds because the costs of creating AI videos and images are high, and our GPU providers do not allow refunds for processing time. You can cancel anytime, and your subscription will end.</p></div></div>
+
+    <div class="faq-item" data-faq-item><button class="faq-q" data-faq-q>Can I cancel my subscription anytime?<i class="faq-ic"></i></button><div class="faq-a" data-faq-a><p>Yes, you can cancel at any time. Simply go to Settings where you'll find the option to cancel or delete your account.</p></div></div>
+  </div>
+
+  <p class="faq-foot reveal">Still have questions? <a href="mailto:hello@autoclips.app">Contact our support team</a></p>
+</section>
+
+<!-- ===== 21-earning-cta.html ===== -->
+<section class="section earning">
+  <div class="container" style="text-align:center">
+    <div class="earning-avatars reveal">
+      <span class="avatar" style="background:#F59E0B">AA</span>
+      <span class="avatar" style="background:#10B981">YA</span>
+      <span class="avatar" style="background:#6366F1">MP</span>
+      <span class="avatar" style="background:#EC4899">IC</span>
+      <span class="avatar" style="background:#3B82F6">JS</span>
+      <span class="avatar" style="background:#8B5CF6">HH</span>
+    </div>
+    <h2 class="reveal" style="font-size:var(--text-h2);color:#fff">Creators Are Already Earning $5K+/Month</h2>
+    <p class="reveal" style="color:#cbd5e1;margin-top:.75rem;font-size:1.125rem">When will you start? Join 40,000+ creators.</p>
+    <a href="https://app.autoclips.app/login" class="btn btn-accent btn-lg reveal" style="margin-top:1.5rem">Start Creating Now</a>
+  </div>
+</section>
+
+<!-- ===== 22-character-explainer.html ===== -->
+<section class="section bg-white format">
+  <div class="container container-narrow" style="text-align:center">
+    <span class="pill pill-accent reveal">New Feature</span>
+    <h2 class="reveal" style="font-size:var(--text-h2);margin-top:1rem">Character Explainer Videos</h2>
+    <p class="reveal lead-muted" style="margin-top:1rem">The viral format dominating TikTok &amp; Instagram. Animated characters explain any topic in an engaging way.</p>
+  </div>
+
+  <div class="container format-videos">
+    <figure class="video-tile format-tile reveal"><span class="video-views">▶ 117.8k views</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/landing-character-explainer-1.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap">College Costs Explained</figcaption></figure>
+    <figure class="video-tile format-tile reveal"><span class="video-views">▶ 104.6k views</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/landing-character-explainer-2.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap">CIA MKUltra Exposed</figcaption></figure>
+    <figure class="video-tile format-tile reveal"><span class="video-views">▶ 145.7k views</span><video data-lazy data-src="https://zayathemes.b-cdn.net/autoclips-videos/landing-character-explainer-3.mp4" muted loop playsinline preload="none"></video><figcaption class="format-cap">Green Tea Myth Busted</figcaption></figure>
+  </div>
+
+  <div class="container" style="text-align:center; margin-top:2rem">
+    <a href="https://app.autoclips.app/character-explainer" class="btn btn-accent btn-lg">Try Character Explainer</a>
+  </div>
+</section>
+
+<!-- ===== 23-testimonial-quotes.html ===== -->
+<section class="section bg-surfacealt">
+  <div class="container quote-grid">
+    <blockquote class="card quote-card reveal"><div class="testi-stars">★★★★★</div><p>"I've always struggled with creating content that resonates, but Autoclips has changed the game for me. In under a minute, I have a fully optimized video ready to go. The SEO-friendly titles and descriptions have boosted my discoverability. It's a dream come true for any content creator!"</p></blockquote>
+    <blockquote class="card quote-card reveal"><div class="testi-stars">★★★★★</div><p>"The efficiency of Autoclips is unmatched. I used to spend hours brainstorming and editing, but now I can focus on what truly matters — connecting with my audience. My followers have doubled in just a month!"</p></blockquote>
+    <blockquote class="card quote-card reveal"><div class="testi-stars">★★★★★</div><p>"Autoclips is my go-to for creating content on a budget. The quality of the videos is astonishingly high, and the automated SEO features have helped me reach a wider audience. Plus, I love how I can make unlimited videos without worrying about extra costs!"</p></blockquote>
+    <blockquote class="card quote-card reveal"><div class="testi-stars">★★★★★</div><p>"Before discovering Autoclips, my videos were struggling to gain traction. Now, every video I create averages between 10k to 100k views! The AI-generated content is perfectly optimized to capture my audience's attention."</p></blockquote>
+  </div>
+</section>
+
+<!-- ===== 24-guides.html ===== -->
+<section class="section bg-surfacealt">
+  <div class="container container-narrow" style="text-align:center">
+    <h2 class="reveal" style="font-size:var(--text-h2)">Learn How to Go Viral</h2>
+    <p class="reveal lead-muted" style="margin-top:.75rem">Free guides to help you succeed with AI videos</p>
+  </div>
+  <div class="container guides-grid">
+    <a href="/make-money-with-character-videos" class="card guide-card reveal">
+      <span class="guide-tag">Monetization</span>
+      <h3>Make $5K+/Month with Character Videos</h3>
+      <p>Real case studies of creators earning with AI videos</p>
+    </a>
+    <a href="/faceless-youtube-channel-ideas" class="card guide-card reveal">
+      <span class="guide-tag">Ideas</span>
+      <h3>50+ Faceless YouTube Channel Ideas</h3>
+      <p>High CPM niches for 2025</p>
+    </a>
+    <a href="/peter-griffin-ai-voice-videos" class="card guide-card reveal">
+      <span class="guide-tag">Trending</span>
+      <h3>Peter Griffin AI Voice Trend</h3>
+      <p>Join the viral character video movement</p>
+    </a>
+  </div>
+  <div class="container" style="text-align:center; margin-top:2rem">
+    <a href="/blog" class="btn btn-dark">View all guides</a>
+  </div>
+</section>
+
+<!-- ===== 25-discord.html ===== -->
+<section class="section bg-surfacealt discord">
+  <div class="container container-narrow" style="text-align:center">
+    <h2 class="reveal" style="font-size:var(--text-h2)">Still Not Sure?</h2>
+    <p class="reveal lead-muted" style="margin-top:.75rem">Join our Discord community of 40,000+ creators. Ask questions, see results, and get inspired.</p>
+    <div class="discord-actions reveal">
+      <a href="https://discord.gg/autoclips" class="btn btn-dark btn-lg">Join Discord Community</a>
+      <a href="https://app.autoclips.app/login" class="btn btn-accent btn-lg">Try Free - No Card Needed</a>
+    </div>
+    <p class="reveal" style="margin-top:1.25rem;color:var(--color-text-muted)">Or email us at <a href="mailto:hello@autoclips.app" style="color:var(--color-accent-600);font-weight:600">hello@autoclips.app</a></p>
+  </div>
+</section>
+
+<!-- ===== 26-footer.html ===== -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="color:#fff">
+        <span class="nav-logo-mark"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M12 2l2.2 5.8L20 10l-5.8 2.2L12 18l-2.2-5.8L4 10l5.8-2.2L12 2z" fill="#00110B"/></svg></span>
+        <span>Autoclips</span>
+      </a>
+      <p class="footer-tag">Create faceless, trending videos in minutes with Autoclips app.</p>
+      <a href="https://app.autoclips.app/login" class="btn btn-accent">Try For Free</a>
+    </div>
+
+    <nav class="footer-cols" aria-label="Footer">
+      <div>
+        <h4>Product</h4>
+        <a href="/pricing">Pricing</a>
+        <a href="#faqs">FAQs</a>
+        <a href="/roadmap">Roadmap</a>
+        <a href="/changelog">Changelog</a>
+        <a href="https://autoclips.getrewardful.com/">Refer &amp; Earn</a>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <a href="/blog">Blog</a>
+        <a href="/make-money-with-character-videos">Make Money with AI Videos</a>
+        <a href="/faceless-youtube-channel-ideas">Faceless YouTube Ideas</a>
+        <a href="/peter-griffin-ai-voice-videos">Peter Griffin AI Voice</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="mailto:hello@autoclips.app">Contact</a>
+      </div>
+    </nav>
+  </div>
+  <div class="container footer-copy">© 2024 Zayaverse LLC — All rights reserved. Ste 1200, 1309 Coffeen Avenue, Sheridan, WY 82801, US</div>
+</footer>
+
+  <!-- Scripts -->
+  <script src="scripts/nav.js" defer></script>
+  <script src="scripts/video-lazy.js" defer></script>
+  <script src="scripts/pricing-toggle.js" defer></script>
+  <script src="scripts/faq-accordion.js" defer></script>
+  <script src="scripts/roi-calculator.js" defer></script>
+  <script src="scripts/automation-pipeline.js" defer></script>
+  <script src="scripts/goal-toggle.js" defer></script>
+  <script src="scripts/reveal.js" defer></script>
+</body>
+</html>

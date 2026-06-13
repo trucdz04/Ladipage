@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CinAI.tv — AI Creative Workspace for Ad Images, Storyboards &amp; AI Video</title>
+  <meta name="description" content="CinAI.tv is the all-in-one AI creative workspace for marketers, sellers and agencies. Create storyboards, ad images, product shots, UGC visuals and AI video in one workflow — premium models unlimited within your plan, from $3/day." />
+  <meta name="theme-color" content="#09090B" />
+  <link rel="icon" href="assets/cinai/cinai-logo-gold.svg" />
+  <!-- OG -->
+  <meta property="og:title" content="CinAI.tv — AI Creative Workspace for Ad Creatives & AI Video" />
+  <meta property="og:description" content="Create ad creatives, product shots & AI video — without counting credits. Premium AI models in one workspace, from $3/day." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/cinai/og-image.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <!-- Tokens + global -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/global.css" />
+
+  <!-- Tailwind CDN (map vào token) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: 'hsl(var(--background) / <alpha-value>)',
+            'bg-elevated': 'hsl(var(--background-elevated) / <alpha-value>)',
+            'bg-subtle': 'hsl(var(--background-subtle) / <alpha-value>)',
+            foreground: 'hsl(var(--foreground) / <alpha-value>)',
+            muted: { DEFAULT: 'hsl(var(--muted) / <alpha-value>)', foreground: 'hsl(var(--muted-foreground) / <alpha-value>)' },
+            card: 'hsl(var(--card) / <alpha-value>)',
+            primary: { DEFAULT: 'hsl(var(--primary) / <alpha-value>)', foreground: 'hsl(var(--primary-foreground) / <alpha-value>)' },
+            accent: { DEFAULT: 'hsl(var(--accent) / <alpha-value>)', hover: 'hsl(var(--accent-hover) / <alpha-value>)' },
+            border: 'hsl(var(--border) / <alpha-value>)',
+            'border-strong': 'hsl(var(--border-strong) / <alpha-value>)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          maxWidth: { 'screen-2xl': '1536px' },
+          borderRadius: { DEFAULT: 'var(--radius)', lg: 'var(--radius-lg)', xl: 'var(--radius-xl)', '2xl': 'var(--radius-2xl)' },
+        }
+      }
+    }
+  </script>
+
+  <!-- Tracking (Meta Pixel + CAPI qua n8n) -->
+  <script src="scripts/tracking-config.js"></script>
+  <script src="scripts/tracking.js"></script>
+</head>
+<body class="font-sans bg-background text-foreground antialiased">
+
+  <!-- ══════════════ 00 ANNOUNCEMENT BAR ══════════════ -->
+  <div id="announcement-bar" class="relative z-[60] bg-primary text-[#333]">
+    <div class="mx-auto flex min-h-12 w-full max-w-screen-xl flex-wrap items-center justify-center gap-2 px-4 py-2 sm:py-0 lg:px-8">
+      <p class="text-sm font-medium">New: Nano Banana Pro &amp; GPT Image 2 unlocked on CinAI Pro — from $3/day</p>
+      <div class="flex w-full items-center justify-between gap-2 sm:ml-auto sm:w-fit">
+        <span class="w-8 sm:hidden"></span>
+        <a href="{{PRICING_URL}}" data-cta="pro" data-track="ClickAnnouncement" class="inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-md bg-[#1a1a1d] px-3 text-xs font-semibold text-white transition hover:bg-black">
+          Get Pro
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <button id="announcement-close" class="grid h-8 w-8 place-items-center rounded-md text-[#333]/70 transition hover:bg-black/10" aria-label="Dismiss announcement">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ 01 HEADER ══════════════ -->
+  <header id="site-header" class="fixed top-12 z-50 w-full transition-colors duration-300">
+    <div class="mx-auto flex h-[76px] w-full max-w-screen-xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <!-- left group: logo + nav pill -->
+      <div class="flex items-center gap-2">
+        <a href="#top" class="flex shrink-0 items-center gap-2 pr-2">
+          <img src="assets/cinai/cinai-logo-gold.svg" alt="CinAI" class="h-7 w-7" />
+          <span class="font-display text-lg font-bold tracking-tight text-white">CinAI<span class="text-primary">.tv</span></span>
+        </a>
+        <!-- nav pill -->
+        <nav aria-label="Main navigation" class="hidden items-center justify-center gap-4 rounded-md bg-background/60 px-6 py-3 text-[15px] text-foreground/80 lg:flex">
+          <a href="#features" class="transition hover:text-foreground">Features</a>
+          <a href="#models" class="transition hover:text-foreground">Models</a>
+          <a href="#use-cases" class="transition hover:text-foreground">Use cases</a>
+          <a href="#pricing" class="transition hover:text-foreground">Pricing</a>
+          <a href="#faq" class="transition hover:text-foreground">FAQ</a>
+        </nav>
+      </div>
+      <!-- actions (right) -->
+      <div class="flex items-center gap-3">
+        <a href="#lead-magnet" data-track="ClickHeaderWorkflow" class="btn-ghost btn h-10 text-sm" data-cta="workflow">Get Free Workflow</a>
+        <a href="{{PRICING_URL}}" data-track="ClickHeaderPricing" class="btn-primary btn h-10 text-sm hidden sm:inline-flex" data-cta="pricing">See Pricing</a>
+        <button id="nav-toggle" class="grid h-10 w-10 place-items-center rounded-lg border border-border-strong lg:hidden" aria-label="Open menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+  <!-- ══════════════ 02 HERO ══════════════ -->
+  <section class="relative overflow-hidden px-4 pt-44 pb-16 sm:px-6">
+    <!-- glow -->
+    <div aria-hidden="true" class="pointer-events-none absolute left-1/2 top-24 h-[480px] w-[820px] max-w-full -translate-x-1/2 rounded-full bg-primary/10 blur-[140px]"></div>
+    <div class="container-2xl relative">
+      <div class="mx-auto max-w-5xl text-center" data-reveal>
+        <h1 class="font-display text-[clamp(2.4rem,1rem+6vw,4.5rem)] font-semibold leading-[1.08] text-white">
+          <span class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            <span>Create</span>
+            <span class="hidden h-16 w-36 shrink-0 overflow-hidden rounded-full ring-1 ring-white/10 md:inline-flex">
+              <video class="h-16 w-36 rounded-full object-cover" poster="assets/cinai/out-kinetic.webp" muted loop playsinline autoplay preload="auto" aria-label="Ad creatives preview"><source src="assets/media/cin-vid-2.mp4" type="video/mp4" /></video>
+            </span>
+            <span>ad creatives, product shots</span>
+          </span>
+          <span class="mt-1 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            <span>&amp;</span>
+            <span class="hidden h-16 w-36 shrink-0 overflow-hidden rounded-full ring-1 ring-white/10 md:inline-flex">
+              <video class="h-16 w-36 rounded-full object-cover" poster="assets/cinai/out-helmet.png" muted loop playsinline autoplay preload="auto" aria-label="AI video preview"><source src="assets/media/cin-vid-4.mp4" type="video/mp4" /></video>
+            </span>
+            <span>AI video — <span class="hero-serif">without counting credits</span></span>
+          </span>
+        </h1>
+        <p class="mx-auto mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
+          CinAI.tv is the all-in-one AI creative workspace for marketers, sellers and agencies. From idea → storyboard → ad image → AI video, in one workflow. Try from $3/day.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <a href="{{PRICING_URL}}" class="btn btn-primary" data-cta="pro" data-track="ClickHeroCTA" data-cta-type="hot">Unlock Pro from $3/day</a>
+          <a href="#lead-magnet" class="btn btn-ghost" data-cta="workflow" data-track="ClickHeroCTA" data-cta-type="cold">Get Free Workflow</a>
+        </div>
+      </div>
+
+      <!-- 3 feature cards — accordion mở rộng khi hover -->
+      <div class="mx-auto mt-14 flex max-w-screen-2xl flex-col gap-2 md:h-[21rem] md:flex-row" data-hero-cards>
+        <article class="hero-card is-active" data-hero-card data-img="assets/cinai/out-kinetic.webp" tabindex="0">
+          <video class="hero-card__media" poster="assets/cinai/out-kinetic.webp" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-2.mp4" type="video/mp4" /></video>
+          <div class="hero-card__overlay"></div>
+          <div class="hero-card__body">
+            <h3 class="font-display text-xl font-semibold text-white">Ad Images &amp; Visuals</h3>
+            <div class="hero-card__reveal">
+              <p class="mt-2 max-w-sm text-sm text-white/70">Turn a brief into scroll-stopping ad images and banners — multiple variants ready to test on Meta Ads.</p>
+              <a href="{{PRICING_URL}}" data-cta="pro" data-track="ClickHeroCardCTA" class="mt-4 inline-flex w-fit items-center gap-1.5 rounded-lg bg-white/95 px-4 py-2 text-sm font-semibold text-[#1a1a1d] transition hover:bg-white">Create ad images →</a>
+            </div>
+          </div>
+        </article>
+        <article class="hero-card" data-hero-card data-img="assets/cinai/out-game.png" tabindex="0">
+          <video class="hero-card__media" poster="assets/cinai/out-game.png" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-3.mp4" type="video/mp4" /></video>
+          <div class="hero-card__overlay"></div>
+          <div class="hero-card__body">
+            <h3 class="font-display text-xl font-semibold text-white">Product &amp; UGC Shots</h3>
+            <div class="hero-card__reveal">
+              <p class="mt-2 max-w-sm text-sm text-white/70">Upload a product photo and generate clean studio shots, lookbooks and UGC-style visuals in minutes.</p>
+              <a href="{{PRICING_URL}}" data-cta="pro" data-track="ClickHeroCardCTA" class="mt-4 inline-flex w-fit items-center gap-1.5 rounded-lg bg-white/95 px-4 py-2 text-sm font-semibold text-[#1a1a1d] transition hover:bg-white">Create product shots →</a>
+            </div>
+          </div>
+        </article>
+        <article class="hero-card" data-hero-card data-img="assets/cinai/out-helmet.png" tabindex="0">
+          <video class="hero-card__media" poster="assets/cinai/out-helmet.png" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-4.mp4" type="video/mp4" /></video>
+          <div class="hero-card__overlay"></div>
+          <div class="hero-card__body">
+            <h3 class="font-display text-xl font-semibold text-white">AI Video</h3>
+            <div class="hero-card__reveal">
+              <p class="mt-2 max-w-sm text-sm text-white/70">Generate short ad videos with Omni &amp; Seedance — from storyboard to motion, no editing suite required.</p>
+              <a href="{{PRICING_URL}}" data-cta="pro" data-track="ClickHeroCardCTA" class="mt-4 inline-flex w-fit items-center gap-1.5 rounded-lg bg-white/95 px-4 py-2 text-sm font-semibold text-[#1a1a1d] transition hover:bg-white">Create AI video →</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 03 CLIENTS STRIP ══════════════ -->
+  <section id="models" class="container-2xl px-4 py-10" data-reveal="fade">
+    <p class="text-center text-sm uppercase tracking-wider text-muted-foreground">Premium AI models, one workspace</p>
+    <div class="marquee mt-6" style="--gap:4rem;--speed:28s">
+      <div class="marquee__track">
+        <span class="logo-pill">GPT Image 2</span><span class="logo-pill">Nano Banana 2</span><span class="logo-pill">Nano Banana Pro</span>
+        <span class="logo-pill">Opus 4.8</span><span class="logo-pill">Omni</span><span class="logo-pill">Seedance</span>
+      </div>
+      <div class="marquee__track" aria-hidden="true">
+        <span class="logo-pill">GPT Image 2</span><span class="logo-pill">Nano Banana 2</span><span class="logo-pill">Nano Banana Pro</span>
+        <span class="logo-pill">Opus 4.8</span><span class="logo-pill">Omni</span><span class="logo-pill">Seedance</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 04 TOOLS OVERVIEW ══════════════ -->
+  <section class="container-2xl px-4 py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 class="font-display text-[clamp(2rem,1.2rem+3vw,3rem)] font-semibold leading-tight text-white">One workspace,<br class="sm:hidden"/> every creative tool you need.</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-muted-foreground">From brief to storyboard to ad image to video — CinAI generates everything in a single session. No tool-switching, no agency markup, no 5-week timelines.</p>
+    </div>
+    <!-- tabs (segmented control trong khối bg-muted) -->
+    <div role="tablist" aria-label="Creative modules" class="mx-auto mt-10 flex w-fit max-w-full gap-2 overflow-x-auto rounded-lg bg-muted p-2 md:justify-center" data-tabs="tools">
+      <button role="tab" class="seg-tab" aria-selected="true" data-track="SelectModule" data-module="ad-image">Ad Image</button>
+      <button role="tab" class="seg-tab" aria-selected="false" data-track="SelectModule" data-module="product-shot">Product Shot</button>
+      <button role="tab" class="seg-tab" aria-selected="false" data-track="SelectModule" data-module="ugc">UGC Image</button>
+      <button role="tab" class="seg-tab" aria-selected="false" data-track="SelectModule" data-module="storyboard">Storyboard</button>
+      <button role="tab" class="seg-tab" aria-selected="false" data-track="SelectModule" data-module="ai-video">AI Video</button>
+      <button role="tab" class="seg-tab" aria-selected="false" data-track="SelectModule" data-module="banner">Banner</button>
+      <button role="tab" class="seg-tab" aria-selected="false" data-track="SelectModule" data-module="workflow">Workflow</button>
+    </div>
+    <!-- video preview — mỗi tab 1 video -->
+    <div class="mx-auto mt-8 max-w-5xl" data-reveal="scale">
+      <div role="tabpanel" data-tabs="tools" class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/out-kinetic.webp" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-2.mp4" type="video/mp4"/></video></div>
+      <div role="tabpanel" data-tabs="tools" hidden class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/out-game.png" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-3.mp4" type="video/mp4"/></video></div>
+      <div role="tabpanel" data-tabs="tools" hidden class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/out-conservation.jpg" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-4.mp4" type="video/mp4"/></video></div>
+      <div role="tabpanel" data-tabs="tools" hidden class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/out-storyboard.png" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-1.mp4" type="video/mp4"/></video></div>
+      <div role="tabpanel" data-tabs="tools" hidden class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/out-helmet.png" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-4.mp4" type="video/mp4"/></video></div>
+      <div role="tabpanel" data-tabs="tools" hidden class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/out-toycity.jpg" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-2.mp4" type="video/mp4"/></video></div>
+      <div role="tabpanel" data-tabs="tools" hidden class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl"><video class="aspect-video w-full object-cover" poster="assets/cinai/out-wangfu.png" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-3.mp4" type="video/mp4"/></video></div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 05 VERTICAL FEATURE LIST (STICKY crossfade) ══════════════ -->
+  <section id="use-cases" class="relative" data-vfl style="height:520vh">
+    <div class="vfl-sticky-full">
+      <!-- glow trang trí -->
+      <div aria-hidden="true" class="pointer-events-none absolute left-1/2 top-10 -z-10 hidden h-44 w-[50rem] max-w-full -translate-x-1/2 rounded-full bg-primary/10 blur-[120px] lg:block"></div>
+      <!-- lens trang trí (lệch trái) + vòng số orbit quanh vành -->
+      <div aria-hidden="true" class="pointer-events-none absolute top-1/2 left-[2rem] hidden -translate-y-1/2 lg:block">
+        <!-- lens: tâm tại điểm này, lệch trái nửa ngoài màn -->
+        <img data-vfl-lens src="assets/images/lence.webp" alt="" class="absolute left-1/2 top-1/2 h-[40rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 opacity-80" style="filter:hue-rotate(100deg) saturate(1.1);max-width:none" />
+        <!-- vòng số: cùng tâm với lens, các số nằm trên vành -->
+        <div class="vfl-num-ring" data-vfl-numbers>
+          <span class="vfl-num">1</span><span class="vfl-num">2</span><span class="vfl-num">3</span><span class="vfl-num">4</span><span class="vfl-num">5</span>
+        </div>
+      </div>
+      <!-- panels chồng tuyệt đối, chỉ active hiện -->
+      <div class="container-2xl relative flex h-full items-center justify-center px-4 lg:justify-end">
+        <article class="vfl-panel-abs is-active" data-vfl-panel data-i="0" data-track="ViewUseCase" data-industry="ecommerce">
+          <div class="vfl-card"><video class="vfl-video" poster="assets/cinai/out-kinetic.webp" muted loop playsinline autoplay preload="metadata" data-vfl-video><source src="assets/media/cin-vid-2.mp4" type="video/mp4"/></video></div>
+          <h3 class="vfl-heading">E-commerce &amp; Shop Owners</h3>
+          <p class="vfl-desc">Turn product photos into ad images. Generate clean studio shots, lookbooks and 5 ad variants to test on Meta — no photographer, no studio booking, no waiting on a designer.</p>
+        </article>
+        <article class="vfl-panel-abs" data-vfl-panel data-i="1" data-track="ViewUseCase" data-industry="beauty">
+          <div class="vfl-card"><video class="vfl-video" poster="assets/cinai/out-conservation.jpg" muted loop playsinline autoplay preload="metadata" data-vfl-video><source src="assets/media/cin-vid-4.mp4" type="video/mp4"/></video></div>
+          <h3 class="vfl-heading">Beauty &amp; Cosmetics</h3>
+          <p class="vfl-desc">Create UGC-style beauty visuals and clean product concepts from a single shot. Test more angles for your skincare and makeup ads without re-shooting every time.</p>
+        </article>
+        <article class="vfl-panel-abs" data-vfl-panel data-i="2" data-track="ViewUseCase" data-industry="fashion">
+          <div class="vfl-card"><video class="vfl-video" poster="assets/cinai/out-wangfu.png" muted loop playsinline autoplay preload="metadata" data-vfl-video><source src="assets/media/cin-vid-3.mp4" type="video/mp4"/></video></div>
+          <h3 class="vfl-heading">Fashion &amp; Apparel</h3>
+          <p class="vfl-desc">Generate AI lookbooks on models, seasonal campaign sets and editorial visuals from flatlays — ready for social feeds and Meta Ads in one session.</p>
+        </article>
+        <article class="vfl-panel-abs" data-vfl-panel data-i="3" data-track="ViewUseCase" data-industry="fnb">
+          <div class="vfl-card"><video class="vfl-video" poster="assets/cinai/out-plant.jpg" muted loop playsinline autoplay preload="metadata" data-vfl-video><source src="assets/media/cin-vid-2.mp4" type="video/mp4"/></video></div>
+          <h3 class="vfl-heading">F&amp;B &amp; Restaurants</h3>
+          <p class="vfl-desc">Make every dish look irresistible. Generate appetizing hero shots, menu visuals and short promo videos for your restaurant or food brand — fast enough for weekly campaigns.</p>
+        </article>
+        <article class="vfl-panel-abs" data-vfl-panel data-i="4" data-track="ViewUseCase" data-industry="agency">
+          <div class="vfl-card"><video class="vfl-video" poster="assets/cinai/out-storyboard.png" muted loop playsinline autoplay preload="metadata" data-vfl-video><source src="assets/media/cin-vid-1.mp4" type="video/mp4"/></video></div>
+          <h3 class="vfl-heading">Agencies &amp; Marketers</h3>
+          <p class="vfl-desc">Go from client brief to storyboard with Opus 4.8, then a hero video and a full set of image variants for A/B testing — all in one workflow, without the agency markup.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 06 PLATFORM FEATURES ══════════════ -->
+  <section id="features" class="container-2xl px-4 py-16 sm:py-20 lg:py-24">
+    <div class="max-w-2xl" data-reveal>
+      <span class="eyebrow">Why CinAI</span>
+      <h2 class="mt-3 font-display text-[clamp(2rem,1.2rem+3vw,3rem)] font-semibold leading-tight text-white">Everything for your creative ads, in one workspace</h2>
+      <p class="mt-4 text-muted-foreground">Generate images, visuals, storyboards and video in one connected workflow — built for teams that test fast and want to stop worrying about credits.</p>
+      <a href="{{PRICING_URL}}" data-cta="pricing" data-track="ClickFeaturesPricing" class="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-accent transition hover:gap-2">See plans &amp; pricing →</a>
+    </div>
+    <div class="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12" data-stagger>
+      <!-- AI Script Generation — card lớn (7 cột × 2 hàng) -->
+      <a href="#" class="feature-card sm:col-span-2 lg:col-span-7 lg:row-span-2" data-reveal>
+        <div class="feature-card__glow"></div>
+        <div class="relative z-10 flex h-full flex-col">
+          <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 4v5h5M8 13h8M8 17h5"/></svg></div>
+          <span class="feature-badge">Unlimited within plan</span>
+          <h3 class="mt-4 font-display text-2xl font-semibold text-white">Stop counting credits</h3>
+          <p class="mt-2 max-w-md text-sm text-muted-foreground">Use GPT Image 2, Nano Banana 2 &amp; Pro, and Opus 4.8 storyboards without watching your balance — unlimited within your plan term &amp; fair-use policy. Test 10 creatives where you used to test 2.</p>
+          <span class="feature-link mt-auto pt-6">See what Pro unlocks →</span>
+        </div>
+      </a>
+      <!-- AI Image (5) -->
+      <a href="#" class="feature-card lg:col-span-5" data-reveal>
+        <div class="feature-card__glow"></div>
+        <div class="relative z-10 flex h-full flex-col">
+          <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></div>
+          <span class="feature-badge">6+ models</span>
+          <h3 class="mt-4 font-display text-xl font-semibold text-white">Premium models, one place</h3>
+          <p class="mt-2 flex-1 text-sm text-muted-foreground">GPT Image 2, Nano Banana Pro, Omni, Seedance and more — switch models without switching tools.</p>
+          <span class="feature-link mt-4">Explore →</span>
+        </div>
+      </a>
+      <!-- AI Video (5) -->
+      <a href="#" class="feature-card lg:col-span-5" data-reveal>
+        <div class="feature-card__glow"></div>
+        <div class="relative z-10 flex h-full flex-col">
+          <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 9 6-3v12l-6-3"/></svg></div>
+          <span class="feature-badge">A/B ready</span>
+          <h3 class="mt-4 font-display text-xl font-semibold text-white">Test more creatives</h3>
+          <p class="mt-2 flex-1 text-sm text-muted-foreground">Generate multiple variants per brief and export image sets ready for Meta Ads in one session.</p>
+          <span class="feature-link mt-4">Explore →</span>
+        </div>
+      </a>
+      <!-- Voice & Narration (7) -->
+      <a href="#" class="feature-card lg:col-span-7" data-reveal>
+        <div class="feature-card__glow"></div>
+        <div class="relative z-10 flex h-full flex-col">
+          <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg></div>
+          <span class="feature-badge">No prompt skills</span>
+          <h3 class="mt-4 font-display text-xl font-semibold text-white">Made for non-designers</h3>
+          <p class="mt-2 flex-1 text-sm text-muted-foreground">Guided workflows turn a simple brief into finished creatives. Prompt packs included — no prompt engineering required.</p>
+          <span class="feature-link mt-4">Explore →</span>
+        </div>
+      </a>
+      <!-- Sound Design (5) -->
+      <a href="#" class="feature-card lg:col-span-5" data-reveal>
+        <div class="feature-card__glow"></div>
+        <div class="relative z-10 flex h-full flex-col">
+          <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h3l3-8 4 16 3-8h5"/></svg></div>
+          <span class="feature-badge">Lower cost</span>
+          <h3 class="mt-4 font-display text-xl font-semibold text-white">Cut outsourcing cost</h3>
+          <p class="mt-2 flex-1 text-sm text-muted-foreground">Replace one-off photographer, designer and editor bills with one predictable plan — from $3/day.</p>
+          <span class="feature-link mt-4">Explore →</span>
+        </div>
+      </a>
+      <!-- Visual Storyboarding (12, full) -->
+      <a href="#" class="feature-card sm:col-span-2 lg:col-span-12" data-reveal>
+        <div class="feature-card__glow"></div>
+        <div class="relative z-10 flex h-full flex-col md:flex-row md:items-center md:gap-6">
+          <div class="md:flex-1">
+            <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="7" height="7" rx="1"/><rect x="14" y="4" width="7" height="7" rx="1"/><rect x="3" y="15" width="7" height="5" rx="1"/><rect x="14" y="15" width="7" height="5" rx="1"/></svg></div>
+            <span class="feature-badge mt-4">All-in-one</span>
+            <h3 class="mt-4 font-display text-xl font-semibold text-white">From idea to ready-to-post</h3>
+            <p class="mt-2 text-sm text-muted-foreground">Brief → storyboard → ad image → product shot → AI video, all in one connected workspace. No tool-switching, no exporting between five apps.</p>
+          </div>
+          <span class="feature-link mt-4 md:mt-0">Explore →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════ 07 GUIDED HIGHLIGHTS ══════════════ -->
+  <section class="container-2xl px-4 py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[minmax(260px,360px)_1fr]">
+      <!-- left: heading + vertical tabs -->
+      <div>
+        <span class="eyebrow">See it in motion</span>
+        <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold leading-tight text-white">From brief to creative, in one flow</h2>
+        <div role="tablist" aria-label="Guided highlights" class="mt-8 flex flex-col gap-2" data-tabs="guided">
+          <button role="tab" class="guided-tab" aria-selected="true" data-track="SelectGuided" data-guided="image">
+            <span class="guided-tab__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></span>
+            <span>Ad Image</span>
+          </button>
+          <button role="tab" class="guided-tab" aria-selected="false" data-track="SelectGuided" data-guided="video">
+            <span class="guided-tab__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 9 6-3v12l-6-3"/></svg></span>
+            <span>AI Video</span>
+          </button>
+          <button role="tab" class="guided-tab" aria-selected="false" data-track="SelectGuided" data-guided="storyboard">
+            <span class="guided-tab__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="7" height="7" rx="1"/><rect x="14" y="4" width="7" height="7" rx="1"/><rect x="3" y="15" width="7" height="5" rx="1"/><rect x="14" y="15" width="7" height="5" rx="1"/></svg></span>
+            <span>Storyboard</span>
+          </button>
+        </div>
+      </div>
+      <!-- right: video panels -->
+      <div>
+        <div role="tabpanel" data-tabs="guided" class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+          <video class="aspect-video w-full object-cover" poster="assets/cinai/out-kinetic.webp" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-2.mp4" type="video/mp4"/></video>
+        </div>
+        <div role="tabpanel" data-tabs="guided" hidden class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+          <video class="aspect-video w-full object-cover" poster="assets/cinai/out-helmet.png" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-4.mp4" type="video/mp4"/></video>
+        </div>
+        <div role="tabpanel" data-tabs="guided" hidden class="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+          <video class="aspect-video w-full object-cover" poster="assets/cinai/out-storyboard.png" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-1.mp4" type="video/mp4"/></video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 08 HORIZONTAL CAROUSEL ══════════════ -->
+  <section class="overflow-hidden py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="container-2xl px-4">
+      <div class="flex items-end justify-between gap-4">
+        <div>
+          <span class="eyebrow">Output gallery</span>
+          <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold text-white">Real outputs, made with CinAI</h2>
+        </div>
+        <div class="hidden gap-2 sm:flex">
+          <button class="grid h-11 w-11 place-items-center rounded-full border border-border-strong transition hover:bg-bg-subtle" data-car-prev aria-label="Previous"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button class="grid h-11 w-11 place-items-center rounded-full border border-border-strong transition hover:bg-bg-subtle" data-car-next aria-label="Next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+        </div>
+      </div>
+      <div class="carousel-track mt-8 pb-2" data-carousel>
+        <article class="carousel-card"><div class="overflow-hidden rounded-3xl border border-border/50 bg-card/70 p-3"><div class="relative aspect-square overflow-hidden rounded-2xl"><div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/40 to-transparent"></div><img src="assets/cinai/out-kinetic.webp" alt="Kinetic product visual" loading="lazy" class="h-full w-full object-cover"/></div><div class="px-2 py-4"><h3 class="font-display text-lg font-semibold text-white">High-end product visuals</h3><p class="mt-2 text-sm text-muted-foreground">Kinetic product shots generated for an e-commerce ad set — multiple tone variants in one session.</p></div></div></article>
+        <article class="carousel-card"><div class="overflow-hidden rounded-3xl border border-border/50 bg-card/70 p-3"><div class="relative aspect-square overflow-hidden rounded-2xl"><div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/40 to-transparent"></div><img src="assets/cinai/out-toycity.jpg" alt="Stylized brand world" loading="lazy" class="h-full w-full object-cover"/></div><div class="px-2 py-4"><h3 class="font-display text-lg font-semibold text-white">Stylized brand worlds</h3><p class="mt-2 text-sm text-muted-foreground">Build consistent brand worlds frame by frame for campaign visuals and social content.</p></div></div></article>
+        <article class="carousel-card"><div class="overflow-hidden rounded-3xl border border-border/50 bg-card/70 p-3"><div class="relative aspect-square overflow-hidden rounded-2xl"><div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/40 to-transparent"></div><img src="assets/cinai/out-storyboard.png" alt="Storyboard generated by CinAI" loading="lazy" class="h-full w-full object-cover"/></div><div class="px-2 py-4"><h3 class="font-display text-lg font-semibold text-white">Storyboards in minutes</h3><p class="mt-2 text-sm text-muted-foreground">A full storyboard generated from a brief with Opus 4.8 — ready to brief your video.</p></div></div></article>
+        <article class="carousel-card"><div class="overflow-hidden rounded-3xl border border-border/50 bg-card/70 p-3"><div class="relative aspect-square overflow-hidden rounded-2xl"><div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/40 to-transparent"></div><img src="assets/cinai/out-helmet.png" alt="Product launch concept" loading="lazy" class="h-full w-full object-cover"/></div><div class="px-2 py-4"><h3 class="font-display text-lg font-semibold text-white">Product launch concepts</h3><p class="mt-2 text-sm text-muted-foreground">Concept films for a product launch — iterate lighting and angle before any shoot.</p></div></div></article>
+        <article class="carousel-card"><div class="overflow-hidden rounded-3xl border border-border/50 bg-card/70 p-3"><div class="relative aspect-square overflow-hidden rounded-2xl"><div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/40 to-transparent"></div><img src="assets/cinai/out-game.png" alt="Character action visual" loading="lazy" class="h-full w-full object-cover"/></div><div class="px-2 py-4"><h3 class="font-display text-lg font-semibold text-white">Character &amp; action visuals</h3><p class="mt-2 text-sm text-muted-foreground">Generate game and character visuals with consistent style across a whole set.</p></div></div></article>
+        <article class="carousel-card"><div class="overflow-hidden rounded-3xl border border-border/50 bg-card/70 p-3"><div class="relative aspect-square overflow-hidden rounded-2xl"><div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-background/40 to-transparent"></div><img src="assets/cinai/out-conservation.jpg" alt="Campaign hero visual" loading="lazy" class="h-full w-full object-cover"/></div><div class="px-2 py-4"><h3 class="font-display text-lg font-semibold text-white">Campaign hero shots</h3><p class="mt-2 text-sm text-muted-foreground">Polished hero visuals ready for approvals, decks and ad testing — on demand.</p></div></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 09 WHY M STUDIO ══════════════ -->
+  <section class="container-2xl px-4 py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="eyebrow">Why CinAI</span>
+      <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold text-white">Built for teams that ship creatives fast</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-muted-foreground">One connected workspace — generate images, product shots, storyboards and video, then export ad-ready sets. No tool switching, no credit anxiety.</p>
+    </div>
+    <div class="mx-auto mt-12 grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
+      <div class="stat-card" data-reveal>
+        <span class="stat-glow"></span>
+        <div class="stat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="m3 10 4-4 3 4 3-4 3 4 3-4M3 10h18"/></svg></div>
+        <h3 class="stat-title">One workspace</h3>
+        <p class="stat-desc">Images, product shots, storyboards and video in a single workflow — no tool switching.</p>
+      </div>
+      <div class="stat-card" data-reveal>
+        <span class="stat-glow"></span>
+        <div class="stat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m15 4 5 5M3 21l4-1 12-12-3-3L4 17l-1 4z"/><path d="m18 6-1.5-1.5M6 18l1 1"/></svg></div>
+        <h3 class="stat-title">6+ models</h3>
+        <p class="stat-desc">GPT Image 2, Nano Banana Pro, Omni, Seedance and more — in one place.</p>
+      </div>
+      <div class="stat-card" data-reveal>
+        <span class="stat-glow"></span>
+        <div class="stat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3"/></svg></div>
+        <h3 class="stat-title">Unlimited*</h3>
+        <p class="stat-desc">Key models unlimited within your plan term &amp; fair-use policy — stop counting credits.</p>
+      </div>
+      <div class="stat-card" data-reveal>
+        <span class="stat-glow"></span>
+        <div class="stat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/></svg></div>
+        <h3 class="stat-title">From $3/day</h3>
+        <p class="stat-desc">Daily, monthly or yearly plans — start small and scale when you're ready.</p>
+      </div>
+    </div>
+    <div class="mt-12 flex flex-col items-center gap-8">
+      <div class="inline-flex max-w-full flex-wrap items-center justify-center gap-x-4 gap-y-2 rounded-full border border-border/40 bg-card/30 px-6 py-2 text-xs text-muted-foreground backdrop-blur-sm">
+        <span>Powered by</span>
+        <span class="font-semibold text-foreground/80">GPT Image 2</span>
+        <span class="h-1 w-1 rounded-full bg-muted-foreground/40"></span>
+        <span class="font-semibold text-foreground/80">Nano Banana Pro</span>
+        <span class="h-1 w-1 rounded-full bg-muted-foreground/40"></span>
+        <span class="font-semibold text-foreground/80">Omni</span>
+        <span class="h-1 w-1 rounded-full bg-muted-foreground/40"></span>
+        <span class="font-semibold text-foreground/80">Seedance</span>
+      </div>
+      <a href="{{PRICING_URL}}" class="btn btn-primary" data-cta="pro" data-track="ClickWhyCTA">Unlock Pro from $3/day
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════ 10 PRO vs PLUS OFFER ══════════════ -->
+  <section id="pricing" class="container-2xl px-4 py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Plans</span>
+      <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold text-white">Pick your plan. Stop counting credits.</h2>
+      <p class="mt-4 text-muted-foreground">Try from $3/day, or go monthly/yearly. Key models are unlimited within your plan term &amp; fair-use policy.</p>
+      <!-- billing toggle -->
+      <div class="mt-7 inline-flex items-center gap-1 rounded-full border border-border bg-muted p-1 text-sm" data-billing-toggle>
+        <button type="button" class="bill-opt is-active" data-billing="monthly" data-track="ToggleBilling">Monthly</button>
+        <button type="button" class="bill-opt" data-billing="yearly" data-track="ToggleBilling">Yearly <span class="text-accent">−16%</span></button>
+      </div>
+    </div>
+
+    <div class="mx-auto mt-10 grid max-w-5xl items-stretch gap-6 md:grid-cols-2" data-stagger>
+      <!-- PRO -->
+      <article class="surface glow-card flex flex-col p-8" data-reveal>
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-xl font-semibold text-white">Pro</h3>
+          <span class="rounded-full border border-border-strong px-3 py-1 text-xs text-muted-foreground">from $3/day</span>
+        </div>
+        <p class="mt-2 text-sm text-muted-foreground">For solo marketers, sellers &amp; creators who want to test more without credit anxiety.</p>
+        <div class="mt-6 flex items-end gap-1">
+          <span class="font-display text-4xl font-bold text-white" data-price data-monthly="$25" data-yearly="$21">$25</span>
+          <span class="pb-1 text-sm text-muted-foreground"><span data-price-suffix>/mo</span></span>
+        </div>
+        <p class="mt-1 text-xs text-muted-foreground" data-price-note>Billed monthly · or $3/day pass</p>
+        <ul class="mt-6 flex-1 space-y-3 text-sm text-foreground/80">
+          <li class="flex gap-2"><span class="text-accent">✓</span> Plan credits + premium models (Omni, Seedance &amp; more)</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> <strong class="text-white">Unlimited*</strong> GPT Image 2</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> <strong class="text-white">Unlimited*</strong> Nano Banana 2 &amp; Nano Banana Pro</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> <strong class="text-white">Unlimited*</strong> storyboards with Opus 4.8</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> Ad images, product shots, UGC &amp; banners</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> Guided workflows + prompt packs</li>
+        </ul>
+        <a href="{{PRICING_URL}}" class="btn btn-ghost mt-8 w-full" data-cta="pro" data-plan="pro" data-track="ClickProOffer">Get Pro</a>
+      </article>
+
+      <!-- PLUS (highlight) -->
+      <article class="surface glow-card relative flex flex-col p-8 ring-1 ring-primary/40" data-reveal>
+        <span class="absolute -top-3 left-8 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">Most popular</span>
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-xl font-semibold text-white">Plus</h3>
+          <span class="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs text-accent">+ unlimited video</span>
+        </div>
+        <p class="mt-2 text-sm text-muted-foreground">For teams &amp; agencies that also need unlimited AI video output.</p>
+        <div class="mt-6 flex items-end gap-1">
+          <span class="font-display text-4xl font-bold text-white" data-price data-monthly="$59" data-yearly="$49">$59</span>
+          <span class="pb-1 text-sm text-muted-foreground"><span data-price-suffix>/mo</span></span>
+        </div>
+        <p class="mt-1 text-xs text-muted-foreground" data-price-note>Billed monthly · everything in Pro included</p>
+        <ul class="mt-6 flex-1 space-y-3 text-sm text-foreground/80">
+          <li class="flex gap-2"><span class="text-accent">✓</span> <strong class="text-white">Everything in Pro</strong></li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> <strong class="text-white">Unlimited*</strong> AI video with Omni</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> <strong class="text-white">Unlimited*</strong> AI video with Seedance</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> Priority for new premium models</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> Best for agencies running many campaigns</li>
+        </ul>
+        <a href="{{PRICING_URL}}" class="btn btn-primary mt-8 w-full" data-cta="plus" data-plan="plus" data-track="ClickPlusOffer">Get Plus</a>
+      </article>
+    </div>
+    <p class="mx-auto mt-6 max-w-xl text-center text-xs text-muted-foreground">*Unlimited applies within your plan term and our fair-use policy. Plan credits cover premium models per your plan.</p>
+  </section>
+
+  <!-- ══════════════ 10b LEAD MAGNET FORM ══════════════ -->
+  <section id="lead-magnet" class="container-2xl px-4 py-16 sm:py-20 lg:py-24" data-reveal>
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <!-- left: form -->
+      <div>
+        <span class="eyebrow">Free workflow</span>
+        <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.5rem)] font-semibold leading-tight text-white">Not ready to upgrade? Get a free AI workflow for your industry.</h2>
+        <p class="mt-4 max-w-md text-muted-foreground">Tell us your industry and goal. We'll email you a ready-to-use workflow, sample prompts, and a limited Pro upgrade voucher.</p>
+        <form class="mt-7 max-w-md space-y-3" data-lead-form data-webhook="{{N8N_WEBHOOK}}" novalidate>
+          <div data-lead-fields class="space-y-3">
+            <input class="lead-field" type="email" name="email" autocomplete="email" placeholder="you@company.com" required aria-label="Email" />
+            <select class="lead-field" name="industry" required aria-label="Industry">
+              <option value="" disabled selected>Your industry</option>
+              <option value="ecommerce">E-commerce / Shop owner</option>
+              <option value="beauty">Beauty / Cosmetics</option>
+              <option value="fashion">Fashion</option>
+              <option value="fnb">F&amp;B</option>
+              <option value="agency">Agency / Freelancer</option>
+              <option value="marketer">Marketer (running ads)</option>
+              <option value="creator">Content Creator</option>
+              <option value="other">Other</option>
+            </select>
+            <select class="lead-field" name="goal" required aria-label="Main goal">
+              <option value="" disabled selected>Your main goal</option>
+              <option value="ad-images">Create ad images</option>
+              <option value="product-images">Create product images</option>
+              <option value="ugc">Create UGC images</option>
+              <option value="storyboard">Create storyboards</option>
+              <option value="ai-video">Create AI video</option>
+              <option value="test-creatives">Test more ad creatives</option>
+              <option value="social">Optimize social content</option>
+            </select>
+            <button type="submit" class="btn btn-primary w-full" data-cta="workflow" data-track="LeadSubmit">Send Me My Workflow →</button>
+            <p class="text-xs text-muted-foreground">We'll only email your workflow &amp; occasional CinAI tips. Unsubscribe anytime.</p>
+          </div>
+          <div data-lead-success hidden class="rounded-xl border border-primary/40 bg-primary/10 p-5 text-sm text-foreground">
+            ✓ Done! Check your inbox — your industry workflow &amp; Pro voucher are on the way.
+          </div>
+        </form>
+      </div>
+      <!-- right: preview Input → Workflow → Output -->
+      <div class="surface glow-card p-6 sm:p-8" data-reveal>
+        <p class="text-xs font-semibold uppercase tracking-wider text-accent">Example workflow</p>
+        <div class="mt-5 space-y-3">
+          <div class="rounded-xl border border-border bg-background/50 p-4"><span class="text-xs uppercase tracking-wide text-muted-foreground">Input</span><p class="mt-1 text-sm text-white">A single product photo</p></div>
+          <div class="flex justify-center text-accent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+          <div class="rounded-xl border border-border bg-background/50 p-4"><span class="text-xs uppercase tracking-wide text-muted-foreground">Workflow</span><p class="mt-1 text-sm text-white">AI lookbook + promo text + variants</p></div>
+          <div class="flex justify-center text-accent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+          <div class="rounded-xl border border-primary/40 bg-primary/10 p-4"><span class="text-xs uppercase tracking-wide text-accent">Output</span><p class="mt-1 text-sm text-white">5 ad variants ready to test on Meta Ads</p></div>
+        </div>
+        <div class="mt-5 grid grid-cols-3 gap-2">
+          <img src="assets/cinai/out-kinetic.webp" alt="" loading="lazy" class="aspect-square w-full rounded-lg object-cover" />
+          <img src="assets/cinai/out-toycity.jpg" alt="" loading="lazy" class="aspect-square w-full rounded-lg object-cover" />
+          <img src="assets/cinai/out-game.png" alt="" loading="lazy" class="aspect-square w-full rounded-lg object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 11 FAQ ══════════════ -->
+  <section id="faq" class="container-2xl px-4 py-16 sm:py-24 md:py-32">
+    <div class="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+      <!-- trái: heading + CTA (không ảnh) -->
+      <div data-reveal>
+        <span class="eyebrow">FAQ</span>
+        <h2 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold leading-tight text-white">Questions before you start</h2>
+        <p class="mt-4 max-w-md text-muted-foreground">Quick answers about plans, models, pricing and the free workflow.</p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="{{PRICING_URL}}" class="btn btn-primary" data-cta="pro" data-track="ClickFaqPricing">See Pricing</a>
+          <a href="#lead-magnet" class="btn btn-ghost" data-cta="workflow">Get Free Workflow</a>
+        </div>
+      </div>
+      <!-- phải: accordion -->
+      <div class="flex flex-col gap-4" data-faq>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">What does Pro include unlimited?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Within your plan term and fair-use policy, Pro unlocks unlimited use of GPT Image 2, Nano Banana 2, Nano Banana Pro and Opus 4.8 storyboards — on top of your plan credits and premium models like Omni &amp; Seedance.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">How is Plus different from Pro?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Plus includes everything in Pro, plus unlimited AI video with Omni and Seedance (within plan term &amp; fair-use). It's built for teams and agencies that also need video output.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">What's the $3/day option?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">It's the lowest-cost way to try CinAI — a daily access pass (about 79K VND) so you can test the workspace before committing to a monthly or yearly plan.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">Is yearly cheaper?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Yes — billed yearly, Pro works out to $21/mo (vs $25) and Plus to $49/mo (vs $59), roughly 16% off.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">I'm not good at prompts — can I still use it?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Yes. Guided workflows turn a simple brief into finished creatives, and prompt packs are included — no prompt engineering required.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">Can I use outputs for commercial ads?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Yes, for client projects and campaigns, subject to your plan and the underlying model providers' terms.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">Which models are unlocked?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">GPT Image 2, Nano Banana 2, Nano Banana Pro, Opus 4.8 (storyboard), Omni and Seedance — all in one workspace.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">How do plan credits work?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Each plan includes credits for premium models, while the listed models above are unlimited within your plan term &amp; fair-use policy — so most everyday creative work won't run your balance down.</div></div>
+        </article>
+        <article class="faq-item" aria-expanded="false">
+          <button class="flex w-full items-start justify-between gap-4 p-5 text-left md:p-6"><span class="font-display text-base font-semibold text-white sm:text-lg">How do I get the free workflow?</span><svg class="faq-chevron mt-1 shrink-0 text-muted-foreground" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><div class="px-5 pb-5 text-sm text-muted-foreground md:px-6">Fill the form above with your industry and goal — we'll email your workflow, sample prompts and a Pro upgrade voucher.</div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 12 CTA READY TO BUILD ══════════════ -->
+  <section class="px-2 py-16 sm:py-24" data-reveal="scale">
+    <div class="container-2xl px-2">
+      <div class="relative overflow-hidden rounded-3xl border border-border px-6 py-16 sm:px-10 md:px-14 md:py-20">
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0"><video class="h-full w-full object-cover opacity-40" poster="assets/cinai/out-kinetic.webp" muted loop playsinline preload="none" data-lazy-video><source src="assets/media/cin-vid-2.mp4" type="video/mp4"/></video><div class="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/30"></div></div>
+        <div class="relative z-10 max-w-xl">
+          <span class="eyebrow">Ready To Build</span>
+          <h3 class="mt-3 font-display text-[clamp(1.75rem,1.2rem+2.5vw,2.75rem)] font-semibold leading-tight text-white">Ready to test more creatives today?</h3>
+          <p class="mt-4 text-muted-foreground">Generate ad images, product shots, storyboards and AI video in one workflow — unlimited within your plan, from $3/day. No tool switching, no credit anxiety.</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="{{PRICING_URL}}" class="btn btn-primary" data-cta="pro" data-track="ClickFinalCTA" data-cta-type="hot">Unlock Pro from $3/day</a>
+            <a href="#lead-magnet" class="btn btn-ghost" data-cta="workflow" data-track="ClickFinalCTA" data-cta-type="cold">Get Free Workflow</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 13 MARQUEE STRIP (full-width) ══════════════ -->
+  <section class="px-2 py-10 sm:py-14" aria-hidden="true">
+    <div class="relative overflow-hidden rounded-2xl border border-border/40 bg-card/70 py-4 sm:py-5">
+      <div class="pointer-events-none absolute inset-0"><div class="absolute left-1/2 top-1/2 h-44 w-[38rem] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/20 blur-[130px]"></div></div>
+      <div class="marquee relative z-10" style="--gap:1.5rem;--speed:30s">
+        <div class="marquee__track">
+          <span class="marquee-text">CinAI.tv — Create more, count credits less</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+          <span class="marquee-text">CinAI.tv — Create more, count credits less</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+          <span class="marquee-text">CinAI.tv — Create more, count credits less</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+          <span class="marquee-text">CinAI.tv — Create more, count credits less</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+        </div>
+        <div class="marquee__track" aria-hidden="true">
+          <span class="marquee-text">CinAI.tv — Create more, count credits less</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+          <span class="marquee-text">CinAI.tv — Create more, count credits less</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+          <span class="marquee-text">CinAI.tv — Create more, count credits less</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+          <span class="marquee-text">CinAI.tv — Create more, count credits less</span><span class="marquee-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- ══════════════ 14 FOOTER ══════════════ -->
+  <footer class="relative overflow-hidden border-t border-border/40 bg-bg-elevated">
+    <!-- top: heading + CTA căn giữa -->
+    <div class="container-2xl px-4 py-20 text-center lg:py-28" data-reveal>
+      <h2 class="mx-auto max-w-3xl font-display text-[clamp(2rem,1.2rem+3vw,3.25rem)] font-semibold text-white">Your next campaign starts here.</h2>
+      <p class="mx-auto mt-4 max-w-xl text-muted-foreground">Start with a plan built for AI creative work — daily, monthly or yearly. Unlock premium models from $3/day.</p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="{{PRICING_URL}}" class="btn btn-primary" data-cta="pro" data-track="ClickFooterCTA">Unlock Pro from $3/day
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#lead-magnet" class="btn btn-ghost" data-cta="workflow" data-track="ClickFooterCTA">Get Free Workflow</a>
+      </div>
+    </div>
+
+    <!-- grid cột: brand + 5 cột link -->
+    <div class="container-2xl px-4 pb-10">
+      <div class="grid grid-cols-2 gap-8 md:grid-cols-7 lg:gap-12">
+        <!-- brand (span 2) -->
+        <div class="col-span-2">
+          <a href="#top" class="flex items-center gap-2">
+            <img src="assets/cinai/cinai-logo-gold.svg" alt="CinAI" class="h-7 w-7" />
+            <span class="font-display text-lg font-bold tracking-tight text-white">CinAI<span class="text-primary">.tv</span></span>
+          </a>
+          <p class="mt-4 max-w-xs text-sm text-muted-foreground">The AI creative workspace for ad images, product shots, storyboards and video.</p>
+          <div class="mt-5 flex items-center gap-3">
+            <a href="#" aria-label="Instagram" class="footer-social"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="#" aria-label="Facebook" class="footer-social"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3a4 4 0 0 0-4 4v2H7v3h3v6h3v-6h3l1-3h-4v-2a1 1 0 0 1 1-1z"/></svg></a>
+            <a href="#" aria-label="Reddit" class="footer-social"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 11.8a2 2 0 0 0-3.4-1.4 9.9 9.9 0 0 0-5-1.4l.9-4 2.8.6a1.5 1.5 0 1 0 .2-1l-3.3-.7-1.2 5.1a9.9 9.9 0 0 0-5 1.4 2 2 0 1 0-2.2 3.3 4 4 0 0 0 0 .7c0 2.8 3.1 5 7 5s7-2.2 7-5a4 4 0 0 0 0-.7 2 2 0 0 0 1.4-1.9zM8.5 13a1.2 1.2 0 1 1 1.2 1.2A1.2 1.2 0 0 1 8.5 13zm6.8 3.4a4.7 4.7 0 0 1-3.3 1 4.7 4.7 0 0 1-3.3-1 .4.4 0 0 1 .6-.6 4 4 0 0 0 2.7.8 4 4 0 0 0 2.7-.8.4.4 0 1 1 .6.6zm-.5-2.2a1.2 1.2 0 1 1 1.2-1.2 1.2 1.2 0 0 1-1.2 1.2z"/></svg></a>
+            <a href="#" aria-label="X" class="footer-social"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 3h3l-7.5 8.6L22 21h-6.3l-4.9-6.4L5 21H2l8-9.2L2 3h6.4l4.5 5.9zm-1.1 16h1.7L7.2 4.8H5.4z"/></svg></a>
+          </div>
+        </div>
+        <div><h4 class="font-display text-sm font-semibold text-white">Product</h4><ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+          <li><a href="{{PRICING_URL}}" class="transition hover:text-foreground">Pricing</a></li><li><a href="#models" class="transition hover:text-foreground">AI Models</a></li><li><a href="#use-cases" class="transition hover:text-foreground">Use Cases</a></li><li><a href="#features" class="transition hover:text-foreground">Features</a></li><li><a href="#lead-magnet" class="transition hover:text-foreground">Free Workflow</a></li></ul></div>
+        <div><h4 class="font-display text-sm font-semibold text-white">Create</h4><ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+          <li><a href="{{MAIN_DOMAIN}}" class="transition hover:text-foreground">Ad Images</a></li><li><a href="{{MAIN_DOMAIN}}" class="transition hover:text-foreground">Product Shots</a></li><li><a href="{{MAIN_DOMAIN}}" class="transition hover:text-foreground">UGC Images</a></li><li><a href="{{MAIN_DOMAIN}}" class="transition hover:text-foreground">Storyboards</a></li><li><a href="{{MAIN_DOMAIN}}" class="transition hover:text-foreground">AI Video</a></li></ul></div>
+        <div><h4 class="font-display text-sm font-semibold text-white">Plans</h4><ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+          <li><a href="{{PRICING_URL}}" class="transition hover:text-foreground">Pro — $25/mo</a></li><li><a href="{{PRICING_URL}}" class="transition hover:text-foreground">Plus — $59/mo</a></li><li><a href="{{PRICING_URL}}" class="transition hover:text-foreground">Yearly (save ~16%)</a></li><li><a href="{{PRICING_URL}}" class="transition hover:text-foreground">Day pass — from $3</a></li></ul></div>
+        <div><h4 class="font-display text-sm font-semibold text-white">Support</h4><ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+          <li><a href="{{MAIN_DOMAIN}}" class="transition hover:text-foreground">Help Center</a></li><li><a href="#faq" class="transition hover:text-foreground">FAQ</a></li><li><a href="#" class="inline-flex items-center gap-1 transition hover:text-foreground">Discord <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li></ul></div>
+        <div><h4 class="font-display text-sm font-semibold text-white">Legal</h4><ul class="mt-4 space-y-3 text-sm text-muted-foreground">
+          <li><a href="#" class="transition hover:text-foreground">Privacy Policy</a></li><li><a href="#" class="transition hover:text-foreground">Refund Policy</a></li><li><a href="#" class="transition hover:text-foreground">Terms of Service</a></li></ul></div>
+      </div>
+      <div class="mt-12 border-t border-border/40 pt-6 text-sm text-muted-foreground">© 2026 CinAI.tv. All rights reserved. · "Unlimited" applies within your plan term &amp; fair-use policy.</div>
+    </div>
+    <div class="watermark select-none px-2 text-center text-[clamp(4rem,20vw,18rem)] leading-[.8] -mt-4">CINAI.TV</div>
+  </footer>
+
+  <!-- ══════════════ 99 CHAT WIDGET (placeholder) ══════════════ -->
+  <button id="chat-widget" aria-label="Open chat" class="fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-primary text-primary-foreground shadow-xl transition hover:scale-105">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  </button>
+
+  <script src="scripts/main.js" defer></script>
+</body>
+</html>

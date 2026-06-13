@@ -1,0 +1,48 @@
+/* tokens.css — Design system trích từ toonbee.ai (Pha 3)
+   Hệ token tài liệu hoá; style.css gốc vẫn là lớp nền chính.
+   Tham chiếu: extraction/tokens-raw.md */
+:root {
+  /* ---- Màu ---- */
+  --color-accent: #FFBF21;            /* vàng hổ phách chủ đạo */
+  --color-accent-bright: #FFD71D;     /* vàng sáng (gradient stop) */
+  --color-accent-orange: #FFAC25;     /* cam (gradient stop đầu) */
+  --color-accent-soft: #FFDF60;       /* vàng nhạt */
+  --color-secondary: #FFEEEC;         /* hồng kem nền section */
+  --color-cream: #FFE7A8;
+  --color-ink: #000000;               /* chữ chính */
+  --color-ink-soft: #26262d;
+  --color-surface: #FFFFFF;
+  --color-surface-dark: #080502;      /* nền tối hero/step */
+  --color-muted-dark: #b7b7b7;        /* chữ phụ trên nền tối */
+  --color-muted-light: #666666;       /* chữ phụ trên nền sáng */
+  --color-danger: #F03030;
+
+  /* gradient vàng dùng cho span highlight / badge / CTA */
+  --gradient-gold: linear-gradient(180deg, #FFAC25 0%, #FFBF21 51%, #FFD71D 100%);
+
+  /* ---- Typography ---- */
+  --font-display: "Wendy One", sans-serif;            /* H1 hero (cartoon tròn) */
+  --font-heading: "Zalando Sans SemiExpanded", "Syne", sans-serif;
+  --font-body: "Outfit", sans-serif;
+  --font-hand: "Gochi Hand", cursive;
+  --font-serif: "Merriweather", serif;
+
+  --text-hero: clamp(2.6rem, 1rem + 7vw, 6.875rem);   /* ~110px desktop */
+  --text-h2: clamp(1.6rem, 1rem + 2.4vw, 2.6875rem);  /* ~43px */
+  --text-body: clamp(1rem, 0.92rem + 0.4vw, 1.25rem); /* ~20px */
+
+  /* ---- Spacing / Radius / Shadow ---- */
+  --space-unit: 4px;
+  --radius-sm: 14px;
+  --radius-md: 21px;
+  --radius-lg: 28px;
+  --radius-pill: 30px;
+  --radius-card: 75px;
+  --shadow-cta: 0 8px 24px rgba(0,0,0,0.35), 0 0 0 rgba(255,210,29,0.55);
+  --shadow-img: drop-shadow(0 27px 54px rgba(0,0,0,0.22));
+
+  /* ---- Motion ---- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+}

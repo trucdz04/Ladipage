@@ -1,0 +1,619 @@
+/* cinai-override.css — Rebrand layer: ToonBee amber → CinAI dark luxury
+   Load sau tokens.css và style.css để override đúng chỗ.
+   Giữ nguyên layout/structure; chỉ đổi màu brand và font. */
+
+/* ─── Font remapping ──────────────────────────────────────────── */
+/* Body: Outfit → Inter */
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  background-color: #09090b;
+  color: #f4f4f5;
+}
+
+/* Display/heading font classes → Plus Jakarta Sans */
+.syne, .zalando, .wendy {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Handwritten/serif accent → Instrument Serif */
+.gochihand, .merriweather {
+  font-family: "Instrument Serif", Georgia, serif !important;
+  font-style: italic;
+}
+
+/* .outfit stays → Inter (already handled by body) */
+.outfit {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* ─── Amber → CinAI gold color overrides ─────────────────────── */
+
+/* CTA buttons: amber gradient → CinAI gold gradient */
+.mybutton1 a,
+.mybutton1-orange a,
+.mybutton2 a,
+.btn-link a,
+.getlink {
+  background: linear-gradient(180deg, #c4a87a 0%, #e0c9a6 51%, #ffd277 100%) !important;
+  color: #09090b !important;
+  border-color: transparent !important;
+}
+.mybutton1 a:hover,
+.mybutton1-orange a:hover,
+.mybutton2 a:hover,
+.btn-link a:hover {
+  background: linear-gradient(180deg, #b89868 0%, #d4b890 51%, #edc266 100%) !important;
+}
+
+/* Nav CTA */
+a.getlink, a.getlink:hover {
+  background: var(--gradient-gold) !important;
+  color: #09090b !important;
+}
+
+/* Headline highlight spans (inline color #ffd21d / gold) */
+span[style*="#ffd21d"], span[style*="#FFD21D"],
+span[style*="#fed45e"], span[style*="#FED45E"] {
+  color: #e0c9a6 !important;
+}
+
+/* Accent color inline styles using ToonBee amber */
+[style*="#FFBF21"], [style*="#FFD71D"], [style*="#FFAC25"],
+[style*="#ffbf21"], [style*="#ffd71d"], [style*="#ffac25"] {
+  color: #e0c9a6 !important;
+}
+
+/* Text accent (gradient-clip) — CHỈ cho chữ, KHÔNG cho badge pill */
+.most-title,
+.banner-pre-subheadline span.w600,
+.section15-cta-emphasis {
+  background: var(--gradient-gold) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: #e0c9a6 !important;
+}
+
+/* Badge phủ lên video (Made with CinAI / Perfect For …): pill NỀN TỐI + chữ gold,
+   đọc rõ trên mọi khung video (sáng hay tối). Trước đây bị clip thành chữ trong suốt → tàng hình. */
+.made-with-badge,
+.single .made-with-badge,
+.perfect-for-badge,
+.single .perfect-for-badge {
+  background: rgba(9, 9, 11, 0.74) !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: #f0d9a8 !important;
+  color: #f0d9a8 !important;
+  border: 1px solid rgba(224, 201, 166, 0.45) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  opacity: 1 !important;
+  backdrop-filter: blur(4px);
+}
+
+/* Glow animation → CinAI gold glow */
+.glow {
+  box-shadow: 0 0 12px 2px rgba(224,201,166,0.35), 0 0 4px 1px rgba(255,210,119,0.20) !important;
+  animation: cinai-pulse-glow 1.4s infinite alternate !important;
+}
+@keyframes cinai-pulse-glow {
+  0%  { box-shadow: 0 0 7px 1px rgba(224,201,166,0.25), 0 0 2px 0.5px rgba(255,210,119,0.15); }
+  100%{ box-shadow: 0 0 18px 5px rgba(224,201,166,0.45), 0 0 8px 2px rgba(255,210,119,0.30); }
+}
+
+/* Inline red/danger urgency text → CinAI muted red (unchanged, just ensure readable) */
+span[style*="#da3131"], span[style*="#DA3131"] {
+  color: #f87171 !important;
+}
+span[style*="#258f16"], span[style*="#258F16"] {
+  color: #4ade80 !important;
+}
+/* "81% OFF" emphasis → keep green */
+.section15 h3 span[style*="color"] { /* handled above */ }
+
+/* ─── Section backgrounds: light → CinAI dark luxury ─────────── */
+
+/* Sections that previously had white/cream bg */
+.section2,
+.section6,
+.section7,
+.section8,
+.section9,
+.section10,
+.section11,
+.section12 .table-box,
+.section14,
+.faq-section {
+  background-color: #09090b;
+}
+
+/* Light-on-dark text fix for affected sections */
+.section2 p, .section2 h1, .section2 h2, .section2 h3, .section2 h4,
+.section6 p, .section6 h1, .section6 h2, .section6 h3, .section6 h4,
+.section8 p, .section8 h1, .section8 h2, .section8 h3, .section8 h4,
+.section9 p, .section9 h1, .section9 h2, .section9 h3, .section9 h4,
+.section10 p, .section10 h1, .section10 h2, .section10 h3, .section10 h4,
+.section11 p, .section11 h1, .section11 h2, .section11 h3, .section11 h4 {
+  color: #f4f4f5;
+}
+
+/* FIX tương phản: section3 & section4 giữ NỀN ẢNH CREAM SÁNG của template,
+   nhưng body mặc định màu chữ sáng (#f4f4f5) → heading trên cùng mờ trên nền sáng.
+   Ép riêng HEADING của row đầu về chữ tối. KHÔNG đụng step-card / nhãn video (nền tối) ở row sau. */
+.section3 > .mycontainer > .row:first-child h1,
+.section4 > .container-fluid > .row:first-child h1,
+.section4 > .container-fluid > .row:first-child h3,
+.section4 > .container-fluid > .row:first-child .section4-samples-title {
+  color: #09090b;
+}
+
+/* Khu CTA trong banner (btn-div) nằm trên nền gold/olive của banner.webp:
+   "Click Below To Secure Your Access" + pills "Monthly/Premium" đang chữ sáng → mờ.
+   Ép chữ tối cho khu này; pills có nền cream nên chữ tối đọc rõ. */
+.btn-div h4 { color: #09090b; }
+.check-text span { color: #09090b !important; }
+
+/* Các SECTION/PANEL nền sáng (cố ý) của template — ảnh nền cream/trắng nhưng bị ép chữ sáng:
+   section10 (nền section10.webp trắng), money-back-box & section15-box (panel cream).
+   Ép chữ về tối cho đọc rõ. Các badge/nút/ảnh có style riêng nên không bị ảnh hưởng. */
+.section10 h1, .section10 h2, .section10 h3, .section10 p,
+.money-back-box h1, .money-back-box h2, .money-back-box h3, .money-back-box p,
+.section15-box h1, .section15-box h2, .section15-box h3, .section15-box p {
+  color: #09090b;
+}
+
+/* Card tính năng section9 có NỀN GRADIENT GOLD sáng → ép chữ trong card về tối
+   (rule .section9 {color sáng} ở trên dành cho tiêu đề section trên nền tối, không cho card). */
+.section9-box h3, .section9-box h4, .section9-box p,
+.section9-box .feature-detail-div h3, .section9-box .feature-detail-div p {
+  color: #1a1612 !important;
+}
+
+/* Dark text only on the GOLD Pro card (.glow). Plus card keeps its own
+   inline dark bg + light text — do NOT force these globally. */
+.table-box-inn.glow h1, .table-box-inn.glow h2, .table-box-inn.glow p,
+.table-box-inn.glow ul li {
+  color: #09090b !important;
+}
+
+/* Gold gradient only on the highlighted card (.glow); other card stays dark via inline style */
+.table-box-inn.glow {
+  background: linear-gradient(135deg, #e0c9a6 0%, #ffd277 100%) !important;
+  border-radius: 20px !important;
+}
+
+/* ─── Bảng giá: ICON CHECKMARK ĐỒNG NHẤT cho cả 2 card ─────────────
+   Template gốc gắn ảnh pricecheck1.webp (chỉ rõ trên nền tối) + ta từng thêm ký tự ✦
+   (chỉ rõ trên nền vàng) → 2 card 2 icon khác nhau. Bỏ cả hai, dùng 1 badge ✓ tròn,
+   đảo màu theo nền (card tối: badge vàng/dấu tối · card vàng: badge tối/dấu vàng). */
+.section12 .table-box-inn ul li {
+  background: none !important;
+  list-style: none !important;
+  padding-left: 32px !important;
+  position: relative;
+}
+.section12 .table-box-inn ul li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+/* Card phụ tối (Pro): badge vàng, dấu tối */
+.section12 .table-box-inn:not(.glow) ul li::before {
+  background: linear-gradient(135deg, #e0c9a6, #ffd277);
+  color: #09090b;
+}
+/* Card nổi bật vàng (Plus): badge tối, dấu vàng */
+.section12 .table-box-inn.glow ul li::before {
+  background: #09090b;
+  color: #ffd277;
+}
+
+/* 2 card đều kích cỡ: cùng bề rộng (inline 450px) + CHIỀU CAO BẰNG NHAU.
+   Row dùng align-items-stretch → cột .table-box cao bằng nhau; ép inner cao 100%
+   và đẩy nút CTA xuống đáy để 2 card cân nhau dù số dòng feature lệch. */
+.section12 #pricing .table-box {
+  display: flex;
+}
+.section12 #pricing .table-box-inn {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+.section12 #pricing .table-box-inn ul {
+  flex: 1 0 auto; /* danh sách feature dãn ra, đẩy CTA + Stripe xuống đáy */
+}
+
+/* Card nổi bật (Plus) nhỉnh hơn để hút mắt: nâng nhẹ (không đổi kích cỡ) */
+.section12 .table-box-inn.glow {
+  transform: translateY(-6px);
+}
+
+/* ─── Logo: ensure SVG renders at proper size ─────────────────── */
+.banner-logo-img,
+.footer-logo {
+  max-height: 52px;
+  width: auto;
+  filter: brightness(0) invert(1); /* white on dark hero bg */
+}
+
+/* Footer logo: white */
+.footer-logo {
+  max-height: 40px;
+  filter: brightness(0) invert(1);
+}
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.site-footer {
+  background-color: #09090b !important;
+  border-top: 1px solid rgba(224,201,166,0.15);
+}
+.site-footer .footer-disclaimer,
+.site-footer .footer-copyright,
+.site-footer .footer-links a {
+  color: #909096 !important;
+}
+.site-footer .footer-links a:hover {
+  color: #e0c9a6 !important;
+}
+
+/* ─── Section3 video box ──────────────────────────────────────── */
+.video-box {
+  background-color: #18181b !important;
+  border: 1px solid rgba(224,201,166,0.12) !important;
+}
+
+/* ─── Accordion ───────────────────────────────────────────────── */
+.accordion_head {
+  color: #f4f4f5 !important;
+  border-bottom-color: rgba(224,201,166,0.15) !important;
+}
+.accordion_body p {
+  color: #d4d4d8 !important;
+}
+
+/* ─── Nav bar override ────────────────────────────────────────── */
+.main-nav {
+  background: rgba(9,9,11,0.95) !important;
+  backdrop-filter: blur(12px);
+}
+.nav-link-inn {
+  color: #d4d4d8 !important;
+}
+.nav-link-inn:hover {
+  color: #e0c9a6 !important;
+}
+
+/* ─── Responsive safety net ───────────────────────────────────────
+   Vá lỗi tràn ngang + media fluid. Đặt ở file override (nạp cuối) để
+   không phải sửa style.css gốc. KHÔNG đổi layout/màu/brand. */
+
+/* Mọi media giữ trong khung — chặn tràn ngang ở 320px.
+   Loại trừ các media cố ý rộng hơn container (banner/intro/noothertool
+   dùng kỹ thuật width>100% + lề âm, parent đã overflow:hidden). */
+img, video, iframe {
+  max-width: 100%;
+}
+.bigleap-video, .bigleap-video-1, .bigleap-video-2 {
+  max-width: none; /* giữ kỹ thuật phóng to có chủ đích của template */
+}
+
+/* Iframe Vimeo: ép về 100% bề ngang khung cha (một số iframe có
+   width/height pixel cứng inline trong demo/feature). */
+.responsive-video iframe,
+.feature-vid-box iframe,
+.vimeo-embed-wrapper iframe,
+.autoplayer-subarea iframe {
+  max-width: 100%;
+}
+
+/* Video output CinAI thay cho iframe Vimeo: fill khung cha như iframe gốc.
+   (Các slot showcase/sample/demo/use-case đã đổi <iframe> → <video class="embed-video">). */
+.vimeo-embed-wrapper video.embed-video,
+.responsive-video video.embed-video,
+.autoplayer-subarea video.embed-video {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; border: 0;
+}
+.vimeo-embed-wrapper video.embed-video { border-radius: 28px; }
+.responsive-video video.embed-video { border-radius: 29px; }
+.feature-vid-box video.embed-video {
+  width: 100%; aspect-ratio: 16/9; display: block;
+  border: none; border-radius: 23px; object-fit: cover;
+}
+
+/* ── Payment strip (Stripe) — thay payment.webp ToonBee (PayPal + 60-day bịa) ──
+   cinai.tv thanh toán qua Stripe; chip trắng đọc rõ trên mọi nền (dark/gold/cream). */
+.pay-strip { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 18px; }
+.pay-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; }
+.pay-chip {
+  background: #fff; color: #1a1a1a;
+  font: 700 12px/1 'Inter', system-ui, sans-serif; letter-spacing: .3px;
+  padding: 6px 11px; border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25); white-space: nowrap;
+}
+.pay-secure { font: 600 13px/1.3 'Inter', system-ui, sans-serif; color: #e0c9a6; letter-spacing: .2px; }
+.pay-trust  { font: 500 12.5px/1.3 'Inter', system-ui, sans-serif; color: #c9c4bd; }
+.pay-strip-compact { margin-top: 14px; gap: 8px; }
+/* Trên nền sáng (card Pro gold, section15 box cream) → chữ phụ về tối cho đủ tương phản */
+.table-box-inn.glow .pay-secure, .section15-box .pay-secure { color: #5a3e1b; }
+.table-box-inn.glow .pay-trust,  .section15-box .pay-trust  { color: #3a3a3a; }
+
+/* ── Nút chuyển ngôn ngữ EN/VI (góc trên phải) ─────────────────────── */
+.lang-switch {
+  position: fixed; top: 14px; right: 14px; z-index: 9999;
+  display: inline-flex; gap: 2px; padding: 3px;
+  background: rgba(9,9,11,0.72); border: 1px solid rgba(224,201,166,0.35);
+  border-radius: 999px; backdrop-filter: blur(6px);
+}
+.lang-switch button {
+  border: 0; cursor: pointer; min-width: 38px; padding: 6px 10px;
+  font: 700 12px/1 'Inter', system-ui, sans-serif; letter-spacing: .5px;
+  color: #d4d4d8; background: transparent; border-radius: 999px;
+  transition: background .18s ease, color .18s ease;
+}
+.lang-switch button:hover { color: #f4f4f5; }
+.lang-switch button.active { background: linear-gradient(135deg,#e0c9a6,#ffd277); color: #09090b; }
+@media (max-width: 600px) {
+  .lang-switch { top: 10px; right: 10px; }
+  .lang-switch button { min-width: 34px; padding: 5px 8px; font-size: 11px; }
+}
+
+/* Thẻ giá (section12) dùng inline max-width + margin 0 12px:
+   ở ≤360px tổng bề rộng + lề có thể vượt viewport. Co lề lại cho khít. */
+@media only screen and (max-width: 380px) {
+  .section12 .table-box {
+    margin-left: 6px !important;
+    margin-right: 6px !important;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .section12 .table-box-inn {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+/* ════════ Section 09 — Marquee video chạy ngang + preview overlay (kiểu cinbase-tvc) ════════ */
+.section10-reel { background: #09090b; padding: clamp(3rem, 2rem + 5vw, 6rem) 0; overflow: hidden; }
+.cin-reel-sub { color: #c9c4bd; max-width: 680px; margin-left: auto; margin-right: auto; }
+.cin-reel-wrap {
+  overflow: hidden; margin-top: 2.5rem;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.cin-reel { display: flex; gap: 1rem; width: max-content; animation: cin-reel-x 60s linear infinite; }
+.cin-reel-wrap:hover .cin-reel { animation-play-state: paused; }
+@keyframes cin-reel-x { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.cin-reel-item { flex: none; width: 300px; display: flex; flex-direction: column; gap: .7rem; }
+.cin-reel-tile {
+  position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden;
+  border-radius: 18px; border: 1px solid rgba(224,201,166,.35); background: #111;
+  box-shadow: 0 20px 40px -14px rgba(0,0,0,.6);
+}
+.cin-reel-video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.cin-reel-views { position: absolute; left: .6rem; bottom: .6rem; z-index: 2; color: #fff;
+  font-size: .78rem; font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,.7); }
+.cin-reel-new { position: absolute; top: .6rem; left: .6rem; z-index: 3;
+  background: linear-gradient(135deg, #e0c9a6, #ffd277); color: #09090b;
+  font-size: .66rem; font-weight: 800; letter-spacing: .04em; padding: .2rem .55rem; border-radius: 999px; }
+.cin-reel-style { font-size: .92rem; font-weight: 500; text-align: center; color: #bdb6ab; }
+@media (max-width: 600px) { .cin-reel-item { width: 240px; } }
+
+/* ── Biến thể DỌC 9:16 (cho section8 "Perfect Style For Any Need", kiểu cinbase-tvc) ── */
+.cin-reel-wrap--v { margin-top: 3rem; }
+.cin-reel--v .cin-reel-item { width: 230px; }
+.cin-reel--v .cin-reel-tile { aspect-ratio: 9 / 16; border-radius: 22px; }
+.cin-reel--v .cin-reel-style { /* caption đậm để đọc rõ trên nền cream của section8 */
+  color: #2a2118; font-weight: 600;
+}
+@media (max-width: 600px) { .cin-reel--v .cin-reel-item { width: 168px; } }
+
+/* ── Marquee samples 16:9 cho section4 (nền cream sáng) — caption tối để đọc rõ ── */
+.cin-reel-wrap--samples { margin-top: 2rem; }
+.cin-reel-wrap--samples .cin-reel-style { color: #2a2118; font-weight: 600; }
+
+/* ════════ Section7 "3 options" — NÉN GỌN (bo góc nhỏ, cap ảnh, giảm padding/font) ════════ */
+.section7 .section7-box { margin-top: 16px; }
+.section7 .section7-box-inn {
+  border-radius: 26px !important;
+  overflow: hidden;
+}
+/* khung text gọn hơn */
+.section7 .section7-detail {
+  padding: 30px 5% !important;
+}
+.section7 .section7-detail h2 {
+  font-size: clamp(1.6rem, 1.1rem + 1.7vw, 2.3rem) !important;
+  letter-spacing: -0.6px !important; margin-top: 6px;
+}
+.section7 .section7-detail h4 {
+  font-size: clamp(.95rem, .9rem + .25vw, 1.1rem) !important; margin-top: 10px;
+}
+.section7 .section7-detail p { margin-top: 16px !important; }
+/* cap chiều cao ảnh/video để mỗi card thấp lại */
+.section7 .section7-img img,
+.section7 .section7-img video {
+  max-height: 300px; width: 100%; object-fit: cover; border-radius: 0 !important; display: block;
+}
+/* ảnh CinAI Option 3 là composition đầy đủ (đã có nền) → contain để không cắt mất chi tiết */
+.section7 .option-img-3 { object-fit: contain !important; max-height: 320px; background: transparent; }
+
+/* FIX badge "OPTION x" (position:absolute, top:21/left:-30) đè lên tiêu đề h2 →
+   đưa badge về in-flow để h2 nằm gọn bên dưới, không bị che. */
+.section7 .section7-detail .optiontitle-img,
+.section7 .section7-detail .option2title-img {
+  position: static !important; top: auto !important; left: auto !important; right: auto !important;
+  display: inline-block; margin: 0 0 12px !important;
+}
+.section7 .section7-detail h2 { margin-top: 0 !important; }
+
+@media (max-width: 768px) {
+  .section7 .section7-img img,
+  .section7 .section7-img video { max-height: 230px; }
+  .section7 .section7-detail { padding: 22px 18px !important; }
+}
+
+/* Overlay "Preview Workflow" (port từ cinbase-tvc, theme gold CinAI) */
+.preview-host { position: relative; }
+.video-preview {
+  position: absolute; inset: 0; z-index: 4; display: grid; place-items: center;
+  text-decoration: none; cursor: pointer; border-radius: 18px;
+  background: radial-gradient(120% 120% at 50% 50%, rgba(9,9,11,.35), rgba(9,9,11,.62));
+  opacity: 0; visibility: hidden; backdrop-filter: blur(2px);
+  transition: opacity .3s cubic-bezier(.16,1,.3,1), visibility .3s;
+}
+.preview-host:hover .video-preview, .preview-host:focus-within .video-preview { opacity: 1; visibility: visible; }
+.video-preview-btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .7rem 1.3rem; border-radius: 999px; font-weight: 700; font-size: .9rem; color: #f4f4f5;
+  background: rgba(24,24,27,.6); border: 1px solid rgba(255,255,255,.35);
+  box-shadow: 0 10px 30px -8px rgba(0,0,0,.55); backdrop-filter: blur(8px);
+  transform: translateY(8px) scale(.96); transition: transform .3s cubic-bezier(.16,1,.3,1), background .15s;
+}
+.preview-host:hover .video-preview-btn, .preview-host:focus-within .video-preview-btn { transform: translateY(0) scale(1); }
+.video-preview:hover .video-preview-btn { background: rgba(224,201,166,.22); border-color: rgba(224,201,166,.6); }
+.video-preview-btn svg { flex: none; opacity: .95; }
+@media (prefers-reduced-motion: reduce) {
+  .cin-reel { animation-duration: 120s; }
+  .video-preview, .video-preview-btn { transition: none; } .video-preview-btn { transform: none; }
+}
+
+/* money-back-section vốn có margin-top ÂM để chồng lên section11 (đã cắt) → nay đè lên
+   section marquee mới. Ép về 0 để xếp gọn bên dưới reel. */
+.money-back-section { margin-top: 0 !important; }
+
+/* vsbg — tiêu đề "Competitors" trên card NỀN SÁNG (without-box) đang dùng chữ sáng
+   mặc định của body (#f4f4f5) → mờ. Ép chữ tối cho đọc rõ (card phải CinAI nền tối giữ text-white). */
+.vsbg-box.without-box h4 { color: #18181b !important; }
+
+/* vsbg — TIÊU ĐỀ LỚN section "Competitors Vs CinAI" nằm trên nền vsbg.webp sáng (cream)
+   → "Competitors" + "Vs" chữ sáng mặc định bị mờ. Ép tối; giữ pill "CinAI" chữ trắng/nền vàng. */
+.vsbg-main-title { color: #18181b !important; }
+.vsbg-main-title .vs-span { color: #ffffff !important; }
+
+/* ════════ Section9 "Unmatched Features" — NÉN LẠI cho đỡ dài ════════
+   Gốc: 13 card to xếp 2/hàng → ~7 hàng rất cao. Chuyển sang LƯỚI 3 CỘT gọn + ảnh/nội dung nhỏ lại.
+   Dùng display:contents để "xuyên" qua wrapper .section9-main-box-2 (giữ nguyên HTML),
+   đẩy các .section9-box-out thành ô lưới trực tiếp. */
+.section9-main-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.section9-main-box-2 { display: contents; }
+.section9-box-out { width: auto !important; padding: 0 !important; }
+/* card cuối từng chiếm full-width → nay thành 1 ô bình thường */
+.section9-box-out.section9-box-last { width: auto !important; }
+
+.section9-box {
+  height: 100%;
+  padding: 26px 22px 22px !important;
+  border-radius: 22px !important;
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+}
+/* card cuối vốn để text|ảnh cạnh nhau (50/50) → xếp dọc như các card khác cho đồng bộ */
+.section9-box-last .section9-box { flex-direction: column; }
+.section9-box-last .feature-detail-div,
+.section9-box-last .feature-img-div { width: 100% !important; }
+
+/* tiêu đề + mô tả nhỏ lại để card thấp hơn */
+.section9-box .feature-detail-div h3 {
+  font-size: 19px !important; letter-spacing: -0.4px !important; line-height: 1.2;
+}
+.section9-box .feature-detail-div p {
+  font-size: 14px !important; margin-bottom: 0 !important; letter-spacing: 0 !important;
+}
+/* ẢNH minh hoạ là thủ phạm chính làm card cao → cap chiều cao, giữ tỉ lệ, đẩy xuống đáy */
+.section9-box .feature-img-div { margin-top: auto; }
+.section9-box .feature-img {
+  max-height: 168px !important; width: auto !important; margin: 0 auto !important;
+  top: 0 !important;
+}
+
+/* thu gọn khoảng đệm dọc của cả section */
+.section9 { padding-top: clamp(2.5rem, 2rem + 3vw, 4rem); padding-bottom: clamp(2.5rem, 2rem + 3vw, 4rem); }
+
+@media (max-width: 992px) {
+  .section9-main-box { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .section9-main-box { grid-template-columns: 1fr; gap: 12px; }
+  .section9-box .feature-img { max-height: 200px !important; }
+}
+
+/* ════════ Lead magnet — form thu email nhận workflow miễn phí (thay CTA cuối) ════════ */
+.lead-magnet {
+  background: radial-gradient(120% 120% at 50% 0%, #1c1508 0%, #09090b 62%);
+  padding: clamp(3.5rem, 2.5rem + 5vw, 6.5rem) 0;
+}
+.lead-magnet .container { display: flex; justify-content: center; }
+.lead-card {
+  width: 100%; max-width: 720px; text-align: center;
+  background: linear-gradient(160deg, rgba(36,30,19,.92), rgba(15,15,17,.94));
+  border: 1px solid rgba(224,201,166,.28);
+  border-radius: 26px;
+  padding: clamp(2rem, 1.4rem + 3vw, 3.4rem);
+  box-shadow: 0 30px 70px -20px rgba(0,0,0,.7), 0 0 0 1px rgba(255,210,119,.06) inset;
+}
+.lead-eyebrow {
+  display: inline-block; font-size: .85rem; font-weight: 700; letter-spacing: .03em;
+  color: #ffd277; background: rgba(224,201,166,.12);
+  border: 1px solid rgba(224,201,166,.32); padding: .35rem .9rem; border-radius: 999px; margin-bottom: 1rem;
+}
+.lead-title { color: #f4f4f5; font-size: clamp(1.8rem, 1.2rem + 2.6vw, 3rem); line-height: 1.12; letter-spacing: -.5px; margin: 0 0 .8rem; }
+.lead-gold { background: linear-gradient(135deg, #e0c9a6, #ffd277); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lead-sub { color: #c9c4bd; font-size: clamp(1rem, .95rem + .3vw, 1.18rem); line-height: 1.5; max-width: 560px; margin: 0 auto 1.8rem; }
+.lead-form { width: 100%; }
+.lead-fields { display: flex; flex-wrap: wrap; gap: .7rem; justify-content: center; }
+.lead-input {
+  flex: 1 1 220px; min-width: 0; padding: .95rem 1.1rem; border-radius: 12px;
+  background: rgba(9,9,11,.6); border: 1px solid rgba(224,201,166,.28); color: #f4f4f5;
+  font-size: 1rem; outline: none; transition: border-color .15s, box-shadow .15s;
+}
+.lead-input::placeholder { color: #8a857d; }
+.lead-input:focus { border-color: rgba(255,210,119,.6); box-shadow: 0 0 0 3px rgba(255,210,119,.15); }
+.lead-input[aria-invalid="true"] { border-color: #f87171; }
+.lead-btn {
+  flex: 1 1 100%; cursor: pointer; padding: 1rem 1.6rem; border: none; border-radius: 12px;
+  background: linear-gradient(135deg, #e0c9a6, #ffd277); color: #09090b; font-weight: 800; font-size: 1.05rem;
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  transition: transform .15s, box-shadow .15s; box-shadow: 0 14px 34px -12px rgba(255,210,119,.5);
+}
+.lead-btn:hover { transform: translateY(-1px); box-shadow: 0 18px 42px -12px rgba(255,210,119,.65); }
+.lead-btn:disabled { opacity: .7; cursor: default; transform: none; }
+.lead-hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; opacity: 0; }
+.lead-msg { min-height: 1.2em; margin: .9rem 0 0; font-weight: 600; font-size: .95rem; }
+.lead-msg.error { color: #f87171; }
+.lead-msg.success { color: #6ee7a8; }
+.lead-fine { color: #8a857d; font-size: .82rem; margin: .9rem 0 0; }
+
+/* Card "risk-free" thay ảnh moneybackimg.webp (ToonBee + "60 Days" sai). Panel tối trên box cream. */
+.riskfree-card {
+  max-width: 560px; margin: 1.5rem auto 1.75rem;
+  background: linear-gradient(135deg, #18181b, #26262b);
+  border: 1px solid rgba(224,201,166,.4); border-radius: 22px;
+  padding: 2rem 1.5rem; box-shadow: 0 20px 50px -16px rgba(0,0,0,.5);
+  display: flex; flex-direction: column; align-items: center; gap: .9rem;
+}
+.riskfree-shield { display: block; }
+.riskfree-title { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700;
+  font-size: clamp(1.15rem, 1rem + 1vw, 1.6rem); color: #f4f4f5 !important; letter-spacing: -.3px; }
+.riskfree-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }

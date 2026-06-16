@@ -12,6 +12,13 @@
 # Large media assets (video) — không commit, tải lại từ CDN khi cần
 clones/**/assets/media/
 templates/**/assets/media/
+# Landings: loại file video gốc (nặng), GIỮ poster .webp để trang vẫn render
+landings/**/assets/media/*.mp4
+landings/**/assets/media/*.mov
+landings/**/assets/media/*.webm
+
+# QC screenshots tạm (nằm rời ở thư mục gốc landing, không thuộc assets/)
+landings/*/*.png
 
 # Node
 node_modules/

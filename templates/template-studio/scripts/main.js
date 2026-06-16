@@ -187,13 +187,21 @@
     vids.forEach((v) => vio.observe(v));
   }
 
-  /* ---------- 8. Mobile nav toggle (simple) ---------- */
+  /* ---------- 8. Mobile nav toggle (dropdown menu) ---------- */
   const navToggle = document.getElementById('nav-toggle');
-  if (navToggle) {
-    navToggle.addEventListener('click', () => {
-      const nav = document.querySelector('header nav');
-      if (nav) nav.classList.toggle('hidden');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (navToggle && mobileMenu) {
+    const setOpen = (open) => {
+      mobileMenu.hidden = !open;
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    navToggle.addEventListener('click', () => setOpen(mobileMenu.hidden));
+    mobileMenu.querySelectorAll('[data-mobile-link]').forEach((link) => {
+      link.addEventListener('click', () => setOpen(false));
     });
+    // đóng khi chuyển sang desktop để tránh kẹt trạng thái mở
+    matchMedia('(min-width: 1024px)').addEventListener('change', (e) => { if (e.matches) setOpen(false); });
   }
 
   /* ---------- 8b. Announcement bar close ---------- */

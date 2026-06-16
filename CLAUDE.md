@@ -58,6 +58,8 @@ SYSTEM X-RAY → 1.Fix CRITICAL → 2.Đề xuất kiến trúc mới → 3.HUMA
 
 | Lệnh | Tác dụng |
 |------|----------|
+| `/landing-prompt <sp>` | Soạn prompt landing page chuẩn theo khung A–I (làm rõ ngữ cảnh → wireframe → xuất prompt) (skill `landing-prompt`) |
+| `/fcb-copy <sp>` | Cấu trúc + copy chuyển đổi cao bằng FCB + tâm lý học (5 bước: FCB → tâm lý → cấu trúc → copy → CRO) (skill `fcb-copywriting`) |
 | `/web <url>` | Điều phối: tự chọn skill phù hợp (inspect / extract / clone / audit) |
 | `/inspect-site <url>` | Phân tích sâu 1 trang: DOM, JS events, network, state |
 | `/clone-ui <url> [phần]` | Clone component pixel-perfect (phân tích trước, clone sau) |
@@ -67,7 +69,8 @@ SYSTEM X-RAY → 1.Fix CRITICAL → 2.Đề xuất kiến trúc mới → 3.HUMA
 | `/tracking-setup <domain>` | Dựng tracking Meta 4 lớp (Pixel+CAPI+EMQ+Dedup) cho landing/SaaS (skill `meta-tracking`) |
 | `/nurture-setup <sp>` | Dựng chuỗi email nuôi dưỡng lead trên n8n, nội dung sửa trên Lark (skill `lead-nurture`) |
 
-> **Skills marketing-automation** (`.claude/skills/`): `clone-template`, `meta-tracking`, `lead-nurture`.
+> **Skills marketing-automation** (`.claude/skills/`): `landing-prompt`, `fcb-copywriting`, `clone-template`, `meta-tracking`, `lead-nurture`.
+> Giá CinAI dùng chung: `templates/_shared/cinai-pricing.md` (+ `.json`) — source of truth cho mọi landing.
 > Hạ tầng n8n dùng chung: `automation/n8n/` (workflow tracking + nurture, đã validate).
 
 Cũng có thể **nói tự nhiên tiếng Việt + dán URL** → AI tự chọn đúng agent/skill.

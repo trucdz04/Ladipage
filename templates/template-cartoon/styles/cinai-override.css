@@ -188,3 +188,41 @@ span[style*="#258f16"], span[style*="#258F16"] {
 .nav-link-inn:hover {
   color: #e0c9a6 !important;
 }
+
+/* ─── Responsive safety net ───────────────────────────────────────
+   Vá lỗi tràn ngang + media fluid. Đặt ở file override (nạp cuối) để
+   không phải sửa style.css gốc. KHÔNG đổi layout/màu/brand. */
+
+/* Mọi media giữ trong khung — chặn tràn ngang ở 320px.
+   Loại trừ các media cố ý rộng hơn container (banner/intro/noothertool
+   dùng kỹ thuật width>100% + lề âm, parent đã overflow:hidden). */
+img, video, iframe {
+  max-width: 100%;
+}
+.bigleap-video, .bigleap-video-1, .bigleap-video-2 {
+  max-width: none; /* giữ kỹ thuật phóng to có chủ đích của template */
+}
+
+/* Iframe Vimeo: ép về 100% bề ngang khung cha (một số iframe có
+   width/height pixel cứng inline trong demo/feature). */
+.responsive-video iframe,
+.feature-vid-box iframe,
+.vimeo-embed-wrapper iframe,
+.autoplayer-subarea iframe {
+  max-width: 100%;
+}
+
+/* Thẻ giá (section12) dùng inline max-width + margin 0 12px:
+   ở ≤360px tổng bề rộng + lề có thể vượt viewport. Co lề lại cho khít. */
+@media only screen and (max-width: 380px) {
+  .section12 .table-box {
+    margin-left: 6px !important;
+    margin-right: 6px !important;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .section12 .table-box-inn {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}

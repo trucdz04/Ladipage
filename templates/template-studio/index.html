@@ -97,10 +97,21 @@
       <div class="flex items-center gap-3">
         <a href="#lead-magnet" data-track="ClickHeaderWorkflow" class="btn-ghost btn h-10 text-sm" data-cta="workflow">Get Free Workflow</a>
         <a href="{{PRICING_URL}}" data-track="ClickHeaderPricing" class="btn-primary btn h-10 text-sm hidden sm:inline-flex" data-cta="pricing">See Pricing</a>
-        <button id="nav-toggle" class="grid h-10 w-10 place-items-center rounded-lg border border-border-strong lg:hidden" aria-label="Open menu">
+        <button id="nav-toggle" class="grid h-10 w-10 place-items-center rounded-lg border border-border-strong lg:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
+    </div>
+    <!-- mobile dropdown menu -->
+    <div id="mobile-menu" hidden class="lg:hidden mx-4 mt-2 rounded-xl border border-border-strong bg-bg-elevated/95 p-2 backdrop-blur-md sm:mx-6">
+      <nav aria-label="Mobile navigation" class="flex flex-col">
+        <a href="#features" class="flex min-h-11 items-center rounded-lg px-4 text-[15px] text-foreground/80 transition hover:bg-bg-subtle hover:text-foreground" data-mobile-link>Features</a>
+        <a href="#models" class="flex min-h-11 items-center rounded-lg px-4 text-[15px] text-foreground/80 transition hover:bg-bg-subtle hover:text-foreground" data-mobile-link>Models</a>
+        <a href="#use-cases" class="flex min-h-11 items-center rounded-lg px-4 text-[15px] text-foreground/80 transition hover:bg-bg-subtle hover:text-foreground" data-mobile-link>Use cases</a>
+        <a href="#pricing" class="flex min-h-11 items-center rounded-lg px-4 text-[15px] text-foreground/80 transition hover:bg-bg-subtle hover:text-foreground" data-mobile-link>Pricing</a>
+        <a href="#faq" class="flex min-h-11 items-center rounded-lg px-4 text-[15px] text-foreground/80 transition hover:bg-bg-subtle hover:text-foreground" data-mobile-link>FAQ</a>
+        <a href="{{PRICING_URL}}" data-cta="pricing" class="mt-2 flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground sm:hidden" data-mobile-link>See Pricing</a>
+      </nav>
     </div>
   </header>
 

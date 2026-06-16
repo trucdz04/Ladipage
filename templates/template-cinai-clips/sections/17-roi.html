@@ -1,0 +1,73 @@
+<section class="section bg-white roi" data-roi>
+  <div class="container container-narrow" style="text-align:center">
+    <div class="roi-badge reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+      <span>ROI Calculator</span>
+    </div>
+    <h2 class="reveal" style="font-size:var(--text-h2);margin-top:.5rem">How Much Could You Save?</h2>
+    <p class="reveal lead-muted" style="margin-top:1rem">Drag the sliders. See what creatives cost you the old way vs with CinAI.</p>
+  </div>
+
+  <div class="container roi-card reveal">
+    <div class="roi-controls">
+      <label class="roi-field">
+        <span class="roi-label">Creatives per month <b data-out-videos-val>30</b></span>
+        <input type="range" data-roi-videos min="10" max="300" step="10" value="30" />
+        <span class="roi-scale"><i>10</i><i>150</i><i>300</i></span>
+      </label>
+      <label class="roi-field">
+        <span class="roi-label">Old cost per creative <b data-out-views-val>$40</b></span>
+        <input type="range" data-roi-views min="15" max="150" step="5" value="40" />
+        <span class="roi-scale"><i>$15</i><i>$80</i><i>$150</i></span>
+      </label>
+      <label class="roi-field">
+        <span class="roi-label">Hours saved per creative <b data-out-rate-val>2.0h</b></span>
+        <input type="range" data-roi-rate min="0.5" max="8" step="0.5" value="2" />
+        <span class="roi-scale"><i>0.5h</i><i>4h</i><i>8h</i></span>
+      </label>
+      <label class="roi-field">
+        <span class="roi-label">Your hourly rate <b data-out-value-val>$30</b></span>
+        <input type="range" data-roi-value min="10" max="150" step="5" value="30" />
+        <span class="roi-scale"><i>$10</i><i>$80</i><i>$150</i></span>
+      </label>
+    </div>
+
+    <div class="roi-panel">
+      <div class="roi-metrics">
+        <div><span class="roi-metric-label">Creatives / month</span><span class="roi-metric-val" data-out-monthly-videos>30</span></div>
+        <div><span class="roi-metric-label">Old cash cost</span><span class="roi-metric-val" data-out-total-views>$1,200</span></div>
+        <div><span class="roi-metric-label">Hours saved</span><span class="roi-metric-val" data-out-est-sales>60</span></div>
+      </div>
+
+      <div class="roi-rule"></div>
+
+      <div class="roi-revenue">
+        <span class="roi-rev-label">Your estimated monthly savings</span>
+        <span class="roi-rev-num" data-out-revenue>$2,941/mo</span>
+        <span class="roi-rev-sub">vs doing it the old way — on a $59/mo CinAI plan</span>
+        <span class="roi-roi" data-out-roi>That's 50.8× your CinAI plan back. 🔥</span>
+      </div>
+
+      <div class="roi-compare">
+        <div class="roi-compare-row"><span>CinAI plan</span><span>You save</span></div>
+        <div class="roi-compare-bar"><i class="roi-bar-cost" data-bar-cost></i><i class="roi-bar-rev" data-bar-rev></i></div>
+        <div class="roi-compare-row roi-compare-vals"><span>$59</span><span class="is-green" data-out-rev-plain>$2,941</span></div>
+      </div>
+
+      <div class="roi-mini">
+        <div class="roi-mini-card"><span class="roi-mini-lbl">Cost per creative</span><span class="roi-mini-val" data-out-cpv>$1.97</span></div>
+        <div class="roi-mini-card"><span class="roi-mini-lbl">You save</span><span class="roi-mini-val" data-out-margin>98%</span></div>
+      </div>
+    </div>
+
+    <p class="roi-foot">* "Old way" = what each ad image, product shot or video clip costs via photographers, designers, editors and stock — plus your time. CinAI replaces it with one plan from $3/day.</p>
+  </div>
+
+  <div class="container roi-close reveal">
+    <p class="roi-close-text">Even at a handful of creatives a month, CinAI pays for itself many times over.<br>That's not a subscription. That's leverage.</p>
+    <a href="https://cinai.tv/pricing" class="btn btn-accent btn-lg roi-close-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Start Saving with CinAI
+    </a>
+  </div>
+</section>

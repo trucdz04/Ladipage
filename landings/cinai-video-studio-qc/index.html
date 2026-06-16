@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <title>CinAI.tv — AI Video Generator &amp; Workflow Studio | Image to Video</title>
+  <meta name="description" content="Build, run, and share AI-powered video workflows on CinAI.tv. Connect 100+ AI models, turn any image or prompt into video, automate creative pipelines, and remix community templates." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="assets/cinai/cinai-logo.svg" type="image/svg+xml" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="CinAI.tv — AI Video &amp; Workflow Studio" />
+  <meta property="og:description" content="Connect 100+ AI models, automate creative pipelines, and remix community templates. Turn any image or prompt into video." />
+  <meta property="og:image" content="assets/cinai/og-image.png" />
+  <meta property="og:url" content="https://cinai.tv/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/global.css" />
+  <link rel="stylesheet" href="styles/sections.css" />
+  <!-- Pha 7: tracking config + Meta Pixel base nạp ở cuối body -->
+</head>
+<body>
+  <!-- ============ 00 — ANNOUNCEMENT BAR ============ -->
+  <div class="announce">
+    <div class="inner">
+      <span data-i18n-html="announce.text"><strong>Welcome Offer!</strong> Connect 100+ AI models — start free.</span>
+      <a class="pill-price" href="https://cinai.tv/pricing" data-cta="pricing" data-track="ClickAnnouncement" data-i18n="announce.cta">See Pricing →</a>
+    </div>
+  </div>
+
+  <!-- ============ 01 — HEADER NAV ============ -->
+  <header class="header">
+    <div class="container inner">
+      <a class="brand" href="https://cinai.tv" aria-label="CinAI home">
+        <img class="brand-logo" src="assets/cinai/cinai-logo.svg" alt="" width="30" height="30" aria-hidden="true" />
+        <span>CinAI<span class="text-accent">.tv</span></span>
+      </a>
+      <nav class="nav-main" aria-label="Main navigation">
+        <!-- AI Videos -->
+        <div class="has-menu">
+          <button class="pill" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav.videos">AI Videos</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="mega">
+            <a class="mega-intro" href="https://cinai.tv">
+              <span class="mi-title" data-i18n="nav.videos">AI Videos</span>
+              <span class="mi-sub" data-i18n="mega.videos.sub">Turn any image or prompt into a dynamic AI video.</span>
+              <span class="mi-arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+            <div class="mega-items">
+              <a class="mega-item" href="https://cinai.tv"><span class="it-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4Z"/></svg></span><span class="it-text"><b data-i18n="mega.i2v.t">Image to Video</b><small data-i18n="mega.i2v.d">Animate any photo or product shot.</small></span></a>
+              <a class="mega-item" href="https://cinai.tv"><span class="it-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 6.1H3M21 12.1H3M15.1 18H3"/></svg></span><span class="it-text"><b data-i18n="mega.t2v.t">Text to Video</b><small data-i18n="mega.t2v.d">Describe a scene, get a polished MP4.</small></span></a>
+              <a class="mega-item" href="https://cinai.tv"><span class="it-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18M3 7.5h4M3 12h18M3 16.5h4M17 3v18M17 7.5h4M17 16.5h4"/></svg></span><span class="it-text"><b data-i18n="mega.ext.t">Extend Video</b><small data-i18n="mega.ext.d">Continue any clip seamlessly.</small></span></a>
+              <a class="mega-item" href="https://cinai.tv"><span class="it-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="it-text"><b data-i18n="mega.ava.t">Talking Avatars</b><small data-i18n="mega.ava.d">Lipsync talking-head clips.</small></span></a>
+            </div>
+          </div>
+        </div>
+        <!-- AI Models -->
+        <div class="has-menu">
+          <button class="pill" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav.models">AI Models</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="mega">
+            <a class="mega-intro" href="https://cinai.tv">
+              <span class="mi-title" data-i18n="mega.models.t">100+ AI Models</span>
+              <span class="mi-sub" data-i18n="mega.models.sub">Connect the best video &amp; image models in one studio.</span>
+              <span class="mi-arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+            <div class="mega-items">
+              <a class="mega-item" href="https://cinai.tv"><span class="it-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3L4 10L12 21L20 10L12 3Z"/></svg></span><span class="it-text"><b>Seedance 2.0</b><small data-i18n="mega.seedance.d">Cinematic multi-shot video engine.</small></span></a>
+              <a class="mega-item" href="https://cinai.tv"><span class="it-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4Z"/></svg></span><span class="it-text"><b>Kling V3 Pro</b><small data-i18n="mega.kling.d">Pro motion &amp; character consistency.</small></span></a>
+              <a class="mega-item" href="https://cinai.tv"><span class="it-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m13 2-3 7h6l-3 7"/></svg></span><span class="it-text"><b>Veo 3.1</b><small data-i18n="mega.veo.d">Fast clips with native audio.</small></span></a>
+              <a class="mega-item" href="https://cinai.tv"><span class="it-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></span><span class="it-text"><b>GPT Image 2 · Nano Banana</b><small data-i18n="mega.img.d">Premium image models for key art.</small></span></a>
+            </div>
+          </div>
+        </div>
+        <!-- Workflows -->
+        <div class="has-menu">
+          <button class="pill" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav.workflows">Workflows</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="mega">
+            <a class="mega-intro" href="https://cinai.tv">
+              <span class="mi-title" data-i18n="mega.wf.t">Workflows &amp; Templates</span>
+              <span class="mi-sub" data-i18n="mega.wf.sub">Automate creative pipelines and remix community templates.</span>
+              <span class="mi-arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+            <div class="mega-items">
+              <a class="mega-item" href="https://cinai.tv"><span class="it-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span><span class="it-text"><b data-i18n="mega.tpl.t">Community Templates</b><small data-i18n="mega.tpl.d">Remix proven creative pipelines.</small></span></a>
+              <a class="mega-item" href="https://cinai.tv"><span class="it-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v12M18 9v12M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 15a9 9 0 0 1 9-9"/></svg></span><span class="it-text"><b data-i18n="mega.pipe.t">Automated Pipelines</b><small data-i18n="mega.pipe.d">Chain models end to end.</small></span></a>
+              <a class="mega-item" href="https://cinai.tv"><span class="it-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/></svg></span><span class="it-text"><b data-i18n="mega.up.t">Image Upscaler</b><small data-i18n="mega.up.d">Enhance &amp; upscale up to 4K.</small></span></a>
+              <a class="mega-item" href="https://cinai.tv"><span class="it-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span><span class="it-text"><b data-i18n="mega.edit.t">Image Editor</b><small data-i18n="mega.edit.d">Edit &amp; restyle with AI.</small></span></a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="header-actions">
+        <!-- Language toggle VI / EN -->
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" class="lang-btn" data-lang="vi">VI</button>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+        </div>
+        <a class="btn-lime" href="https://cinai.tv/pricing" data-cta="signin" data-track="ClickTrial" data-i18n="cta.trial">Trial Omni unlimited</a>
+        <button class="hamburger hide-desktop" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile menu (xổ xuống, chỉ hiện <900px khi bấm hamburger) -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <div class="mm-inner">
+        <span class="mm-group-title" data-i18n="nav.videos">AI Videos</span>
+        <a class="mm-link" href="https://cinai.tv" data-i18n="mega.i2v.t">Image to Video</a>
+        <a class="mm-link" href="https://cinai.tv" data-i18n="mega.t2v.t">Text to Video</a>
+        <a class="mm-link" href="https://cinai.tv" data-i18n="mega.ext.t">Extend Video</a>
+        <a class="mm-link" href="https://cinai.tv" data-i18n="mega.ava.t">Talking Avatars</a>
+        <span class="mm-group-title" data-i18n="nav.models">AI Models</span>
+        <a class="mm-link" href="https://cinai.tv" data-i18n="mega.models.t">100+ AI Models</a>
+        <a class="mm-link" href="https://cinai.tv">Seedance 2.0</a>
+        <a class="mm-link" href="https://cinai.tv">Veo 3.1</a>
+        <span class="mm-group-title" data-i18n="nav.workflows">Workflows</span>
+        <a class="mm-link" href="https://cinai.tv" data-i18n="mega.tpl.t">Community Templates</a>
+        <a class="mm-link" href="https://cinai.tv" data-i18n="mega.pipe.t">Automated Pipelines</a>
+        <a class="mm-link" href="https://cinai.tv" data-i18n="mega.edit.t">Image Editor</a>
+        <a class="mm-link" href="#pricing" data-i18n="nav.pricing">Pricing</a>
+        <a class="btn-lime mm-cta" href="https://cinai.tv/pricing" data-cta="signin-mobile" data-track="ClickTrial" data-i18n="cta.trial">Trial Omni unlimited</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="grid-zone">
+    <!-- ============ 02 — BREADCRUMB ============ -->
+    <div class="breadcrumb-wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="https://cinai.tv" data-i18n="bc.home">Home</a>
+        <svg class="sep" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        <span class="current" data-i18n="bc.studio">AI Video Studio</span>
+      </nav>
+    </div>
+
+    <!-- ============ 03 — HERO + GENERATOR PANEL ============ -->
+    <section class="hero container" aria-labelledby="hero-heading">
+      <div class="laurel reveal">
+        <div class="laurel-frame">
+          <img class="laurel-img" src="assets/icons/laurel.svg" alt="" width="180" height="57" loading="eager" />
+          <div class="laurel-overlay">
+            <div class="laurel-stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 17l-5.878 3.59 1.598-6.7L2.49 9.41l6.865-.55L12 2.5l2.645 6.36 6.865.55-5.23 4.48 1.598 6.7z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 17l-5.878 3.59 1.598-6.7L2.49 9.41l6.865-.55L12 2.5l2.645 6.36 6.865.55-5.23 4.48 1.598 6.7z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 17l-5.878 3.59 1.598-6.7L2.49 9.41l6.865-.55L12 2.5l2.645 6.36 6.865.55-5.23 4.48 1.598 6.7z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 17l-5.878 3.59 1.598-6.7L2.49 9.41l6.865-.55L12 2.5l2.645 6.36 6.865.55-5.23 4.48 1.598 6.7z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 17l-5.878 3.59 1.598-6.7L2.49 9.41l6.865-.55L12 2.5l2.645 6.36 6.865.55-5.23 4.48 1.598 6.7z"/></svg>
+            </div>
+            <span class="lbl" data-i18n="hero.laurel">#1 AI Cinematic</span>
+          </div>
+        </div>
+      </div>
+      <h1 id="hero-heading" class="reveal" data-i18n-html="hero.h1">AI Video &amp; Workflow Studio with <em>Image to Video</em></h1>
+      <p class="hero-sub reveal" data-i18n="hero.sub">Build, run, and share AI-powered video workflows on CinAI.tv. Connect 100+ AI models and turn any image or prompt into a finished video.</p>
+      <div class="hero-pills reveal">
+        <span class="feat-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg><span data-i18n="hero.pill1">Instant AI Video Generation</span></span>
+        <span class="feat-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/></svg><span data-i18n="hero.pill2">Picture to Video AI</span></span>
+        <span class="feat-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/></svg><span data-i18n="hero.pill3">Connect 100+ AI Models</span></span>
+        <span class="feat-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg><span data-i18n="hero.pill4">Automate Creative Pipelines</span></span>
+      </div>
+
+      <!-- Generator panel (component động) -->
+      <div class="panel reveal" id="generator">
+        <div class="panel-banner"><span class="badge badge-new shimmer">NEW</span> <span data-i18n="panel.banner">Try the new Gemini Omni cinematic model</span></div>
+        <div class="panel-body">
+          <!-- LEFT: form -->
+          <div class="panel-form">
+            <div class="panel-head">
+              <h2 data-i18n="panel.title">Turn Images into Videos with AI</h2>
+              <a href="https://cinai.tv/login" data-i18n="panel.login">Login to generate videos</a>
+            </div>
+
+            <span class="field-label" data-i18n="panel.selectModel">Select AI Model</span>
+            <div class="model-list" role="radiogroup" aria-label="Select AI Model">
+              <button class="model-card" role="radio" aria-checked="true">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="diamondGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#67e8f9"/><stop offset="50%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#f472b6"/></linearGradient></defs><path d="M12 3L4 10L12 21L20 10L12 3Z" fill="url(#diamondGradient)" opacity="0.9"/><path d="M12 3L8 10H16L12 3ZM4 10L12 21M20 10L12 21" stroke="#fff" stroke-width="0.5" opacity="0.6" fill="none"/></svg></span>
+                <span class="meta">
+                  <span class="name">Gemini Omni</span>
+                  <span class="chips"><span class="mc-badge rose" data-i18n="panel.badge.bestAudio">Best Quality + Audio</span><span class="mc-badge green" data-i18n="panel.badge.new">New</span></span>
+                </span>
+                <span class="radio" aria-hidden="true"></span>
+              </button>
+              <button class="model-card" role="radio" aria-checked="false">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3L4 10L12 21L20 10L12 3Z" fill="url(#diamondGradient)" opacity="0.9"/><path d="M12 3L8 10H16L12 3ZM4 10L12 21M20 10L12 21" stroke="#fff" stroke-width="0.5" opacity="0.6" fill="none"/></svg></span>
+                <span class="meta">
+                  <span class="name">Veo 3.1 <span class="text-accent">(NEW)</span></span>
+                  <span class="chips"><span class="mc-badge rose" data-i18n="panel.badge.proQuality">Pro Quality</span><span class="mc-badge green" data-i18n="panel.badge.justLaunched">Just Launched</span></span>
+                </span>
+                <span class="radio" aria-hidden="true"></span>
+              </button>
+            </div>
+            <button class="see-more" data-open-modal>
+              <span class="sm-left">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+                <span data-i18n="panel.seeMore">See More Models</span> <span class="sm-count" data-i18n="panel.seeMoreCount">+8 more</span>
+              </span>
+              <svg class="sm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+
+            <div class="tabs" role="tablist" aria-label="Generation mode">
+              <button class="tab" role="tab" aria-selected="true" data-i18n="panel.tab.i2v">Image to Video</button>
+              <button class="tab" role="tab" aria-selected="false" data-i18n="panel.tab.t2v">Text to Video</button>
+              <button class="tab" role="tab" aria-selected="false" data-i18n="panel.tab.ext">Extend Video</button>
+            </div>
+
+            <div data-tab-panel="image">
+              <div class="upload-head">
+                <span class="field-label" style="margin:0" data-i18n="panel.upload">Upload Image</span>
+                <a href="#" class="use-sample" data-open-modal data-i18n="panel.useSample">Use sample image</a>
+              </div>
+              <div class="dropzone-lg">
+                <img src="assets/cinai/out-helmet.png" alt="Sample input image" loading="lazy" />
+                <button class="change-img" data-open-modal><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg> <span data-i18n="panel.changeImg">Change image</span></button>
+              </div>
+            </div>
+
+            <label class="field-label prompt-label" for="prompt"><span data-i18n="panel.prompt">Prompt</span>
+              <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            </label>
+            <textarea id="prompt" data-i18n-attr="placeholder:panel.promptPh" placeholder="Describe how the image should animate...">Cinematic slow push-in on the subject, dramatic rim lighting and soft volumetric haze, the camera glides forward as subtle motion brings the scene to life...</textarea>
+
+            <span class="field-label" data-i18n="panel.duration">Video Duration</span>
+            <div class="chip-row" role="group" aria-label="Video Duration">
+              <button class="chip" aria-pressed="true">5s</button>
+              <button class="chip" aria-pressed="false">10s<small data-i18n="panel.credits20">+20 credits</small></button>
+              <button class="chip" aria-pressed="false">15s<small data-i18n="panel.credits40">+40 credits</small></button>
+            </div>
+
+            <span class="field-label" data-i18n="panel.resolution">Video Resolution</span>
+            <div class="chip-row" role="group" aria-label="Video Resolution">
+              <button class="chip" aria-pressed="true">720p</button>
+              <button class="chip" aria-pressed="false">1080p<small data-i18n="panel.credits10">+10 credits</small></button>
+            </div>
+
+            <button class="more-options" data-open-modal>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg><span data-i18n="panel.moreOptions">Click to see more options</span></button>
+
+            <a class="btn btn-primary btn-block btn-lg" href="https://cinai.tv/pricing" data-cta="generate" data-track="ClickGenerate"><span data-i18n="panel.cta">Sign up to Try!</span>
+              <svg class="spark-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#faf7ffaa" d="M7.195 2.845a.75.75 0 0 0-1.467 0c-.232 1.096-.55 1.835-.99 2.361c-.429.516-1.029.893-1.95 1.166a.75.75 0 0 0 0 1.438c.885.262 1.48.617 1.916 1.125c.444.516.782 1.26 1.024 2.402a.75.75 0 0 0 1.467 0c.242-1.143.58-1.886 1.024-2.402c.436-.508 1.03-.863 1.917-1.125a.75.75 0 0 0 0-1.438c-.886-.262-1.481-.617-1.917-1.125c-.444-.516-.782-1.26-1.024-2.402m8.303 3.251a.75.75 0 0 0-1.458 0c-.554 2.292-1.141 3.674-1.972 4.638c-.82.952-1.947 1.576-3.77 2.192a.75.75 0 0 0 0 1.421c1.904.643 3.046 1.322 3.852 2.292c.819.986 1.362 2.355 1.89 4.537a.75.75 0 0 0 1.458 0c.554-2.291 1.142-3.673 1.972-4.637c.82-.952 1.947-1.576 3.77-2.192a.75.75 0 0 0 0-1.421c-1.907-.644-3.047-1.32-3.852-2.29c-.818-.984-1.36-2.352-1.89-4.54"/></svg></a>
+            <p class="panel-note" data-i18n="panel.note">Update: Now generate more videos while you wait</p>
+            <div class="notif-wrap">
+              <button class="notif-toggle" aria-pressed="true" aria-label="Notification sound on — click to mute" data-open-modal>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg><span data-i18n="panel.notif">Notification sound on</span></button>
+            </div>
+          </div>
+
+          <!-- RIGHT: preview -->
+          <div class="preview">
+            <div class="player">
+              <video autoplay loop muted playsinline preload="metadata"
+                src="assets/media/cinai-tvc.mp4"></video>
+              <span class="timestamp">0:06 / 0:10</span>
+            </div>
+            <div class="preview-actions">
+              <button class="pv-btn pv-save" data-open-modal>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> <span data-i18n="pv.save">Save</span></button>
+              <button class="pv-btn" data-open-modal>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg> <span data-i18n="pv.extend">Extend video</span></button>
+              <button class="pv-btn pv-cyan" data-open-modal>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> <span data-i18n="pv.upscale">Upscale video</span></button>
+              <button class="pv-btn" data-open-modal>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg> <span data-i18n="pv.continue">Continue from last frame</span></button>
+              <button class="pv-btn" data-open-modal>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></svg> <span data-i18n="pv.editImg">Generate or edit an image</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div><!-- /grid-zone -->
+
+    <!-- ============ 04 — COMMUNITY VIDEOS ============ -->
+    <section class="section community-section" aria-labelledby="community-heading">
+      <div class="section-head reveal">
+        <span class="eyebrow eyebrow-gold" data-i18n="community.eyebrow">Community Videos</span>
+        <h2 id="community-heading" data-i18n="community.h2">Community Videos Collection</h2>
+        <p class="section-sub" data-i18n="community.sub">Discover and remix videos with prompts.</p>
+      </div>
+      <!-- lưới full-width, cắt cao + làm tối dần ở đáy, nút đặt đè lên (khớp gốc) -->
+      <div class="community-clip">
+        <div class="community-grid" id="community-grid"><!-- video cards injected by main.js --></div>
+        <div class="community-fade">
+          <a class="btn btn-primary" href="https://cinai.tv" target="_blank" rel="noopener" data-cta="community"><span data-i18n="community.cta">View all Community Videos</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:18px;height:18px"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 05 — FEATURES (ngay sau Community, khớp gốc) ============ -->
+    <section class="section features" aria-labelledby="features-heading">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 id="features-heading" data-i18n="features.h2">Everything you need to create AI videos</h2>
+          <p class="section-sub" data-i18n="features.sub">Generate clips from images, prompts, portraits, and product shots in one workflow.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card reveal"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></span><h3 data-i18n="feat.fast.t">Fast Generation</h3><p data-i18n="feat.fast.d">Turn images and prompts into short videos without editing software or render queues.</p></article>
+          <article class="feature-card reveal"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/></svg></span><h3 data-i18n="feat.t2v.t">Text to Video</h3><p data-i18n="feat.t2v.d">Describe the scene, style, and motion you want, then generate a polished MP4.</p></article>
+          <article class="feature-card reveal"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg></span><h3 data-i18n="feat.i2v.t">Image to Video</h3><p data-i18n="feat.i2v.d">Upload a photo, product shot, or character image and add realistic motion.</p></article>
+          <article class="feature-card reveal"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg></span><h3 data-i18n="feat.ava.t">Talking Avatars</h3><p data-i18n="feat.ava.d">Create lipsync and talking-head videos from portraits for ads, intros, and social clips.</p></article>
+          <article class="feature-card reveal"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg></span><h3 data-i18n="feat.comm.t">Commercial Use</h3><p data-i18n="feat.comm.d">Download videos for social media, ads, websites, presentations, and client work.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 06 — EXPLORE AI MODELS ============ -->
+    <section class="section container-wide" aria-labelledby="models-heading">
+      <div class="section-head reveal">
+        <h2 id="models-heading" data-i18n="models.h2">Explore AI Video Models</h2>
+        <p class="section-sub" data-i18n="models.sub">Discover powerful AI video generation models to create stunning videos from text or images.</p>
+      </div>
+      <div class="model-grid" id="model-grid"><!-- model tiles injected by main.js --></div>
+      <div class="center-cta"><a class="btn btn-primary" href="https://cinai.tv" target="_blank" rel="noopener" data-cta="models"><span data-i18n="models.cta">View All Models</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:18px;height:18px"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></div>
+    </section>
+
+    <!-- ============ 07 — PRICING (Pro / Plus — nguồn: _shared/cinai-pricing.json) ============ -->
+    <section class="section pricing-section container" id="pricing" aria-labelledby="pricing-heading">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="pricing.eyebrow">Unlimited starts at $19/mo</span>
+        <h2 id="pricing-heading" data-i18n="pricing.h2">Simple pricing, unlimited creativity</h2>
+        <p class="section-sub" data-i18n="pricing.sub">Start free, then pick the plan that fits how you create. Cancel anytime.</p>
+      </div>
+
+      <!-- Toggle Monthly / Yearly (mặc định Yearly) -->
+      <div class="billing-toggle reveal" role="group" aria-label="Billing period">
+        <button type="button" class="bt-opt" data-billing="monthly" aria-pressed="false" data-i18n="pricing.monthly">Monthly</button>
+        <button type="button" class="bt-opt is-active" data-billing="yearly" aria-pressed="true">
+          <span data-i18n="pricing.yearly">Yearly</span> <span class="bt-save" data-i18n="pricing.save">save up to 33%</span>
+        </button>
+      </div>
+
+      <div class="pricing-grid" id="pricing-grid" data-billing-state="yearly">
+        <!-- PRO -->
+        <article class="price-card reveal">
+          <span class="price-badge price-badge-alt" data-i18n="pricing.pro.badge">Most popular</span>
+          <div class="pc-head">
+            <h3 class="pc-name">Pro</h3>
+            <p class="pc-sublabel" data-i18n="pricing.pro.sub">Start here</p>
+          </div>
+          <div class="pc-price">
+            <span class="pc-anchor" data-anchor-monthly="$66" data-anchor-yearly="$43" aria-hidden="true">$43</span>
+            <span class="pc-amount" data-price-monthly="$29" data-price-yearly="$19">$19</span>
+            <span class="pc-period" data-i18n="pricing.perMonth">/mo</span>
+            <span class="pc-off">−56%</span>
+          </div>
+          <p class="pc-billnote" data-billnote-monthly data-i18n="pricing.billedMonthly">billed monthly</p>
+          <p class="pc-billnote" data-billnote-yearly data-i18n="pricing.pro.billedYearly">billed yearly · $228/yr</p>
+          <p class="pc-tagline" data-i18n="pricing.pro.tagline">Unlimited AI images + storyboards, with credits for cinematic video.</p>
+          <a class="btn btn-primary btn-block" href="https://cinai.tv/signup?plan=pro" data-cta="pricing-pro" data-track="ClickPricingPro" data-plan="pro"><span data-i18n="pricing.pro.cta">Start with Pro</span></a>
+          <ul class="pc-features">
+            <li data-i18n="pricing.pro.f1">♾️ Unlimited AI images — Nano Banana 2 Pro</li>
+            <li data-i18n="pricing.pro.f2">♾️ Unlimited AI images — ChatGPT Image 2</li>
+            <li data-i18n="pricing.pro.f3">Auto-storyboard with Opus 4.8</li>
+            <li data-i18n="pricing.pro.f4">Plan credits for Seedance · Kling · Omni video</li>
+            <li class="pc-bonus" data-i18n="pricing.pro.bonus">🎁 Welcome bonus: 20 Grok + 20 Omni + 100 Veo Quality renders free (one-time)</li>
+          </ul>
+        </article>
+
+        <!-- PLUS (card nổi bật — gói muốn đẩy mạnh) -->
+        <article class="price-card reveal is-spotlight">
+          <span class="price-badge" data-i18n="pricing.plus.badge">Best for video creators</span>
+          <div class="pc-head">
+            <h3 class="pc-name">Plus</h3>
+            <p class="pc-sublabel" data-i18n="pricing.plus.sub">Unlimited video</p>
+          </div>
+          <div class="pc-price">
+            <span class="pc-anchor" data-anchor-monthly="$111" data-anchor-yearly="$89" aria-hidden="true">$89</span>
+            <span class="pc-amount" data-price-monthly="$49" data-price-yearly="$39">$39</span>
+            <span class="pc-period" data-i18n="pricing.perMonth">/mo</span>
+            <span class="pc-off">−56%</span>
+          </div>
+          <p class="pc-billnote" data-billnote-monthly data-i18n="pricing.billedMonthly">billed monthly</p>
+          <p class="pc-billnote" data-billnote-yearly data-i18n="pricing.plus.billedYearly">billed yearly · $468/yr</p>
+          <p class="pc-tagline" data-i18n="pricing.plus.tagline">Everything in Pro, plus unlimited cinematic video.</p>
+          <a class="btn btn-primary btn-block" href="https://cinai.tv/signup?plan=plus" data-cta="pricing-plus" data-track="ClickPricingPlus" data-plan="plus"><span data-i18n="pricing.plus.cta">Go Plus</span></a>
+          <ul class="pc-features">
+            <li data-i18n="pricing.plus.f1">✓ Everything in Pro</li>
+            <li data-i18n="pricing.plus.f2">♾️ Unlimited AI video — Gemini Omni</li>
+            <li data-i18n="pricing.plus.f3">♾️ Unlimited AI video — Veo Quality</li>
+            <li data-i18n="pricing.plus.f4">Larger plan credit allotment</li>
+            <li class="pc-bonus" data-i18n="pricing.plus.bonus">🎁 100 free Grok videos every month</li>
+          </ul>
+        </article>
+      </div>
+      <p class="pricing-foot reveal" data-i18n="pricing.freeTrial">Sign up and generate for free — no credit card required.</p>
+    </section>
+
+    <!-- ============ 08 — FAQ ============ -->
+    <section class="section container" aria-labelledby="faq-heading">
+      <div class="section-head reveal"><h2 id="faq-heading" data-i18n="faq.h2">Frequently asked questions</h2></div>
+      <div class="faq-wrap" id="faq-wrap"><!-- faq items injected by main.js --></div>
+    </section>
+  </main>
+
+  <!-- ============ 09 — FOOTER / CTA ============ -->
+  <section class="epic container">
+    <div class="big reveal"><span data-i18n="epic.big">Create Epic</span><br /><span class="ghost">CinAI.tv</span></div>
+    <p class="sub" data-i18n="epic.sub">Build, run, and share AI video workflows with CinAI.tv · Questions: hello@cinai.tv</p>
+  </section>
+  <footer class="footer">
+    <div class="container footer-cols">
+      <div class="footer-brand">
+        <a class="brand" href="https://cinai.tv"><img class="brand-logo" src="assets/cinai/cinai-logo.svg" alt="" width="26" height="26" aria-hidden="true" /> CinAI<span class="text-accent">.tv</span></a>
+        <p data-i18n="footer.brand">AI video &amp; workflow studio. Connect 100+ AI models, automate creative pipelines, and remix community templates. Questions: hello@cinai.tv</p>
+      </div>
+      <div><h4 data-i18n="footer.product">Product</h4><div class="footer-links">
+        <a href="https://cinai.tv" data-i18n="bc.home">Home</a><a href="https://cinai.tv" data-i18n="mega.i2v.t">Image to Video</a><a href="https://cinai.tv" data-i18n="mega.t2v.t">Text to Video</a>
+        <a href="https://cinai.tv" data-i18n="mega.ava.t">Talking Avatars</a><a href="https://cinai.tv" data-i18n="nav.models">AI Models</a><a href="https://cinai.tv" data-i18n="nav.workflows">Workflows</a>
+        <a href="#pricing" data-i18n="nav.pricing">Pricing</a></div></div>
+      <div><h4 data-i18n="footer.models">Models</h4><div class="footer-links">
+        <a href="https://cinai.tv">Seedance 2.0</a><a href="https://cinai.tv">Kling V3 Pro</a><a href="https://cinai.tv">Veo 3.1</a>
+        <a href="https://cinai.tv">Hailuo (MiniMax)</a><a href="https://cinai.tv">GPT Image 2</a><a href="https://cinai.tv">Nano Banana</a>
+        <a href="https://cinai.tv">Omni · Opus 4.8</a></div></div>
+      <div><h4 data-i18n="footer.company">Company</h4><div class="footer-links">
+        <a href="https://cinai.tv/blog" data-i18n="footer.blog">Blog</a><a href="https://cinai.tv/login" data-i18n="footer.login">Login</a><a href="https://cinai.tv/pricing" data-i18n="footer.plans">Plans</a>
+        <a href="https://cinai.tv/privacy" data-i18n="footer.privacy">Privacy Policy</a><a href="https://cinai.tv/terms" data-i18n="footer.terms">Terms &amp; Conditions</a><a href="mailto:hello@cinai.tv" data-i18n="footer.contact">Contact</a></div></div>
+    </div>
+    <div class="container footer-bottom">
+      <span data-i18n="footer.copy">© CinAI.tv — AI Video &amp; Workflow Studio</span>
+      <span><a href="https://cinai.tv/privacy" data-i18n="footer.privacy">Privacy Policy</a> · <a href="https://cinai.tv/terms" data-i18n="footer.termsUse">Terms of Use</a></span>
+    </div>
+  </footer>
+
+  <!-- ============ LOGIN MODAL ============ -->
+  <div class="modal-backdrop" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal" style="position:relative">
+      <button class="modal-close" aria-label="Close" data-close-modal>×</button>
+      <span class="eyebrow">CinAI.tv</span>
+      <h3 id="modal-title" data-i18n="modal.title">Epic AI Videos in Seconds</h3>
+      <p class="trust" data-i18n="modal.trust">Sign up to start creating · Connect 100+ AI models</p>
+      <form id="lead-form" data-track-lead="signup" data-redirect="https://cinai.tv/login">
+        <a href="https://cinai.tv/login" class="btn btn-secondary btn-block" data-cta="google"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.35 11.1h-9.18v2.92h5.27c-.23 1.4-1.64 4.1-5.27 4.1-3.17 0-5.76-2.62-5.76-5.86s2.59-5.86 5.76-5.86c1.8 0 3.01.77 3.7 1.43l2.52-2.43C16.46 3.5 14.5 2.6 12.17 2.6 6.98 2.6 2.8 6.78 2.8 12s4.18 9.4 9.37 9.4c5.41 0 8.99-3.8 8.99-9.15 0-.61-.07-1.08-.81-1.15Z"/></svg> <span data-i18n="modal.google">Continue with Google</span></a>
+        <input type="email" name="email" placeholder="you@email.com" required
+          style="width:100%;padding:.7rem;border-radius:8px;background:var(--color-surface-3);border:1px solid var(--color-border);color:#fff;margin-bottom:.75rem" />
+        <button type="submit" class="btn btn-primary btn-block" data-cta="create-account" data-i18n="modal.create">Create Account</button>
+      </form>
+      <p class="trust" style="margin:.75rem 0 0"><span data-i18n="modal.haveAccount">Already have an account?</span> <a class="text-accent" href="https://cinai.tv/login" data-i18n="modal.signin">Sign In</a></p>
+      <p class="disclaimer" data-i18n="modal.disclaimer">By continuing, I acknowledge the Privacy Policy and agree to the Terms of Use. I also confirm that I am at least 18 years old.</p>
+    </div>
+  </div>
+
+  <!-- Nút CTA nổi (hiện khi cuộn xuống, header không sticky) -->
+  <div class="float-cta" id="float-cta" aria-hidden="true">
+    <a class="btn-lime" href="https://cinai.tv/pricing" data-cta="float" data-track="ClickTrial" data-i18n="cta.trial">Trial Omni unlimited</a>
+  </div>
+
+  <script src="scripts/tracking-config.js"></script>
+  <script src="scripts/i18n.js"></script>
+  <script src="scripts/main.js" defer></script>
+  <script src="scripts/tracking.js" defer></script>
+</body>
+</html>

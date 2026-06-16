@@ -125,7 +125,7 @@ button { font-family: inherit; cursor: pointer; }
 
 /* mobile fallback: xếp dọc, hiện hết */
 @media (max-width: 1023px) {
-  #vertical-feature-list[data-vfl] { height: auto !important; }
+  [data-vfl] { height: auto !important; }
   .vfl-sticky-full { position: static; height: auto; padding: 2rem 0; }
   .vfl-sticky-full .container-2xl { display: block; }
   .vfl-panel-abs { position: relative; inset: auto; opacity: 1; visibility: visible; transform: none; pointer-events: auto;

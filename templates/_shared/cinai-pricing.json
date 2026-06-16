@@ -1,0 +1,68 @@
+{
+  "$comment": "SOURCE OF TRUTH cho bảng giá CinAI.tv — dùng chung cho mọi landing template. Cập nhật ở ĐÂY, các template tham chiếu sang. Số đánh dấu trong 'placeholders' cần xác nhận trước deploy.",
+  "brand": "CinAI.tv",
+  "currency": "USD",
+  "updated": "2026-06-16",
+  "billing": {
+    "monthly": "per month, billed monthly",
+    "yearly": "billed yearly, displayed as effective per-month price"
+  },
+  "plans": [
+    {
+      "id": "pro",
+      "name": "Pro",
+      "badge": "Most popular",
+      "subLabel": "Start here",
+      "price": { "monthly": 29, "yearlyPerMonth": 19, "yearlyTotal": 228 },
+      "tagline": "Unlimited AI images + storyboards, with credits for cinematic video.",
+      "unlimited": [
+        "Unlimited AI images — Nano Banana 2 Pro",
+        "Unlimited AI images — ChatGPT Image 2"
+      ],
+      "storyboard": "Auto-storyboard with Opus 4.8",
+      "credits": "Plan credits to run video models: Seedance, Kling, Omni",
+      "bonus": {
+        "type": "one-time",
+        "label": "Welcome free renders (one-time)",
+        "items": [
+          "20 Grok videos free",
+          "20 Omni videos free",
+          "100 Veo Quality videos free"
+        ]
+      }
+    },
+    {
+      "id": "plus",
+      "name": "Plus",
+      "badge": "Best for video creators",
+      "subLabel": "Unlimited video",
+      "price": { "monthly": 49, "yearlyPerMonth": 39, "yearlyTotal": 468 },
+      "tagline": "Everything in Pro, plus unlimited cinematic video.",
+      "includes": "Everything in Pro",
+      "extraCredits": "Larger plan credit allotment (added per plan)",
+      "unlimited": [
+        "Unlimited AI video — Gemini Omni",
+        "Unlimited AI video — Veo Quality"
+      ],
+      "bonus": {
+        "type": "monthly",
+        "label": "Recurring free renders (every month)",
+        "items": [
+          "100 Grok videos free every month"
+        ]
+      }
+    }
+  ],
+  "freeTrial": "Sign up and generate for free",
+  "ctaUrls": {
+    "pro": "https://cinai.tv/signup?plan=pro",
+    "plus": "https://cinai.tv/signup?plan=plus"
+  },
+  "defaultBillingToggle": "yearly",
+  "placeholders": [
+    "Exact credit amounts per plan (Pro vs Plus) — chưa rõ con số",
+    "Yearly total billing copy/display (đang tính = perMonth × 12)",
+    "Free-trial mechanics (số credit/video tặng khi đăng ký free)",
+    "Most-popular badge: hiện gán Pro — đổi sang Plus nếu muốn đẩy gói cao"
+  ]
+}

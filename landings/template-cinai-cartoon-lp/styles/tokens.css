@@ -1,0 +1,98 @@
+/* tokens.css — Design system CinAI.tv (rebrand từ toonbee.ai → cinai.tv)
+   Hệ màu HSL. KHÔNG hardcode lặp. */
+:root {
+  /* ===== Màu nền (dark luxury) ===== */
+  --background: 240 10% 4%;           /* #09090b */
+  --background-elevated: 240 6% 10%;  /* #18181b */
+  --background-subtle: 240 5% 15%;    /* #26262b */
+  --card: 240 6% 10%;
+  --card-foreground: 240 5% 96%;
+  --popover: 240 6% 10%;
+
+  /* ===== Chữ ===== */
+  --foreground: 240 5% 96%;           /* #f4f4f5 */
+  --foreground-muted: 240 4% 58%;     /* #909096 */
+  --muted: 240 5% 15%;
+  --muted-foreground: 240 4% 58%;
+
+  /* ===== Nhấn (CinAI gold/cream) ===== */
+  --primary: 32 47% 80%;              /* vàng kem #e0c9a6 */
+  --primary-hover: 32 47% 70%;
+  --primary-foreground: 0 0% 10%;
+  --accent: 32 47% 80%;               /* #e0c9a6 */
+  --accent-hover: 32 47% 70%;
+  --accent-foreground: 240 10% 4%;
+  --accent-muted: 32 47% 30%;
+  --gold: #ffd277;
+  --gold-2: #77530a;
+  --gold-gradient: linear-gradient(180deg, #c4a87a 0%, #e0c9a6 51%, #ffd277 100%);
+
+  /* ===== Palette thay thế amber ToonBee ===== */
+  --color-accent: #e0c9a6;            /* thay #FFBF21 */
+  --color-accent-bright: #ffd277;     /* thay #FFD71D */
+  --color-accent-orange: #c4a87a;     /* thay #FFAC25 */
+  --color-accent-soft: #f0e0c0;       /* thay #FFDF60 */
+  --color-ink: #f4f4f5;               /* chữ trên dark bg */
+  --color-ink-soft: #d4d4d8;
+  --color-surface: hsl(240 10% 4%);   /* nền tối */
+  --color-surface-dark: #09090b;
+  --color-muted-dark: #909096;
+  --color-muted-light: #a1a1aa;
+  --gradient-gold: linear-gradient(180deg, #c4a87a 0%, #e0c9a6 51%, #ffd277 100%);
+
+  /* ===== Phụ ===== */
+  --secondary: 240 5% 15%;
+  --secondary-hover: 240 4% 20%;
+  --secondary-foreground: 240 5% 84%;
+
+  /* ===== Trạng thái ===== */
+  --success: 160 84% 39%;
+  --warning: 38 92% 50%;
+  --destructive: 0 84% 60%;
+  --info: 217 91% 60%;
+
+  /* ===== Viền & focus ===== */
+  --border: 240 5% 18%;
+  --border-subtle: 240 6% 12%;
+  --border-strong: 240 4% 28%;
+  --ring: 32 47% 80%;
+
+  /* ===== Bo góc ===== */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-card: 20px;    /* thay 75px — phong cách CinAI sắc hơn */
+  --radius-pill: 999px;
+
+  /* ===== Shadow ===== */
+  --shadow-xs: 0 1px 2px 0 #00000080;
+  --shadow-sm: 0 1px 3px 0 #0009;
+  --shadow-md: 0 4px 6px -1px #0009;
+  --shadow-lg: 0 10px 15px -3px #0009;
+  --shadow-xl: 0 20px 25px -5px #0009;
+  --shadow-cta: 0 8px 24px rgba(0,0,0,0.40), 0 0 0 1px rgba(224,201,166,0.15);
+  --shadow-img: drop-shadow(0 27px 54px rgba(0,0,0,0.35));
+
+  /* ===== Typography ===== */
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+
+  --text-hero: clamp(2.6rem, 1rem + 7vw, 6.875rem);
+  --text-h2: clamp(1.6rem, 1rem + 2.4vw, 2.6875rem);
+  --text-body: clamp(1rem, 0.92rem + 0.4vw, 1.25rem);
+
+  /* ===== Layout ===== */
+  --container-max: 1536px;
+  --header-h: 76px;
+  --space-section: clamp(4rem, 3rem + 5vw, 7rem);
+
+  /* ===== Motion ===== */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --dur-reveal: 650ms;
+}

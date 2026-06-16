@@ -1,0 +1,34 @@
+/* global.css — bổ sung nhẹ cho bản clone (không ghi đè style.css gốc)
+   Mục tiêu: a11y focus ring, reduced-motion, fallback CTA placeholder. */
+
+/* Focus ring rõ ràng cho điều hướng bàn phím (a11y) */
+a:focus-visible,
+button:focus-visible,
+.accordion_head:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Tôn trọng prefers-reduced-motion cho mọi animation lặp */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* FAQ accordion: con trỏ + vùng bấm rõ */
+.accordion_head { cursor: pointer; }
+
+/* Cuộn mượt tới anchor in-page (#pricing, #features, #faq, #buynow) */
+html { scroll-behavior: smooth; }
+
+/* Nhãn "bản clone demo" cho nút mua (không có checkout thật) */
+[data-clone-note]::after {
+  content: attr(data-clone-note);
+}

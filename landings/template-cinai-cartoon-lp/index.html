@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CinAI.tv — Unlimited cinematic AI video & images for creators</title>
+  <meta name="description" content="CinAI turns one idea into finished, scroll-stopping content. Unlimited AI images, cinematic AI video, and auto-storyboards — powered by Veo, Seedance, Kling, Nano Banana 2 & Opus 4.8. No editing skills required." />
+  <link rel="canonical" href="https://cinai.tv/" />
+  <link rel="icon" href="assets/cinai/cinai-logo.svg" type="image/svg+xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="CinAI.tv" />
+  <meta property="og:title" content="CinAI.tv — Unlimited cinematic AI video & images" />
+  <meta property="og:description" content="One idea. A week of cinematic videos. 100+ AI models, one workflow, no editing skills." />
+  <meta property="og:url" content="https://cinai.tv/" />
+  <meta property="og:image" content="https://cinai.tv/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/global.css" />
+  <link rel="stylesheet" href="styles/style.css" />
+
+  <!-- Tracking: Meta Pixel + CAPI via n8n (dedup event_id). Config before tracking.js. -->
+  <script src="scripts/tracking-config.js" defer></script>
+  <script src="scripts/tracking.js" defer></script>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="#top" aria-label="CinAI.tv home">
+        <img src="assets/cinai/cinai-logo-gold.svg" alt="CinAI.tv logo" />
+        <span>CinAI<span class="gold">.tv</span></span>
+      </a>
+      <div class="header-cta">
+        <a class="btn btn-ghost" href="#pricing">Pricing</a>
+        <a class="btn btn-primary" href="https://cinai.tv/signup?plan=pro" data-cta="header" data-track="Click_CTA">Start Creating — Free</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ===== 1. HERO + logo strip ===== -->
+    <section class="hero" aria-labelledby="hero-h">
+      <div class="container">
+        <h1 id="hero-h">Unlimited cinematic video. <span class="serif gold">Zero editing.</span></h1>
+        <p class="lead">CinAI turns your idea into finished, scroll-stopping content — auto-storyboard with Opus 4.8, then generate with Veo, Seedance, Kling &amp; Nano&nbsp;Banana&nbsp;2. One studio. No editing skills.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="https://cinai.tv/signup?plan=pro" data-cta="hero" data-track="Click_CTA">Start Creating — Free</a>
+          <a class="btn btn-ghost btn-lg" href="#showcase">Watch it work ↓</a>
+        </div>
+        <p class="hero-note">Sign up and generate for free · No card to start</p>
+
+        <div class="hero-media reveal" aria-label="CinAI cinematic output">
+          <video autoplay muted loop playsinline preload="metadata"
+                 poster="assets/cinai/out-kinetic.webp"
+                 aria-label="Cinematic video made with CinAI">
+            <source src="assets/media/cinai-tvc.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <div class="logo-strip">
+      <div class="container">
+        <p>Powered by 100+ AI models</p>
+        <div class="logo-row">
+          <span class="model-chip">Veo Quality</span>
+          <span class="model-chip">Seedance</span>
+          <span class="model-chip">Kling</span>
+          <span class="model-chip">Gemini Omni</span>
+          <span class="model-chip">Nano Banana 2</span>
+          <span class="model-chip">ChatGPT Image 2</span>
+          <span class="model-chip">Grok</span>
+          <span class="model-chip">Opus 4.8</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 2. SHOWCASE / DEMO (conversion hinge) ===== -->
+    <section id="showcase" aria-labelledby="showcase-h">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Made with CinAI</span>
+          <h2 id="showcase-h">Look what creators ship in a single afternoon</h2>
+          <p class="lead">Real output, not mockups. Pick a model, run the workflow, post.</p>
+        </div>
+        <div class="showcase-grid">
+          <figure class="tile wide reveal">
+            <video autoplay muted loop playsinline preload="none" poster="assets/cinai/out-toycity.jpg"
+                   aria-label="Branded cinematic video made with CinAI">
+              <source src="assets/media/cinai-thuonghieu.mp4" type="video/mp4" />
+            </video>
+            <figcaption class="tile-tag">Cinematic video · brand spot</figcaption>
+          </figure>
+          <figure class="tile reveal"><img src="assets/cinai/out-toycity.jpg" alt="Stylized toy-city scene generated with CinAI" loading="lazy" /><figcaption class="tile-tag">Image · scene design</figcaption></figure>
+          <figure class="tile reveal"><img src="assets/cinai/out-lantern.jpg" alt="Lantern-lit cinematic frame generated with CinAI" loading="lazy" /><figcaption class="tile-tag">Image · cinematic frame</figcaption></figure>
+          <figure class="tile reveal"><img src="assets/cinai/out-helmet.png" alt="Detailed helmet character render generated with CinAI" loading="lazy" /><figcaption class="tile-tag">Image · character render</figcaption></figure>
+          <figure class="tile reveal"><img src="assets/cinai/out-wangfu.png" alt="Ornate scene illustration generated with CinAI" loading="lazy" /><figcaption class="tile-tag">Image · key art</figcaption></figure>
+        </div>
+        <div class="showcase-cta">
+          <a class="btn btn-primary btn-lg" href="https://cinai.tv/signup?plan=pro" data-cta="showcase" data-track="Click_CTA">Make yours — Free</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3. PROBLEM → SOLUTION ===== -->
+    <section aria-labelledby="ps-h">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">The limit</span>
+          <h2 id="ps-h">Posting daily shouldn't burn you out</h2>
+        </div>
+        <div class="split">
+          <div class="panel problem reveal">
+            <h3>Without CinAI</h3>
+            <ul>
+              <li>Hours per video — and it still looks like everyone else's</li>
+              <li>Render credits run out right when the idea gets good</li>
+              <li>Stuck waiting on an editor to ship anything</li>
+              <li>Falling behind while AI tools move every week</li>
+            </ul>
+          </div>
+          <div class="panel solution reveal">
+            <h3>With CinAI</h3>
+            <ul>
+              <li><strong class="gold">Unlimited</strong> AI images and cinematic video in one studio</li>
+              <li>Auto-storyboard with Opus 4.8 — idea to shot list in seconds</li>
+              <li>Top models on tap: Veo, Seedance, Kling, Gemini Omni</li>
+              <li>Ship a week of content before lunch — no editing skills</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4. HOW IT WORKS (3 steps + models inline) ===== -->
+    <section aria-labelledby="how-h">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">How it works</span>
+          <h2 id="how-h">Idea to finished video in three steps</h2>
+        </div>
+        <div class="steps">
+          <div class="step reveal">
+            <div class="num" aria-hidden="true"></div>
+            <h3>Describe your idea</h3>
+            <p>Type a prompt or drop a reference. Tell CinAI the vibe, format and length.</p>
+          </div>
+          <div class="step reveal">
+            <div class="num" aria-hidden="true"></div>
+            <h3>Auto-storyboard</h3>
+            <p>Opus 4.8 turns your idea into a shot-by-shot plan you can tweak in a click.</p>
+            <p class="models">Storyboard · Opus 4.8</p>
+          </div>
+          <div class="step reveal">
+            <div class="num" aria-hidden="true"></div>
+            <h3>Render &amp; publish</h3>
+            <p>Generate unlimited images and video, then export ready to post.</p>
+            <p class="models">Veo · Seedance · Kling · Gemini Omni · Nano Banana 2</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 5. WHY CINAI (compare + use cases) ===== -->
+    <section aria-labelledby="why-h">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Why CinAI</span>
+          <h2 id="why-h">One studio instead of ten tabs</h2>
+        </div>
+        <div class="why-grid">
+          <div class="compare reveal" role="table" aria-label="CinAI compared to other ways">
+            <div class="compare-row head" role="row">
+              <div role="columnheader">&nbsp;</div>
+              <div role="columnheader">CinAI</div>
+              <div role="columnheader">Editing apps / single tools</div>
+            </div>
+            <div class="compare-row" role="row"><div>Unlimited images</div><div class="you">Yes</div><div class="them">Pay per export</div></div>
+            <div class="compare-row" role="row"><div>Cinematic video models</div><div class="you">Veo · Seedance · Kling</div><div class="them">One, if any</div></div>
+            <div class="compare-row" role="row"><div>Auto-storyboard</div><div class="you">Opus 4.8</div><div class="them">Manual</div></div>
+            <div class="compare-row" role="row"><div>Editing skills needed</div><div class="you">None</div><div class="them">Yes</div></div>
+            <div class="compare-row" role="row"><div>Time per batch</div><div class="you">Minutes</div><div class="them">Hours</div></div>
+          </div>
+          <div class="usecases reveal">
+            <h3>Built for what creators actually post</h3>
+            <div class="chips">
+              <span class="chip">Shorts &amp; Reels</span>
+              <span class="chip">Talking-head</span>
+              <span class="chip">B-roll</span>
+              <span class="chip">Product / UGC ads</span>
+              <span class="chip">Animation</span>
+              <span class="chip">Thumbnails</span>
+            </div>
+            <p style="margin-top:1.25rem">From a single prompt to a full content batch — consistent look, every time.</p>
+            <a class="btn btn-ghost" href="#pricing">See plans →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 6. PRICING (toggle + 2 plans + bonus + guarantee) ===== -->
+    <section id="pricing" aria-labelledby="pricing-h">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Unlimited starts at $19/mo</span>
+          <h2 id="pricing-h">Pick your plan, start free today</h2>
+          <p class="lead">Cancel anytime. Switch plans whenever you want.</p>
+        </div>
+
+        <div class="pricing-toggle">
+          <span class="toggle-label" data-period="monthly">Monthly</span>
+          <button class="switch" id="billing-switch" role="switch" aria-checked="true" aria-label="Toggle yearly billing"><span class="knob"></span></button>
+          <span class="toggle-label active" data-period="yearly">Yearly <span class="save-badge">save up to 33%</span></span>
+        </div>
+
+        <div class="plans" id="plans">
+          <!-- Pro -->
+          <div class="plan reveal">
+            <span class="badge muted">Most popular</span>
+            <h3>Pro</h3>
+            <p class="sub">Start here — unlimited images + storyboards</p>
+            <div class="price">
+              <span class="amt-old">$29</span>
+              <span class="amt" data-monthly="$29" data-yearly="$19">$19</span>
+              <span class="per">/mo</span>
+              <span class="save-pill">Save $120/yr</span>
+            </div>
+            <p class="price-note" data-monthly="Billed monthly · cancel anytime" data-yearly="Billed yearly · $228/yr">Billed yearly · $228/yr</p>
+            <ul class="features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Unlimited AI images — Nano Banana 2 Pro &amp; ChatGPT Image 2</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Auto-storyboards with Opus 4.8</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Plan credits for video — Seedance, Kling &amp; Omni</li>
+            </ul>
+            <div class="cta-wrap">
+              <a class="btn btn-outline-gold btn-block cta" href="https://cinai.tv/signup?plan=pro" data-cta="pricing-pro" data-track="Click_CTA">Start with Pro <span class="arrow" aria-hidden="true">→</span></a>
+              <span class="cta-sub">Start free · No card to begin</span>
+            </div>
+            <p class="bonus">🎁 Welcome free renders: <strong>20 Grok + 20 Omni + 100 Veo Quality</strong> videos.</p>
+          </div>
+
+          <!-- Plus (featured) -->
+          <div class="plan featured reveal">
+            <span class="badge">★ Best for video creators</span>
+            <h3>Plus</h3>
+            <p class="sub">Everything in Pro, plus unlimited video</p>
+            <div class="price">
+              <span class="amt-old">$49</span>
+              <span class="amt" data-monthly="$49" data-yearly="$39">$39</span>
+              <span class="per">/mo</span>
+              <span class="save-pill">Save $120/yr</span>
+            </div>
+            <p class="price-note" data-monthly="Billed monthly · cancel anytime" data-yearly="Billed yearly · $468/yr">Billed yearly · $468/yr</p>
+            <ul class="features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Everything in Pro + a bigger credit allotment</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> <strong class="gold">Unlimited video</strong> — Gemini Omni &amp; Veo Quality</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> 100 Grok videos free — every month</li>
+            </ul>
+            <div class="cta-wrap">
+              <a class="btn btn-primary btn-block btn-shine cta" href="https://cinai.tv/signup?plan=plus" data-cta="pricing-plus" data-track="Click_CTA">Go unlimited with Plus <span class="arrow" aria-hidden="true">→</span></a>
+              <span class="cta-sub">Start free · Cancel anytime</span>
+            </div>
+            <p class="bonus">🎁 Includes Pro's welcome renders, plus monthly free Grok videos.</p>
+          </div>
+        </div>
+
+        <div class="pricing-foot">
+          <span class="urgency"><span class="dot" aria-hidden="true"></span> Founder pricing ends in <span class="countdown" id="countdown" aria-live="polite">--:--:--</span></span>
+          <ul class="trust-row">
+            <li>✓ 7-day money-back</li>
+            <li>✓ Cancel anytime</li>
+            <li>✓ 100+ AI models</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 7. SOCIAL PROOF + FAQ ===== -->
+    <section aria-labelledby="proof-h">
+      <div class="container">
+        <div class="proof-faq">
+          <div>
+            <span class="eyebrow">Loved by creators</span>
+            <h2 id="proof-h" style="font-size:1.6rem">Made to keep you posting</h2>
+            <div class="quotes">
+              <blockquote class="quote reveal">
+                <p>"I went from one video a week to one a day — and they finally look cinematic."</p>
+                <span class="who"><span class="ava" aria-hidden="true"></span> Creator · 480K followers</span>
+              </blockquote>
+              <blockquote class="quote reveal">
+                <p>"Unlimited images alone pays for itself. The storyboard step is the magic."</p>
+                <span class="who"><span class="ava" aria-hidden="true"></span> UGC creator</span>
+              </blockquote>
+            </div>
+            <div class="stats">
+              <div class="stat"><div class="n">100+</div><div class="l">AI models</div></div>
+              <div class="stat"><div class="n">∞</div><div class="l">Images on Pro</div></div>
+              <div class="stat"><div class="n">Min</div><div class="l">Not hours</div></div>
+            </div>
+          </div>
+
+          <div>
+            <span class="eyebrow">FAQ</span>
+            <h2 style="font-size:1.6rem">Quick answers</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">Is "unlimited" really unlimited?</button>
+                <div class="faq-a"><p>Yes. Pro includes unlimited AI image generation; Plus adds unlimited video with Gemini Omni and Veo Quality. Premium video models run on plan credits so quality stays high.</p></div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">What are credits for?</button>
+                <div class="faq-a"><p>Credits power premium video models like Seedance, Kling and Omni. Every plan includes a monthly allotment — Plus gets a bigger one — and you start with welcome free renders.</p></div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">Do I need editing skills?</button>
+                <div class="faq-a"><p>No. Describe your idea, let Opus 4.8 storyboard it, then render and publish. No timeline, no plugins.</p></div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">How is this different from other tools?</button>
+                <div class="faq-a"><p>Most tools give you one model and pay-per-export. CinAI puts 100+ models, auto-storyboards and unlimited generation in one workflow — so a full batch takes minutes.</p></div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">Can I cancel anytime?</button>
+                <div class="faq-a"><p>Yes — cancel or switch plans whenever you want, and there's a 7-day money-back guarantee.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 8. LEAD MAGNET — free 1,000 workflow templates (nurture undecided) ===== -->
+    <section class="final-cta" id="lead" aria-labelledby="final-h">
+      <div class="container">
+        <div class="box reveal lead-box">
+          <span class="eyebrow">🎁 Free creator kit</span>
+          <h2 id="final-h">Get <span class="gold">1,000 AI workflow templates</span> — free</h2>
+          <p class="lead">Not ready to subscribe? Drop your email and we'll send 1,000 ready-to-run CinAI workflows — remix one and post today.</p>
+
+          <form class="lead-form" id="lead-form" data-track-lead data-webhook="https://n8n.halcion.vn/webhook/cinai-nurture" novalidate>
+            <div class="lead-fields">
+              <input type="text" name="name" class="lead-input" autocomplete="given-name" placeholder="First name (optional)" aria-label="First name" />
+              <input type="email" name="email" class="lead-input" autocomplete="email" required placeholder="Your best email" aria-label="Email address" />
+              <!-- honeypot anti-spam (ẩn với người, bot điền vào sẽ bị bỏ) -->
+              <input type="text" name="company" class="lead-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+              <button type="submit" class="btn btn-primary btn-shine cta" data-cta="lead-1000-templates">Send me the 1,000 templates <span class="arrow" aria-hidden="true">→</span></button>
+            </div>
+            <p class="lead-msg" id="lead-msg" role="status" aria-live="polite"></p>
+            <p class="lead-fineprint">Instant delivery to your inbox · No spam · Unsubscribe anytime</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <a class="brand" href="#top"><img src="assets/cinai/cinai-logo.svg" alt="CinAI.tv logo" /> <span>CinAI<span class="gold">.tv</span></span></a>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="https://cinai.tv">Open app</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#showcase">Showcase</a>
+        <a href="https://cinai.tv/terms">Terms</a>
+        <a href="https://cinai.tv/privacy">Privacy</a>
+      </nav>
+      <p class="foot-copy">© 2026 CinAI.tv — AI Video &amp; Workflow Studio. Build, run and share AI-powered video workflows.</p>
+    </div>
+  </footer>
+
+  <script src="scripts/main.js" defer></script>
+</body>
+</html>

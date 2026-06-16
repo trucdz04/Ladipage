@@ -117,6 +117,21 @@ Xem mục KPI + Testing dưới.
 4. **Cross-domain** — bấm CTA → URL app chính đủ tham số; cookie `_fbc` domain `ROOT_COOKIE`.
 5. **GA4 DebugView** — UTM khớp Meta ↔ GA4 ↔ CRM.
 
+## Gotchas thực chiến (kiểm trước khi verify)
+
+Rút từ lần dựng CinBase trên `n8n.halcion.vn` — 3 lỗi này KHÔNG hiện khi test server-to-server,
+chỉ lộ khi chạy thật. Kiểm execution n8n (`n8n_executions` mode `error`/`filtered`) nếu Lark/CAPI rỗng:
+
+| Triệu chứng | Nguyên nhân | Cách xử lý |
+|-------------|-------------|-----------|
+| Console: `blocked by CORS policy ... preflight` | beacon gửi `application/json` → preflight, n8n khác origin không trả CORS header | Client gửi **`text/plain`** (CORS-safelisted); Normalize `JSON.parse` body chuỗi |
+| Execution lỗi `Module 'crypto' is disallowed` | task-runner n8n chặn `require('crypto')` | Dùng **SHA-256 thuần JS** (không import) trong node Normalize |
+| Node ra `access to env vars denied` → token rỗng → Lark 400 "Missing access token" | instance bật `N8N_BLOCK_ENV_ACCESS_IN_NODE` | Thay `{{ $env.* }}` bằng **n8n credentials** (httpQueryAuth cho Meta, httpCustomAuth cho Lark) |
+
+Quyết định routing (mặc định nên theo): **mọi event → Meta CAPI**, **chỉ `Lead`/`CompleteRegistration`/`Purchase` → Lark**
+(không ghi PageView/ViewContent/Scroll/click vào Lark — tránh phình CRM). Bảng Lark tracking tạo riêng,
+không dùng chung bảng nurture (khác schema). Chi tiết: [`references/server-capi-emq-dedup.md`](references/server-capi-emq-dedup.md).
+
 ## Output (tiếng Việt — §5 CLAUDE.md)
 
 1. **Tổng quan** — phễu đã dựng, lớp nào xong, môi trường nào.

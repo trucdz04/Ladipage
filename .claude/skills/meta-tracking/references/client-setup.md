@@ -50,7 +50,15 @@ gửi song song về `N8N_WEBHOOK`.
       utm_term: qs.get('utm_term')||''
     }, extra||{});
   }
-  function srv(p){ try{ navigator.sendBeacon(T.N8N_WEBHOOK, new Blob([JSON.stringify(p)],{type:'application/json'})); }catch(e){} }
+  // QUAN TRỌNG (CORS): dùng content-type 'text/plain' — KHÔNG 'application/json'.
+  // Landing thường khác origin với n8n → 'application/json' bật preflight OPTIONS, n8n không trả
+  // CORS header → request bị CHẶN, không tới server. 'text/plain' là CORS-safelisted → request
+  // "simple", fire-and-forget tới được webhook. n8n parse chuỗi JSON ở node Normalize (xem ref server).
+  function srv(p){ try{
+    var body = JSON.stringify(p);
+    if (navigator.sendBeacon) navigator.sendBeacon(T.N8N_WEBHOOK, new Blob([body],{type:'text/plain;charset=UTF-8'}));
+    else fetch(T.N8N_WEBHOOK, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body:body, keepalive:true });
+  }catch(e){} }
 
   if(!gc('_fbc') && qs.get('fbclid')){
     document.cookie='_fbc=fb.1.'+Date.now()+'.'+qs.get('fbclid')+'; domain='+T.ROOT_COOKIE+'; path=/; max-age=7776000';

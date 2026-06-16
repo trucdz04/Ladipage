@@ -1,0 +1,101 @@
+/* ============================================================
+   tokens.css — Design tokens (trích từ extraction/tokens-raw.md)
+   CinAI.tv — AI Video & Workflow Studio (dark luxury / AI tech)
+   ============================================================ */
+:root {
+  /* ---- Màu nền / surface ---- */
+  --color-bg: #000000;            /* nền trang đáy */
+  --color-bg-2: #0a0a0a;          /* nền section xen kẽ */
+  --color-bg-3: #18181b;          /* zinc-900 nền html */
+  --color-surface: rgba(255, 255, 255, 0.05);   /* card kính */
+  --color-surface-2: #1a1a1a;     /* button secondary / input shell */
+  --color-surface-3: #0d0d0d;     /* input bg */
+  --color-border: rgba(255, 255, 255, 0.10);
+  --color-border-strong: rgba(255, 255, 255, 0.18);
+
+  /* ---- Accent tím (thương hiệu) ---- */
+  --color-accent: #a855f7;        /* purple-500 — CTA chính */
+  --color-accent-hover: #9333ea;  /* purple-600 */
+  --color-accent-text: #c084fc;   /* purple-400 — link/nhấn */
+  --color-accent-soft: #d8b4fe;   /* purple-300 */
+  --color-accent-900: #581c87;    /* purple-900 nền card */
+  --color-accent-ring: rgba(168, 85, 247, 0.40);
+  --color-accent-glow: rgba(168, 85, 247, 0.25);
+  /* gradient icon thương hiệu: tím → lime (khớp trang gốc) */
+  --gradient-icon: linear-gradient(to left top, rgba(211, 231, 99, 0.7), #a855f7);
+
+  /* ---- Lime (điểm nhấn Sign In) ---- */
+  --color-lime: #a3e635;          /* lime-400 */
+  --color-star: #d3e763;          /* vàng-lime cho sao đánh giá (khớp gốc) */
+  --color-lime-text: #3f6212;     /* lime-800 */
+  --color-lime-border: #d9f99d;   /* lime-200 */
+
+  /* ---- Phụ ---- */
+  --color-green: #22c55e;
+  --color-cyan: #22d3ee;
+  --color-amber: #fbbf24;         /* credits (+N credits) */
+  --color-rose: #fb7185;          /* badge chất lượng model */
+  --color-emerald: #34d399;       /* badge trạng thái model */
+
+  /* ---- Text ---- */
+  --color-text: #ffffff;
+  --color-text-2: #d1d5db;        /* gray-300 subtitle */
+  --color-text-3: #9ca3af;        /* gray-400 caption */
+  --color-text-4: #71717a;        /* zinc-500 mờ */
+
+  /* ---- Typography ---- */
+  --font-heading: "Rubik", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --text-xs: 0.75rem;     /* 12 */
+  --text-sm: 0.875rem;    /* 14 — body */
+  --text-base: 1rem;      /* 16 — nav */
+  --text-lg: 1.125rem;    /* 18 — subtitle */
+  --text-xl: 1.5rem;      /* 24 */
+  --text-2xl: 2rem;       /* 32 — h2 section */
+  --text-hero: clamp(1.9rem, 1.1rem + 3.4vw, 3rem);    /* H1 48px desktop (khớp gốc), co mobile */
+  --text-epic: clamp(3rem, 1rem + 13vw, 11rem);        /* "Create Epic" khổng lồ */
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ---- Spacing (thang 4px) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-section: clamp(4rem, 3rem + 5vw, 7rem);
+  --container: 1280px;
+  --container-wide: 1500px;
+
+  /* ---- Radius ---- */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-pill: 9999px;
+
+  /* ---- Shadow / glow ---- */
+  --shadow-card: 0 1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  --shadow-accent: 0 0 0 2px var(--color-accent-ring);
+  --shadow-glow: 0 0 40px -8px var(--color-accent-glow);
+  --shadow-lift: 0 20px 50px -20px rgba(0, 0, 0, 0.7);
+
+  /* ---- Motion ---- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 0.15s;
+  --dur-normal: 0.3s;
+  --dur-slow: 0.6s;
+
+  --z-header: 50;
+  --z-modal: 100;
+}

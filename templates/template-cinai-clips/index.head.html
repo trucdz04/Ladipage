@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CinAI.tv — AI Creative Workspace for Ad Creatives &amp; AI Video</title>
+  <meta name="description" content="CinAI.tv is the all-in-one AI creative workspace for marketers, sellers and agencies. Go from idea → storyboard → ad image → product shot → AI video in one workflow — premium models unlimited within your plan, from $3/day." />
+  <meta property="og:title" content="CinAI.tv — AI Creative Workspace for Ad Creatives &amp; AI Video" />
+  <meta property="og:description" content="Create ad creatives, product shots & AI video — without counting credits. Premium AI models in one workspace, from $3/day." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Play CDN (clone dùng để tái dụng utility classes của bản gốc) -->
+  <script src="https://cdn.tailwindcss.com?plugins=line-clamp"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { container: false }, // tránh trùng tên với .container tuỳ biến của project
+      theme: {
+        extend: {
+          colors: {
+            accent: { DEFAULT: '#15E49E', 600: '#0FCB8A', soft: '#A7F3D0', ink: '#00110B' },
+            ink: { DEFAULT: '#0A0A0A', 900: '#111827' },
+            surfacealt: '#F9FAFB', mutedbg: '#F3F4F6',
+            dark: '#0F0B17', pinkbg: '#FCF5F8',
+          },
+          fontFamily: { sans: ['Urbanist', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+
+  <!-- Tokens + global -->
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/global.css" />
+  <link rel="stylesheet" href="styles/sections.css" />
+  <link rel="stylesheet" href="styles/sections-b.css" />
+</head>
+<body class="font-sans text-ink antialiased">

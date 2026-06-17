@@ -271,6 +271,27 @@
       // 1 sự kiện "Hoàn tất đăng ký" duy nhất: cinaiTrack tự bắn Browser Pixel (CompleteRegistration)
       // + gửi server payload tới N8N_WEBHOOK với CÙNG event_id → n8n route nhánh "register" (CAPI + ghi Lark), dedup chuẩn.
       fire('CompleteRegistration', data);
+      // + đẩy lead vào chuỗi email nurture (n8n cinai-nurture): lưu Lark + gửi Email 0, hẹn lịch +1d/+3d/+7d.
+      try {
+        const cfg = window.CINAI_CONFIG || {};
+        const nurtureUrl = cfg.NURTURE_WEBHOOK;
+        if (nurtureUrl && /^https?:/.test(nurtureUrl)) {
+          const nameField = leadForm.querySelector('[name="name"]');
+          const lead = JSON.stringify({
+            name: (nameField && nameField.value) || '',
+            email: data.email,
+            gift: '1000_workflow_templates',
+            campaign: 'cinbase_tvc',
+            utm_source: 'landing_tvc',
+            industry: data.industry, goal: data.goal, vat_invoice: data.vat_invoice,
+          });
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon(nurtureUrl, new Blob([lead], { type: 'text/plain;charset=UTF-8' }));
+          } else {
+            fetch(nurtureUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: lead, keepalive: true });
+          }
+        }
+      } catch (_) {}
       const done = () => { leadForm.querySelector('[data-lead-fields]')?.setAttribute('hidden', ''); if (ok) ok.hidden = false; };
       setTimeout(done, 600);
     });

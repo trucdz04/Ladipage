@@ -1,12 +1,6 @@
 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="cb-mark" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#5BB8F5"/>
-      <stop offset="1" stop-color="#8B5CF6"/>
-    </linearGradient>
-  </defs>
-  <!-- speech-bubble C -->
-  <path d="M34 24c0-7.7-6.3-14-14-14S6 16.3 6 24s6.3 14 14 14h2" stroke="url(#cb-mark)" stroke-width="6" stroke-linecap="round"/>
-  <!-- bubble tail -->
-  <path d="M14 34l-2 8 9-5" fill="url(#cb-mark)"/>
+  <!-- bold speech-bubble C (solid blue, matches wordmark) -->
+  <path d="M38 24c0-8.3-6.7-15-15-15S8 15.7 8 24s6.7 15 15 15c3.3 0 6.4-1.1 8.9-2.9" stroke="#29ABE2" stroke-width="9" stroke-linecap="round"/>
+  <!-- chat-bubble tail -->
+  <path d="M13 33l-3 10 11-5z" fill="#29ABE2"/>
 </svg>

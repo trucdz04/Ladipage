@@ -18,6 +18,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap&subset=vietnamese,latin" rel="stylesheet" />
 
+  <!-- n8n chat widget -->
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
   <!-- Tokens + global -->
   <link rel="stylesheet" href="styles/tokens.css?v=20260618" />
   <link rel="stylesheet" href="styles/global.css?v=20260618e" />
@@ -953,10 +956,7 @@
     <div class="watermark select-none px-2 text-center text-[clamp(4rem,20vw,18rem)] leading-[.8] -mt-4">CINBASE</div>
   </footer>
 
-  <!-- ══════════════ 99 CHAT WIDGET (placeholder) ══════════════ -->
-  <button id="chat-widget" aria-label="Open chat" class="fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-primary text-primary-foreground shadow-xl transition hover:scale-105">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-  </button>
+  <!-- ══════════════ 99 CHAT WIDGET — n8n chat (bot thật, tự tạo nút bong bóng góc phải) ══════════════ -->
 
   <!-- ══════════════ DEMO MODAL — form nhận video demo ══════════════ -->
   <div id="demo-modal" class="demo-modal" hidden>
@@ -1026,5 +1026,11 @@
 
   <script src="scripts/main.js?v=20260618d" defer></script>
   <script src="scripts/i18n.js?v=20260618c" defer></script>
+
+  <!-- n8n chat bot -->
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+    createChat({ webhookUrl: 'https://n8n.halcion.vn/webhook/12370c8b-2265-424a-9b22-301dce89a57a/chat' });
+  </script>
 </body>
 </html>

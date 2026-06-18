@@ -1,6 +1,6 @@
 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- bold speech-bubble C (solid blue, matches wordmark) -->
-  <path d="M38 24c0-8.3-6.7-15-15-15S8 15.7 8 24s6.7 15 15 15c3.3 0 6.4-1.1 8.9-2.9" stroke="#29ABE2" stroke-width="9" stroke-linecap="round"/>
+  <!-- bold speech-bubble C (cream-gold #e0c9a6, matches website accent) -->
+  <path d="M38 24c0-8.3-6.7-15-15-15S8 15.7 8 24s6.7 15 15 15c3.3 0 6.4-1.1 8.9-2.9" stroke="#e0c9a6" stroke-width="9" stroke-linecap="round"/>
   <!-- chat-bubble tail -->
-  <path d="M13 33l-3 10 11-5z" fill="#29ABE2"/>
+  <path d="M13 33l-3 10 11-5z" fill="#e0c9a6"/>
 </svg>

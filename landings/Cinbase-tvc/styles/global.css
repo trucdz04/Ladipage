@@ -388,18 +388,18 @@ select.lead-field { appearance: none; background-image: url("data:image/svg+xml,
 
 /* ===== Brand wordmark "CinBase" (khớp logo mẫu) ===== */
 .logo-word { font-family: 'Baloo 2', var(--font-display), sans-serif; font-weight: 800; line-height: 1; letter-spacing: -.01em; display: inline-flex; align-items: baseline; }
-.logo-word .logo-blue { color: #29ABE2; }
-.logo-word .logo-purple { color: #8B5CF6; }
+.logo-word .logo-blue { color: hsl(var(--foreground)); }       /* "Cin" — trắng theo website */
+.logo-word .logo-purple { color: hsl(var(--accent)); }         /* "Base" — vàng kem accent của website */
 /* chữ C kiểu bong bóng chat: đuôi nhỏ dưới-trái */
 .logo-c { position: relative; }
 .logo-c::after {
   content: ""; position: absolute; left: .05em; bottom: -.01em;
-  width: .24em; height: .24em; background: #29ABE2;
+  width: .24em; height: .24em; background: hsl(var(--foreground));
   clip-path: polygon(0 100%, 100% 0, 100% 100%);
 }
 /* chữ e + nét bút (như mẫu) */
 .logo-e { position: relative; display: inline-block; }
-.logo-pen { position: absolute; right: -.44em; top: -.3em; width: .72em; height: .52em; color: #8B5CF6; }
+.logo-pen { position: absolute; right: -.44em; top: -.3em; width: .72em; height: .52em; color: hsl(var(--accent)); }
 .marquee-text { white-space: nowrap; font-family: var(--font-body); font-weight: 500; font-size: clamp(1.25rem, 1rem + 1.1vw, 1.875rem); color: hsl(var(--foreground) / .92); }
 .marquee-badge { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
   height: 2rem; width: 2rem; border-radius: 999px; border: 1px solid hsl(var(--border-strong)); color: hsl(var(--foreground) / .55); }

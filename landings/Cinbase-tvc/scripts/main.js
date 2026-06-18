@@ -300,4 +300,54 @@
   /* ---------- 9. Chat widget placeholder ---------- */
   const chat = document.getElementById('chat-widget');
   if (chat) chat.addEventListener('click', () => alert('Khung chat (placeholder) — gắn công cụ chat thật khi triển khai.'));
+
+  /* ---------- 10. Demo modal: mở từ mọi CTA → submit đẩy Lark (sale gọi) → redirect CINAI.TV ---------- */
+  const demoModal = document.getElementById('demo-modal');
+  if (demoModal) {
+    const fire = (name, extra) => { if (window.cinaiTrack) window.cinaiTrack(name, extra || {}); };
+    const openModal = (plan) => {
+      demoModal.dataset.plan = plan || '';
+      demoModal.hidden = false;
+      document.body.classList.add('demo-open');
+      const first = demoModal.querySelector('input[name="name"]');
+      setTimeout(() => first && first.focus(), 60);
+      fire('OpenDemoForm', plan ? { plan } : {});
+    };
+    const closeModal = () => { demoModal.hidden = true; document.body.classList.remove('demo-open'); };
+
+    // mọi CTA "nhận video demo / tư vấn" (anchor data-cta=consult) → mở modal thay vì cuộn
+    document.querySelectorAll('a[data-cta="consult"]').forEach((a) => {
+      a.addEventListener('click', (e) => { e.preventDefault(); openModal(a.getAttribute('data-plan')); });
+    });
+    demoModal.querySelectorAll('[data-demo-close]').forEach((el) => el.addEventListener('click', closeModal));
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && !demoModal.hidden) closeModal(); });
+
+    const demoForm = document.getElementById('demo-form');
+    if (demoForm) {
+      demoForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const get = (n) => ((demoForm.querySelector('[name="' + n + '"]') || {}).value || '').trim();
+        const data = {
+          name: get('name'), phone: get('phone'), email: get('email'),
+          industry: get('industry'), goal: get('goal'),
+          plan: demoModal.dataset.plan || '', lead_source: 'demo_modal',
+        };
+        const btn = demoForm.querySelector('[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Đang gửi…'; }
+        // 1) Đẩy vào Lark cho sale gọi (cinai-track → bảng CinBase Leads: Name/Phone/Email/Industry/Goal)
+        fire('CompleteRegistration', data);
+        // 2) Đưa vào chuỗi email nurture (tuỳ chọn, nếu webhook cấu hình)
+        try {
+          const cfg = window.CINAI_CONFIG || {};
+          if (cfg.NURTURE_WEBHOOK && /^https?:/.test(cfg.NURTURE_WEBHOOK)) {
+            const lead = JSON.stringify({ name: data.name, email: data.email, gift: '1000_workflow_templates', campaign: 'cinbase_tvc_demo', utm_source: 'demo_modal', industry: data.industry, goal: data.goal });
+            if (navigator.sendBeacon) navigator.sendBeacon(cfg.NURTURE_WEBHOOK, new Blob([lead], { type: 'text/plain;charset=UTF-8' }));
+            else fetch(cfg.NURTURE_WEBHOOK, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: lead, keepalive: true });
+          }
+        } catch (_) {}
+        // 3) Chuyển hướng sang CINAI.TV để xem thêm demo (chờ beacon kịp gửi)
+        setTimeout(() => { window.location.href = 'https://cinai.tv/?utm_source=cinbase_tvc&utm_medium=demo_form'; }, 300);
+      });
+    }
+  }
 })();

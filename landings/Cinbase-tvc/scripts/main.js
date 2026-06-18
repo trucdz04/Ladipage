@@ -202,14 +202,20 @@
     mobileNav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
   }
 
-  /* ---------- 8b. Announcement bar close ---------- */
+  /* ---------- 8b. Announcement bar: đồng bộ vị trí header + đóng ---------- */
   const annClose = document.getElementById('announcement-close');
   const annBar = document.getElementById('announcement-bar');
-  if (annClose && annBar && header) {
-    annClose.addEventListener('click', () => {
-      annBar.style.display = 'none';
-      header.style.top = '0';
-    });
+  if (annBar && header) {
+    // header bám đúng chiều cao thực của thanh thông báo (mobile xuống dòng cao hơn 48px → tránh đè).
+    const syncHeaderTop = () => {
+      const visible = annBar.style.display !== 'none';
+      header.style.top = (visible ? annBar.offsetHeight : 0) + 'px';
+    };
+    syncHeaderTop();
+    addEventListener('resize', syncHeaderTop);
+    // tự cập nhật khi thanh đổi chiều cao (load webfont, đổi ngôn ngữ, xoay màn hình…)
+    if (window.ResizeObserver) new ResizeObserver(syncHeaderTop).observe(annBar);
+    if (annClose) annClose.addEventListener('click', () => { annBar.style.display = 'none'; syncHeaderTop(); });
   }
 
   /* ---------- 8c. Term toggle (ma trận cam kết 1/6/12 tháng) ---------- */

@@ -315,11 +315,12 @@ button { font-family: inherit; cursor: pointer; }
   transition: transform var(--dur-fast); }
 .feature-card:hover .feature-link { transform: translateX(3px); }
 
-/* language switcher (i18n) */
-#lang-switcher { position: fixed; left: 16px; bottom: 16px; z-index: 55; display: flex; gap: 2px; padding: 3px;
-  border-radius: 999px; background: hsl(var(--card) / .9); border: 1px solid hsl(var(--border-strong));
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: 0 4px 16px rgba(0,0,0,.3); }
-.lang-opt { min-width: 34px; padding: 5px 9px; border-radius: 999px; font-size: 12px; font-weight: 600;
+/* language switcher (i18n) — inline trong header, cạnh nút "Xem Báo Giá" */
+#lang-switcher { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px;
+  background: hsl(var(--card) / .6); border: 1px solid hsl(var(--border-strong)); }
+#lang-switcher.lang-floating { position: fixed; left: 16px; bottom: 16px; z-index: 55;
+  background: hsl(var(--card) / .9); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+.lang-opt { min-width: 30px; padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; line-height: 1;
   color: hsl(var(--muted-foreground)); transition: color .15s, background .15s; cursor: pointer; }
 .lang-opt:hover { color: hsl(var(--foreground)); }
 .lang-opt.is-active { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }

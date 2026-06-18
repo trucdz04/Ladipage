@@ -203,7 +203,10 @@
       if (window.cinaiTrack) window.cinaiTrack('SwitchLanguage', { lang: l });
       location.reload();
     });
-    document.body.appendChild(wrap);
+    // ưu tiên đặt cạnh CTA trong header; nếu không có thì nổi góc dưới trái
+    const host = document.querySelector('[data-header-actions]');
+    if (host) host.insertBefore(wrap, host.firstChild);
+    else { wrap.classList.add('lang-floating'); document.body.appendChild(wrap); }
   }
 
   function run() {

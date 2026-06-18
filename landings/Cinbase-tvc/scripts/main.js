@@ -350,4 +350,80 @@
       });
     }
   }
+
+  /* ---------- 11. Gift popup: tự bật (cuộn 50% / 25s / exit-intent) — 1 lần/phiên, tắt hẳn sau khi điền ---------- */
+  const giftPopup = document.getElementById('gift-popup');
+  if (giftPopup) {
+    const SEEN_KEY = 'cinbase_gift_seen';   // đã hiện trong phiên (sessionStorage)
+    const DONE_KEY = 'cinbase_gift_done';   // đã điền form (localStorage, vĩnh viễn)
+    const SCROLL_RATIO = 0.5;               // 50% trang
+    const TIME_MS = 25000;                  // 25 giây
+    const fire = (name, extra) => { if (window.cinaiTrack) window.cinaiTrack(name, extra || {}); };
+    let shown = false, timer = null;
+
+    const isDone = () => { try { return localStorage.getItem(DONE_KEY) === '1'; } catch (_) { return false; } };
+    const isSeen = () => { try { return sessionStorage.getItem(SEEN_KEY) === '1'; } catch (_) { return false; } };
+
+    const cleanup = () => {
+      if (timer) { clearTimeout(timer); timer = null; }
+      window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('mouseout', onExit);
+    };
+    const openPopup = (trigger) => {
+      if (shown || isDone() || isSeen()) return;
+      shown = true;
+      try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (_) {}
+      cleanup();
+      giftPopup.hidden = false;
+      document.body.classList.add('demo-open');
+      const first = giftPopup.querySelector('input[name="email"]');
+      setTimeout(() => first && first.focus(), 60);
+      fire('OpenGiftPopup', { trigger: trigger || '' });
+    };
+    const closePopup = () => { giftPopup.hidden = true; document.body.classList.remove('demo-open'); };
+
+    function onScroll() {
+      const sc = window.scrollY || document.documentElement.scrollTop || 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (max > 0 && sc / max >= SCROLL_RATIO) openPopup('scroll');
+    }
+    function onExit(e) { if (!e.relatedTarget && e.clientY <= 0) openPopup('exit'); }
+
+    // chỉ gắn trigger nếu chưa điền & chưa hiện trong phiên
+    if (!isDone() && !isSeen()) {
+      timer = setTimeout(() => openPopup('time'), TIME_MS);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      if (!('ontouchstart' in window)) document.addEventListener('mouseout', onExit); // exit-intent: desktop only
+    }
+
+    // đóng popup
+    giftPopup.querySelectorAll('[data-gift-close]').forEach((el) => el.addEventListener('click', closePopup));
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && !giftPopup.hidden) closePopup(); });
+
+    // submit: bắn CompleteRegistration + nurture (cùng luồng quà như form inline) → đánh dấu done
+    const giftForm = document.getElementById('gift-form');
+    if (giftForm) {
+      giftForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = ((giftForm.querySelector('[name="email"]') || {}).value || '').trim();
+        if (!email) return;
+        const btn = giftForm.querySelector('[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Đang gửi…'; }
+        fire('CompleteRegistration', { email, industry: '', goal: '', vat_invoice: '', lead_source: 'gift_popup' });
+        try {
+          const cfg = window.CINAI_CONFIG || {};
+          const nurtureUrl = cfg.NURTURE_WEBHOOK;
+          if (nurtureUrl && /^https?:/.test(nurtureUrl)) {
+            const lead = JSON.stringify({ name: '', email, gift: '1000_workflow_templates', campaign: 'cinbase_tvc_popup', utm_source: 'gift_popup' });
+            if (navigator.sendBeacon) navigator.sendBeacon(nurtureUrl, new Blob([lead], { type: 'text/plain;charset=UTF-8' }));
+            else fetch(nurtureUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: lead, keepalive: true });
+          }
+        } catch (_) {}
+        try { localStorage.setItem(DONE_KEY, '1'); } catch (_) {}
+        const ok = giftPopup.querySelector('[data-gift-success]');
+        setTimeout(() => { giftPopup.querySelector('[data-gift-fields]')?.setAttribute('hidden', ''); if (ok) ok.hidden = false; }, 600);
+        setTimeout(closePopup, 2400);
+      });
+    }
+  }
 })();

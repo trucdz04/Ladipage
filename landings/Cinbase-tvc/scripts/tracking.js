@@ -45,7 +45,7 @@
   } else { log('Pixel ID chưa cấu hình — log-only mode'); }
 
   /* ---------- core: cinaiTrack(name, params) → fbq + n8n (cùng event_id) ---------- */
-  const STANDARD = { PageView: 'PageView', ViewContent: 'ViewContent', Lead: 'Lead', LeadSubmit: 'Lead', CompleteRegistration: 'CompleteRegistration', InitiateCheckout: 'InitiateCheckout', Purchase: 'Purchase' };
+  const STANDARD = { PageView: 'PageView', ViewContent: 'ViewContent', Lead: 'Lead', LeadSubmit: 'Lead', CompleteRegistration: 'CompleteRegistration', AddToCart: 'AddToCart', InitiateCheckout: 'InitiateCheckout', Purchase: 'Purchase' };
   window.cinaiTrack = (name, params) => {
     const event_id = newEventId(name);
     const payload = Object.assign({ event_name: name, event_id, timestamp: Date.now() }, attribution(), params || {});

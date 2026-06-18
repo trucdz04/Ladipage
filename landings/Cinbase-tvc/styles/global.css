@@ -315,6 +315,15 @@ button { font-family: inherit; cursor: pointer; }
   transition: transform var(--dur-fast); }
 .feature-card:hover .feature-link { transform: translateX(3px); }
 
+/* language switcher (i18n) */
+#lang-switcher { position: fixed; left: 16px; bottom: 16px; z-index: 55; display: flex; gap: 2px; padding: 3px;
+  border-radius: 999px; background: hsl(var(--card) / .9); border: 1px solid hsl(var(--border-strong));
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+.lang-opt { min-width: 34px; padding: 5px 9px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  color: hsl(var(--muted-foreground)); transition: color .15s, background .15s; cursor: pointer; }
+.lang-opt:hover { color: hsl(var(--foreground)); }
+.lang-opt.is-active { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+
 /* ===== Billing toggle (Pro/Plus) ===== */
 .bill-opt { display: inline-flex; align-items: center; gap: .35rem; border-radius: 999px; padding: .5rem 1.1rem;
   font-weight: 600; color: hsl(var(--foreground) / .65); transition: background var(--dur-fast), color var(--dur-fast); }

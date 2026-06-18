@@ -264,8 +264,15 @@
     vatSel && vatSel.addEventListener('change', () => fire('SelectVatInvoice', { vat_invoice: vatSel.value }));
     leadForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      // bắt buộc email hợp lệ mới cho gửi (form có novalidate nên phải tự kiểm)
+      const emailField = leadForm.querySelector('[name="email"]');
+      const email = (emailField && emailField.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        if (emailField) { emailField.focus(); if (emailField.reportValidity) emailField.reportValidity(); }
+        return;
+      }
       const data = {
-        email: (leadForm.querySelector('[name="email"]') || {}).value || '',
+        email: email,
         industry: indSel ? indSel.value : '',
         goal: goalSel ? goalSel.value : '',
         vat_invoice: vatSel ? vatSel.value : '',
@@ -411,8 +418,9 @@
     if (giftForm) {
       giftForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const email = ((giftForm.querySelector('[name="email"]') || {}).value || '').trim();
-        if (!email) return;
+        const emailEl = giftForm.querySelector('[name="email"]');
+        const email = (emailEl && emailEl.value || '').trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { if (emailEl) { emailEl.focus(); if (emailEl.reportValidity) emailEl.reportValidity(); } return; }
         const btn = giftForm.querySelector('[type="submit"]');
         if (btn) { btn.disabled = true; btn.textContent = 'Đang gửi…'; }
         fire('CompleteRegistration', { email, industry: '', goal: '', vat_invoice: '', lead_source: 'gift_popup' });

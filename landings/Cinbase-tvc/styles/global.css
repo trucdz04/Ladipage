@@ -68,7 +68,7 @@ button { font-family: inherit; cursor: pointer; }
 @media (min-width: 768px) { .hero-card { min-height: auto; } .hero-card.is-active { flex: 3 1 0%; } }
 .hero-card__media { position: absolute; inset: 0; height: 100%; width: 100%; object-fit: cover; }
 .hero-card__overlay { position: absolute; inset: 0; background: linear-gradient(to top, hsl(var(--background) / .95), hsl(var(--background) / .35) 45%, transparent 75%); }
-.hero-card__body { position: absolute; inset: auto 0 0 0; padding: 1.25rem; }
+.hero-card__body { position: absolute; inset: auto 0 0 0; padding: 1.25rem; text-shadow: 0 1px 10px hsl(var(--background) / .85), 0 1px 3px hsl(var(--background) / .9); }
 .hero-card__body h3 { white-space: nowrap; }
 .hero-card__reveal { overflow: hidden; max-height: 0; opacity: 0; transform: translateY(8px); transition: max-height var(--dur-normal) var(--ease-out), opacity var(--dur-normal) var(--ease-out), transform var(--dur-normal) var(--ease-out); }
 .hero-card.is-active .hero-card__reveal { max-height: 12rem; opacity: 1; transform: translateY(0); }
@@ -115,7 +115,10 @@ button { font-family: inherit; cursor: pointer; }
 .hero-card__preview svg { flex: none; opacity: .95; }
 @media (prefers-reduced-motion: reduce) { .hero-card__preview { transition: none; transform: none; } }
 @media (max-width: 767px) { .hero-card__reveal { max-height: 12rem; opacity: 1; transform: none; } .hero-card__body h3 { white-space: normal; }
-  .hero-card__preview { opacity: 1; visibility: visible; transform: none; } }
+  .hero-card__preview { opacity: 1; visibility: visible; transform: none; }
+  /* mobile: chữ luôn hiện nên cần phủ tối mạnh hơn để đọc rõ trên video */
+  .hero-card { min-height: 15rem; }
+  .hero-card__overlay { background: linear-gradient(to top, hsl(var(--background) / .97) 0%, hsl(var(--background) / .93) 55%, hsl(var(--background) / .82) 78%, hsl(var(--background) / .35) 92%, transparent 100%); } }
 
 /* ===== Hero serif highlight (Instrument Serif italic, trắng) ===== */
 .hero-serif {

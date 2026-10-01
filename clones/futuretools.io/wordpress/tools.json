@@ -1,0 +1,232 @@
+[
+  {
+    "key": "adcreative",
+    "name": "AdCreative.ai",
+    "slug": "adcreative-ai-review",
+    "id": 517,
+    "category": "AI ad creative",
+    "audience": "performance marketers and small teams producing many campaign variations",
+    "job": "turn brand assets and offer details into ad visuals and copy variations",
+    "strengths": [
+      "Creative generation reduces the time spent making first drafts for multiple formats.",
+      "Creative scoring and competitor insights can help frame hypotheses for the next campaign."
+    ],
+    "limits": [
+      "A predicted creative score is a planning signal, not proof that an ad will convert.",
+      "Output still needs brand, claims, and platform policy review before launch."
+    ],
+    "test": "Create one campaign brief, generate at least five variations, and compare the time to an in-house design workflow.",
+    "product": "https://www.adcreative.ai/",
+    "docs": "https://help.adcreative.ai/en/collections/11004452-creative-tools-features",
+    "partner": "https://market.partnerstack.com/artificial-intelligence/adcreative",
+    "categories": [
+      3,
+      8,
+      14
+    ]
+  },
+  {
+    "key": "descript",
+    "name": "Descript",
+    "slug": "descript-review",
+    "id": 518,
+    "category": "AI video and podcast editing",
+    "audience": "podcasters, educators, and marketers editing spoken-word recordings",
+    "job": "edit audio and video through a transcript-based workflow",
+    "strengths": [
+      "Text-based editing makes cuts feel familiar to writers and non-editors.",
+      "Transcription, captions, filler-word cleanup, and audio tools can shorten routine post-production."
+    ],
+    "limits": [
+      "A transcript may mishear names or technical terms, so final captions need review.",
+      "Fine visual timing and complex motion work may still call for a dedicated editor."
+    ],
+    "test": "Edit the same five-minute interview in Descript and your current editor, then compare correction time and export quality.",
+    "product": "https://www.descript.com/",
+    "docs": "https://www.descript.com/",
+    "partner": "https://market.partnerstack.com/trending/descriptinc",
+    "categories": [
+      3,
+      8,
+      4
+    ]
+  },
+  {
+    "key": "browseai",
+    "name": "Browse AI",
+    "slug": "browse-ai-review",
+    "id": 519,
+    "category": "No-code web monitoring",
+    "audience": "researchers, sales teams, and operators monitoring public web pages",
+    "job": "extract website data and track changes without writing a scraper",
+    "strengths": [
+      "A no-code robot builder can make recurring page extraction approachable.",
+      "Scheduled monitoring and integrations can send changes into existing workflows."
+    ],
+    "limits": [
+      "Website layout changes can break an extraction and require retraining.",
+      "Respect site terms, privacy rules, and data quality checks before using collected data."
+    ],
+    "test": "Track one public page for a week, inspect missed changes, and calculate the cost per useful record.",
+    "product": "https://www.browse.ai/",
+    "docs": "https://help.browse.ai/en/articles/10486821-what-does-browse-ai-do",
+    "partner": "https://market.partnerstack.com/artificial-intelligence/browseai",
+    "categories": [
+      3,
+      8,
+      13
+    ]
+  },
+  {
+    "key": "omniseo",
+    "name": "OmniSEO",
+    "slug": "omniseo-review",
+    "id": 520,
+    "category": "AI search visibility",
+    "audience": "SEO teams and brands studying how they appear in AI answers",
+    "job": "monitor brand mentions, citations, prompts, and gaps in AI search results",
+    "strengths": [
+      "Prompt and citation tracking can reveal where a brand is present or absent.",
+      "The gap view may help prioritize content and entity improvements."
+    ],
+    "limits": [
+      "AI answer visibility is volatile; one snapshot cannot establish a durable ranking.",
+      "Attribution from a mention to revenue needs separate analytics and judgment."
+    ],
+    "test": "Define ten buyer prompts, record the baseline across supported engines, and revisit the same prompts after content changes.",
+    "product": "https://omniseo.com/",
+    "docs": "https://omniseo.com/features/",
+    "partner": "https://market.partnerstack.com/artificial-intelligence/omniseo",
+    "categories": [
+      3,
+      8,
+      10
+    ]
+  },
+  {
+    "key": "meetgeek",
+    "name": "MeetGeek",
+    "slug": "meetgeek-review",
+    "id": 521,
+    "category": "AI meeting notes",
+    "audience": "remote teams that need searchable meeting notes and follow-up ownership",
+    "job": "capture meetings, produce summaries, and organize action items",
+    "strengths": [
+      "Automated notes can free participants to focus on the discussion.",
+      "Integrations and searchable history can help teams retrieve decisions later."
+    ],
+    "limits": [
+      "Consent and recording rules must be handled before enabling automatic capture.",
+      "Summaries can omit nuance or misassign an action, so owners should confirm important decisions."
+    ],
+    "test": "Use it for three meetings with consent, compare action items to manual notes, and check how quickly a teammate can find a decision.",
+    "product": "https://meetgeek.ai/",
+    "docs": "https://support.meetgeek.ai/en/articles/6021876-frequently-asked-questions-faq",
+    "partner": "https://market.partnerstack.com/artificial-intelligence/meetgeek",
+    "categories": [
+      3,
+      8
+    ]
+  },
+  {
+    "key": "castmagic",
+    "name": "Castmagic",
+    "slug": "castmagic-review",
+    "id": 522,
+    "category": "AI content repurposing",
+    "audience": "podcasters, video creators, and content teams with long recordings",
+    "job": "turn audio or video into outlines, summaries, and draft marketing content",
+    "strengths": [
+      "One source recording can become several draft assets for different channels.",
+      "Importing existing media reduces the work of starting every post from scratch."
+    ],
+    "limits": [
+      "Generated copy still needs fact checking and a consistent editorial voice.",
+      "A weak source recording will limit the value of every derived asset."
+    ],
+    "test": "Upload one published episode, create three channel-specific drafts, and measure how much human editing each needs.",
+    "product": "https://www.castmagic.io/",
+    "docs": "https://www.castmagic.io/",
+    "partner": "https://market.partnerstack.com/artificial-intelligence/castmagic",
+    "categories": [
+      3,
+      8
+    ]
+  },
+  {
+    "key": "murf",
+    "name": "Murf AI",
+    "slug": "murf-ai-review",
+    "id": 523,
+    "category": "AI voiceover",
+    "audience": "course creators, product marketers, and teams localizing narrated content",
+    "job": "produce synthetic voiceovers and adapt audio for multiple markets",
+    "strengths": [
+      "Text-to-speech can speed up revisions when a script changes.",
+      "Voice, dubbing, translation, and API options cover several production workflows."
+    ],
+    "limits": [
+      "Pronunciation, pacing, and emotional fit need listening checks before publication.",
+      "Voice usage rights and localization accuracy should be reviewed for each campaign."
+    ],
+    "test": "Render a 60-second script with names and numbers, compare pronunciation and timing with your current voiceover workflow.",
+    "product": "https://murf.ai/",
+    "docs": "https://help.murf.ai/what-is-murf",
+    "partner": "https://market.partnerstack.com/artificial-intelligence/murfai",
+    "categories": [
+      3,
+      8,
+      5
+    ]
+  },
+  {
+    "key": "reclaim",
+    "name": "Reclaim.ai",
+    "slug": "reclaim-ai-review",
+    "id": 524,
+    "category": "AI calendar planning",
+    "audience": "busy professionals and teams whose calendars change throughout the week",
+    "job": "place tasks, habits, and focus time around real calendar commitments",
+    "strengths": [
+      "Automated scheduling can protect time for work that otherwise gets crowded out.",
+      "Flexible habits and task scheduling can adapt when meetings move."
+    ],
+    "limits": [
+      "An overfilled calendar remains overfilled, even when blocks move automatically.",
+      "Team adoption and calendar permissions need a thoughtful setup."
+    ],
+    "test": "Track one week of focus blocks and tasks, then compare planned versus completed work and manual rescheduling time.",
+    "product": "https://reclaim.ai/",
+    "docs": "https://help.reclaim.ai/en/articles/6210740-features-in-reclaim",
+    "partner": "https://market.partnerstack.com/artificial-intelligence/reclaim",
+    "categories": [
+      3,
+      8
+    ]
+  },
+  {
+    "key": "consensus",
+    "name": "Consensus",
+    "slug": "consensus-review",
+    "id": 525,
+    "category": "AI research search",
+    "audience": "students, analysts, and writers who need research-grounded starting points",
+    "job": "search scientific papers and surface cited research summaries",
+    "strengths": [
+      "A paper-focused search experience is useful when a general web answer is too broad.",
+      "Citations and filters help readers trace claims back to studies."
+    ],
+    "limits": [
+      "A generated synthesis is a research starting point, not a substitute for reading methods and limitations.",
+      "Coverage and conclusions depend on the papers indexed and the wording of a query."
+    ],
+    "test": "Run three specific research questions, open every cited study, and check whether the summary reflects the evidence and study design.",
+    "product": "https://consensus.app/",
+    "docs": "https://consensus.app/home/resources/consensus-libguide-for-academic-research/",
+    "partner": "https://market.partnerstack.com/page/consensus",
+    "categories": [
+      3,
+      8
+    ]
+  }
+]

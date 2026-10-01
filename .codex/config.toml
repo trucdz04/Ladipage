@@ -1,0 +1,44 @@
+#:schema https://developers.openai.com/codex/config-schema.json
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@playwright/mcp@0.0.83", "--browser", "chrome"]
+startup_timeout_sec = 60
+
+[mcp_servers.chrome-devtools]
+command = "npx"
+args = ["-y", "chrome-devtools-mcp@1.10.1"]
+startup_timeout_sec = 60
+
+[mcp_servers.firecrawl]
+command = "npx"
+args = ["-y", "firecrawl-mcp@3.27.2"]
+env_vars = ["FIRECRAWL_API_KEY"]
+startup_timeout_sec = 60
+
+[mcp_servers.magic]
+url = "https://21st.dev/api/mcp"
+env_http_headers = { "x-api-key" = "API_KEY_21ST" }
+startup_timeout_sec = 60
+
+[mcp_servers.n8n]
+command = "npx"
+args = ["-y", "n8n-mcp@2.90.0"]
+env = { MCP_MODE = "stdio", LOG_LEVEL = "error", DISABLE_CONSOLE_OUTPUT = "true" }
+env_vars = ["N8N_API_URL", "N8N_API_KEY", "N8N_MCP_ACCESS_TOKEN"]
+startup_timeout_sec = 60
+default_tools_approval_mode = "writes"
+
+[mcp_servers.meta-ads]
+command = "npx"
+args = ["-y", "@mikusnuz/meta-ads-mcp@1.4.1"]
+env_vars = ["META_ADS_ACCESS_TOKEN", "META_AD_ACCOUNT_ID", "META_APP_ID", "META_APP_SECRET", "META_BUSINESS_ID", "META_PIXEL_ID"]
+startup_timeout_sec = 60
+default_tools_approval_mode = "writes"
+
+[mcp_servers.lark]
+command = "cmd"
+args = ["/c", "npx", "-y", "@larksuiteoapi/lark-mcp@0.5.1", "mcp", "--app-id", "%LARK_APP_ID%", "--app-secret", "%LARK_APP_SECRET%", "--domain", "https://open.larksuite.com", "--token-mode", "tenant_access_token", "--mode", "stdio", "--tools", "preset.default", "--language", "en"]
+env_vars = ["LARK_APP_ID", "LARK_APP_SECRET"]
+startup_timeout_sec = 60
+default_tools_approval_mode = "writes"

@@ -1,0 +1,56 @@
+{
+  "source": "https://cinai.tv/explore",
+  "verified": "2026-10-01",
+  "note": "Original skill names and matching preview media extracted from public Explore cards. No claim that these outputs were made with the two Pro models.",
+  "skills": [
+    {
+      "name": "MotionRiseAI™ Commercial Advert Creator",
+      "text": "MotionRiseAI™ Commercial Advert Creator\nC\nCinAI\n·\n1.3k",
+      "video": "https://api.cinai.tv/uploads/900e8543-c4e5-4313-847a-bbdef0752da0.mp4",
+      "poster": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/76795dc1-f025-4684-1f3a-3db0c048a100/lg",
+      "key": "commercial"
+    },
+    {
+      "name": "AI Avatar",
+      "text": "AI Avatar\njimi\n·\n1.3k",
+      "video": "https://api.cinai.tv/uploads/e7e00b6f-7f73-45b2-98fe-3dcdbdd016f2.mp4",
+      "poster": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/a9cadf19-93f7-431e-bd88-6da0882ff300/lg",
+      "key": "avatar"
+    },
+    {
+      "name": "Cinematic 3D Animation Director",
+      "text": "Cinematic 3D Animation Director\nC\nCinAI\n·\n1.3k",
+      "video": "https://api.cinai.tv/uploads/eeb463d9-bb7a-430f-bf4b-4808214064a5.mp4",
+      "poster": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/9d97d0af-bf7c-4879-aa8a-17066f656200/lg",
+      "key": "animation"
+    },
+    {
+      "name": "Music Video",
+      "text": "Music Video\nN\nNovaFrames\n·\n11.5k",
+      "video": "https://api.cinai.tv/uploads/80632616-0de4-4a85-9951-0c6e552fb10a.mp4",
+      "poster": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/6e23e3e4-74bc-4c59-c951-d0adc4d00200/lg",
+      "key": "music"
+    },
+    {
+      "name": "Drama Video",
+      "text": "Drama Video\nN\nNovaFrames\n·\n6.2k",
+      "video": "https://api.cinai.tv/uploads/c77e0488-162e-411b-81c6-2b2a233b8ff8.mp4",
+      "poster": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/c7a86921-c9a7-4907-2202-52a8d9c47a00/lg",
+      "key": "drama"
+    },
+    {
+      "name": "Interactive Drama",
+      "text": "Interactive Drama\nlanry\n·\n1.1k",
+      "video": "https://api.cinai.tv/uploads/2f39f3fa-7193-40af-a011-48de54c6e1ab.mp4",
+      "poster": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/55f8ffe5-7c84-4c1b-94cc-10da1646c300/lg",
+      "key": "interactive"
+    },
+    {
+      "name": "Subtitle Localize",
+      "text": "Subtitle Localize\nCinAI\n·\n1.3k",
+      "video": "https://api.cinai.tv/uploads/15c0f7af-a72f-4b08-a0e3-3f00aa5259a9.mp4",
+      "poster": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/ba0137cb-ed93-44c0-427b-abac4b866d00/lg",
+      "key": "subtitle"
+    }
+  ]
+}

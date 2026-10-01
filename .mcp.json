@@ -2,26 +2,26 @@
   "mcpServers": {
     "firecrawl": {
       "command": "cmd",
-      "args": ["/c", "npx", "-y", "firecrawl-mcp"],
+      "args": ["/c", "npx", "-y", "firecrawl-mcp@3.27.2"],
       "env": {
         "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
       }
     },
     "chrome-devtools": {
       "command": "cmd",
-      "args": ["/c", "npx", "-y", "chrome-devtools-mcp@latest"]
+      "args": ["/c", "npx", "-y", "chrome-devtools-mcp@1.10.1"]
     },
     "playwright": {
       "command": "cmd",
-      "args": ["/c", "npx", "-y", "@playwright/mcp@latest"]
+      "args": ["/c", "npx", "-y", "@playwright/mcp@0.0.83"]
     },
     "magic": {
       "command": "cmd",
-      "args": ["/c", "npx", "-y", "@21st-dev/magic@latest", "API_KEY=\"${MAGIC_API_KEY}\""]
+      "args": ["/c", "npx", "-y", "@21st-dev/magic@0.2.3", "API_KEY=\"${API_KEY_21ST}\""]
     },
     "n8n": {
       "command": "cmd",
-      "args": ["/c", "npx", "-y", "n8n-mcp"],
+      "args": ["/c", "npx", "-y", "n8n-mcp@2.90.0"],
       "env": {
         "MCP_MODE": "stdio",
         "LOG_LEVEL": "error",
@@ -32,7 +32,7 @@
     },
     "meta-ads": {
       "command": "cmd",
-      "args": ["/c", "npx", "-y", "@mikusnuz/meta-ads-mcp"],
+      "args": ["/c", "npx", "-y", "@mikusnuz/meta-ads-mcp@1.4.1"],
       "env": {
         "META_ADS_ACCESS_TOKEN": "${META_ADS_ACCESS_TOKEN}",
         "META_AD_ACCOUNT_ID": "${META_AD_ACCOUNT_ID}",
@@ -45,7 +45,7 @@
     "lark": {
       "command": "cmd",
       "args": [
-        "/c", "npx", "-y", "@larksuiteoapi/lark-mcp", "mcp",
+        "/c", "npx", "-y", "@larksuiteoapi/lark-mcp@0.5.1", "mcp",
         "--app-id", "${LARK_APP_ID}",
         "--app-secret", "${LARK_APP_SECRET}",
         "--domain", "https://open.larksuite.com",

@@ -265,6 +265,7 @@
     leadForm.addEventListener('submit', (e) => {
       e.preventDefault();
       // bắt buộc email hợp lệ mới cho gửi (form có novalidate nên phải tự kiểm)
+      if (!leadForm.reportValidity()) return;
       const emailField = leadForm.querySelector('[name="email"]');
       const email = (emailField && emailField.value || '').trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -281,30 +282,10 @@
       const btn = leadForm.querySelector('[type="submit"]');
       const ok = leadForm.querySelector('[data-lead-success]');
       if (btn) { btn.disabled = true; btn.textContent = 'Đang gửi…'; }
-      // 1 sự kiện "Hoàn tất đăng ký" duy nhất: cinaiTrack tự bắn Browser Pixel (CompleteRegistration)
-      // + gửi server payload tới N8N_WEBHOOK với CÙNG event_id → n8n route nhánh "register" (CAPI + ghi Lark), dedup chuẩn.
-      fire('CompleteRegistration', data);
-      // + đẩy lead vào chuỗi email nurture (n8n cinai-nurture): lưu Lark + gửi Email 0, hẹn lịch +1d/+3d/+7d.
-      try {
-        const cfg = window.CINAI_CONFIG || {};
-        const nurtureUrl = cfg.NURTURE_WEBHOOK;
-        if (nurtureUrl && /^https?:/.test(nurtureUrl)) {
-          const nameField = leadForm.querySelector('[name="name"]');
-          const lead = JSON.stringify({
-            name: (nameField && nameField.value) || '',
-            email: data.email,
-            gift: '1000_workflow_templates',
-            campaign: 'cinbase_tvc',
-            utm_source: 'landing_tvc',
-            industry: data.industry, goal: data.goal, vat_invoice: data.vat_invoice,
-          });
-          if (navigator.sendBeacon) {
-            navigator.sendBeacon(nurtureUrl, new Blob([lead], { type: 'text/plain;charset=UTF-8' }));
-          } else {
-            fetch(nurtureUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: lead, keepalive: true });
-          }
-        }
-      } catch (_) {}
+      fire('Lead', { ...data, plan: 'pro' });
+      if (ok) ok.textContent = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+        ? 'Bản xem thử: thông tin hợp lệ, chưa gửi ra hệ thống. Liên hệ 0962949620 để được tư vấn.'
+        : 'Bạn đã hoàn tất biểu mẫu. Nếu cần xác nhận tư vấn, vui lòng liên hệ 0962949620.';
       const done = () => { leadForm.querySelector('[data-lead-fields]')?.setAttribute('hidden', ''); if (ok) ok.hidden = false; };
       setTimeout(done, 600);
     });
@@ -339,6 +320,7 @@
     if (demoForm) {
       demoForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        if (!demoForm.reportValidity()) return;
         const get = (n) => ((demoForm.querySelector('[name="' + n + '"]') || {}).value || '').trim();
         const data = {
           name: get('name'), phone: get('phone'), email: get('email'),
@@ -347,19 +329,10 @@
         };
         const btn = demoForm.querySelector('[type="submit"]');
         if (btn) { btn.disabled = true; btn.textContent = 'Đang gửi…'; }
-        // 1) Đẩy vào Lark cho sale gọi (cinai-track → bảng CinBase Leads: Name/Phone/Email/Industry/Goal)
-        fire('CompleteRegistration', data);
-        // 2) Đưa vào chuỗi email nurture (tuỳ chọn, nếu webhook cấu hình)
-        try {
-          const cfg = window.CINAI_CONFIG || {};
-          if (cfg.NURTURE_WEBHOOK && /^https?:/.test(cfg.NURTURE_WEBHOOK)) {
-            const lead = JSON.stringify({ name: data.name, email: data.email, gift: '1000_workflow_templates', campaign: 'cinbase_tvc_demo', utm_source: 'demo_modal', industry: data.industry, goal: data.goal });
-            if (navigator.sendBeacon) navigator.sendBeacon(cfg.NURTURE_WEBHOOK, new Blob([lead], { type: 'text/plain;charset=UTF-8' }));
-            else fetch(cfg.NURTURE_WEBHOOK, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: lead, keepalive: true });
-          }
-        } catch (_) {}
-        // 3) Chuyển hướng sang CINAI.TV để xem thêm demo (chờ beacon kịp gửi)
-        setTimeout(() => { window.location.href = 'https://cinai.tv/?utm_source=cinbase_tvc&utm_medium=demo_form'; }, 300);
+        fire('Lead', { ...data, plan: 'pro' });
+        if (btn) btn.textContent = ['localhost', '127.0.0.1'].includes(location.hostname)
+          ? 'Bản xem thử — chưa gửi dữ liệu'
+          : 'Đã hoàn tất — hotline 0962949620';
       });
     }
   }
@@ -367,8 +340,8 @@
   /* ---------- 11. Gift popup: tự bật (cuộn 50% / 25s / exit-intent) — 1 lần/phiên, tắt hẳn sau khi điền ---------- */
   const giftPopup = document.getElementById('gift-popup');
   if (giftPopup) {
-    const SEEN_KEY = 'cinbase_gift_seen';   // đã hiện trong phiên (sessionStorage)
-    const DONE_KEY = 'cinbase_gift_done';   // đã điền form (localStorage, vĩnh viễn)
+    const SEEN_KEY = 'cinai_pro_voucher_seen';   // đã hiện trong phiên (sessionStorage)
+    const DONE_KEY = 'cinai_pro_voucher_done';   // đã điền form (localStorage, vĩnh viễn)
     const SCROLL_RATIO = 0.5;               // 50% trang
     const TIME_MS = 25000;                  // 25 giây
     const fire = (name, extra) => { if (window.cinaiTrack) window.cinaiTrack(name, extra || {}); };
@@ -413,31 +386,5 @@
     giftPopup.querySelectorAll('[data-gift-close]').forEach((el) => el.addEventListener('click', closePopup));
     addEventListener('keydown', (e) => { if (e.key === 'Escape' && !giftPopup.hidden) closePopup(); });
 
-    // submit: bắn CompleteRegistration + nurture (cùng luồng quà như form inline) → đánh dấu done
-    const giftForm = document.getElementById('gift-form');
-    if (giftForm) {
-      giftForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const emailEl = giftForm.querySelector('[name="email"]');
-        const email = (emailEl && emailEl.value || '').trim();
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { if (emailEl) { emailEl.focus(); if (emailEl.reportValidity) emailEl.reportValidity(); } return; }
-        const btn = giftForm.querySelector('[type="submit"]');
-        if (btn) { btn.disabled = true; btn.textContent = 'Đang gửi…'; }
-        fire('CompleteRegistration', { email, industry: '', goal: '', vat_invoice: '', lead_source: 'gift_popup' });
-        try {
-          const cfg = window.CINAI_CONFIG || {};
-          const nurtureUrl = cfg.NURTURE_WEBHOOK;
-          if (nurtureUrl && /^https?:/.test(nurtureUrl)) {
-            const lead = JSON.stringify({ name: '', email, gift: '1000_workflow_templates', campaign: 'cinbase_tvc_popup', utm_source: 'gift_popup' });
-            if (navigator.sendBeacon) navigator.sendBeacon(nurtureUrl, new Blob([lead], { type: 'text/plain;charset=UTF-8' }));
-            else fetch(nurtureUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: lead, keepalive: true });
-          }
-        } catch (_) {}
-        try { localStorage.setItem(DONE_KEY, '1'); } catch (_) {}
-        const ok = giftPopup.querySelector('[data-gift-success]');
-        setTimeout(() => { giftPopup.querySelector('[data-gift-fields]')?.setAttribute('hidden', ''); if (ok) ok.hidden = false; }, 600);
-        setTimeout(closePopup, 2400);
-      });
-    }
   }
 })();

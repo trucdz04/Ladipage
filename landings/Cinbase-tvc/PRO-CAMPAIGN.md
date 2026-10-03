@@ -1,5 +1,11 @@
 # CinAI Pro campaign — 2026-10-01
 
+## Cập nhật ưu tiên — 02/10/2026
+
+Người dùng xác nhận 500 workflow và hơn 4.000 skill là bộ tài liệu MIỄN PHÍ do CinBase tặng qua cộng đồng Zalo, không phải số skill trên Explore hay quyền lợi thuê bao Pro. Các ghi chú cũ bên dưới về số lượng chỉ là lịch sử. Đã cập nhật SEO, hero, các section tài nguyên, pricing, FAQ, footer và CTA; bỏ form email tại section cộng đồng. Không xác nhận cơ chế tự động cấp tài liệu trong nhóm, không tham gia nhóm hay gửi tin nhắn.
+
+Media: không còn video rỗng hoặc link template cũ trong index. Process dùng tour Explore thật với chú thích phạm vi; không giả làm bản quay các bước tạo nội dung. Gallery, hero, sticky và nền CTA dùng preview skill có nguồn trong assets/explore-skills/sources.json. Đã có review CRO độc lập, không còn lỗi nghiêm trọng gộp quà miễn phí vào gói Pro.
+
 Trang `index.html` đã chuyển từ dịch vụ sản xuất TVC sang bán gói nền tảng CinAI Pro, theo artwork và yêu cầu mới của chủ repo.
 
 - Pro: 25 USD/tháng (brief mới được ưu tiên so với bảng giá cũ $29 trong `templates/_shared/`). Không đổi bảng giá các landing khác.

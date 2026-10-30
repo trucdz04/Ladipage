@@ -1,0 +1,477 @@
+{
+  "schema_version": "1.0",
+  "verified_at": "2026-10-07",
+  "source": {
+    "page": "https://cinai.tv/explore",
+    "public_api": "https://api.cinai.tv/api/entities/public/agent-skills",
+    "total_public_skills": 1143,
+    "eligible_with_image_and_video": 159,
+    "note": "All selected video URLs returned HTTP 200 on 2026-10-07. Images and videos remain hosted by CinAI/Cloudflare and videos are lazy-loaded on hover or focus."
+  },
+  "selection": {
+    "count": 50,
+    "quotas": {
+      "marketing": 7,
+      "game": 4,
+      "story": 10,
+      "explainer": 6,
+      "music": 6,
+      "remake": 1,
+      "cinematic": 7,
+      "video": 8,
+      "social": 1
+    }
+  },
+  "items": [
+    {
+      "id": "6abd0215d83211d5b2000120",
+      "slug": "cinematic-commercial-creator",
+      "name": "Cinematic Commercial Creator",
+      "category": "marketing",
+      "uses": 40,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/e9788484-5925-4ce4-5f6b-4f490fe62b00/md",
+      "video": "https://api.cinai.tv/uploads/f9b9ad2c-cff7-40c4-a403-c91558d7b0ab.mp4"
+    },
+    {
+      "id": "6a9cd92f73265eba1f000001",
+      "slug": "ugc-ad-x10",
+      "name": "UGC Product Ad x10",
+      "category": "marketing",
+      "uses": 27,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/6bbd8d6d-c110-4f5d-937e-4e1a8e11be00/md",
+      "video": "https://api.cinai.tv/uploads/19304b39-fb29-4452-b002-82f976d1b1ae.mp4"
+    },
+    {
+      "id": "6a9cd923890afb936e000001",
+      "slug": "narrative-tvc",
+      "name": "Narrative TVC 15s/30s",
+      "category": "marketing",
+      "uses": 20,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/fb5c1b5a-c91c-4031-4058-087b56c83700/md",
+      "video": "https://api.cinai.tv/uploads/8c26958a-aec7-41bb-b576-4031f183b81f.mp4"
+    },
+    {
+      "id": "6abd0270a1af8d73e40001ec",
+      "slug": "recast-video-character-replacement",
+      "name": "Recast — Video Character Replacement",
+      "category": "marketing",
+      "uses": 20,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/7d502245-6f43-48d5-35f2-b781d4339600/md",
+      "video": "https://api.cinai.tv/uploads/317f5f36-ab04-4d95-809d-00a76129c845.mp4"
+    },
+    {
+      "id": "6abd02db3513fd41630002ea",
+      "slug": "affiliate-video-creator",
+      "name": "Affiliate Video Creator",
+      "category": "marketing",
+      "uses": 9,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/92a24d17-cdf8-4df8-6769-945e60e58800/md",
+      "video": "https://api.cinai.tv/uploads/01ac63bc-64d9-4260-b869-338bc7346f50.mp4"
+    },
+    {
+      "id": "6abd030de9f1427364000366",
+      "slug": "marketing-studio",
+      "name": "Marketing Studio",
+      "category": "marketing",
+      "uses": 7,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/80ec7b68-7053-4a01-f403-478641f96d00/md",
+      "video": "https://api.cinai.tv/uploads/e67b824b-db07-4d01-b7c3-215cfab4b47d.mp4"
+    },
+    {
+      "id": "6abd036d14d283aed9000439",
+      "slug": "promonight-event-promo-maker",
+      "name": "PROMONIGHT - Event Promo Maker",
+      "category": "marketing",
+      "uses": 6,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/72c122a9-75c0-45fa-040d-31848a270300/md",
+      "video": "https://api.cinai.tv/uploads/4c4c682b-0d39-440c-81ae-f35c7801b206.mp4"
+    },
+    {
+      "id": "6abd028126e6e0a9aa000215",
+      "slug": "minecraft-life-video-creator",
+      "name": "Minecraft Life Video Creator",
+      "category": "game",
+      "uses": 16,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/79b5d8d9-52c5-4cfb-879f-a70868626d00/md",
+      "video": "https://api.cinai.tv/uploads/30af373f-ca2f-4481-b633-e0650bea2dd1.mp4"
+    },
+    {
+      "id": "6abd029770479502fc000249",
+      "slug": "minecraft-shorts",
+      "name": "Minecraft Shorts",
+      "category": "game",
+      "uses": 14,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/7dc52a25-05d7-4e01-6cd3-9f007c229e00/md",
+      "video": "https://api.cinai.tv/uploads/86c2eeac-5066-41a1-b07e-05474b28e882.mp4"
+    },
+    {
+      "id": "6a9cd93878fbc249e5000001",
+      "slug": "card-game-ua",
+      "name": "Card Game UA Ad",
+      "category": "game",
+      "uses": 2,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/b7217c5c-4983-4bc5-d7e7-80e27d89c700/md",
+      "video": "https://api.cinai.tv/uploads/02eb5598-63aa-416a-a983-aa78a8a0e426.mp4"
+    },
+    {
+      "id": "6abd046b1303cb27e4000699",
+      "slug": "ai-gameplay-shorts",
+      "name": "AI Gameplay Shorts",
+      "category": "game",
+      "uses": 1,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/ec65c590-194c-41aa-e534-b8d95f053b00/md",
+      "video": "https://api.cinai.tv/uploads/75dd64af-8516-4fab-9424-a82c3107b66d.mp4"
+    },
+    {
+      "id": "6abd01f6d39ef2666e0000df",
+      "slug": "destined-story",
+      "name": "Destined-Story",
+      "category": "story",
+      "uses": 70,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/db33a514-b353-489c-bf64-2a1c30db8f00/md",
+      "video": "https://api.cinai.tv/uploads/0f1941f4-b17d-41d2-ae98-b48100cc2923.mp4"
+    },
+    {
+      "id": "6abd01ec920659bf320000c7",
+      "slug": "stick-figure-studio",
+      "name": "Stick Figure Studio",
+      "category": "story",
+      "uses": 69,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/f7005900-f105-494b-d28a-ee14738b0000/md",
+      "video": "https://api.cinai.tv/uploads/df50acfb-c44e-4ec6-a716-0947a4f9ac6c.mp4"
+    },
+    {
+      "id": "6abd02002621c3647f0000ed",
+      "slug": "interactive-drama",
+      "name": "Interactive Drama",
+      "category": "story",
+      "uses": 55,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/55f8ffe5-7c84-4c1b-94cc-10da1646c300/md",
+      "video": "https://api.cinai.tv/uploads/2f39f3fa-7193-40af-a011-48de54c6e1ab.mp4"
+    },
+    {
+      "id": "6abd02079c47f5faae0000fa",
+      "slug": "hope-shorts",
+      "name": "Hope Shorts",
+      "category": "story",
+      "uses": 48,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/a6dec24f-d57c-44ce-b663-b37017b03300/md",
+      "video": "https://api.cinai.tv/uploads/8262061f-6609-4eac-a57e-9948c05cb8e7.mp4"
+    },
+    {
+      "id": "6abd0217163c234232000125",
+      "slug": "your-very-own-otome-game-male-lead",
+      "name": "Your Very Own Otome Game Male Lead",
+      "category": "story",
+      "uses": 47,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/f57ba7c6-a383-4fe3-8d82-0bfd400bee00/md",
+      "video": "https://api.cinai.tv/uploads/3adc9b2a-f7d9-4e9c-acd0-ec199fdaf0b0.mp4"
+    },
+    {
+      "id": "6abd020e725868fc96000110",
+      "slug": "ceiling-hero-shorts",
+      "name": "Ceiling Hero Shorts",
+      "category": "story",
+      "uses": 46,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/98892251-7d72-4693-c255-5c85df0a7200/md",
+      "video": "https://api.cinai.tv/uploads/45080e6e-61b2-46ec-ac4f-79f2bb212961.mp4"
+    },
+    {
+      "id": "6abd0216e92193bad7000122",
+      "slug": "cat-workday-vlog",
+      "name": "Cat Workday Vlog",
+      "category": "story",
+      "uses": 39,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/dadb67dc-0f6d-4d93-e6f5-c831fce78b00/md",
+      "video": "https://api.cinai.tv/uploads/494f11c5-d2fe-441c-9e17-c510afd4c976.mp4"
+    },
+    {
+      "id": "6abd022d177e01779d00015d",
+      "slug": "cinematic-film-studio",
+      "name": "Cinematic Film Studio",
+      "category": "story",
+      "uses": 29,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/c7a3bf0d-e13b-4028-83ef-181a1fd1bc00/md",
+      "video": "https://api.cinai.tv/uploads/d7e16934-beca-4769-9390-31959ad7f85a.mp4"
+    },
+    {
+      "id": "6abd0238e5e9764f80000177",
+      "slug": "beastman-first-person-pov-video-generation",
+      "name": "Beastman First-Person POV Video Generation",
+      "category": "story",
+      "uses": 25,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/4b34547d-a102-472d-94e0-45fa5fb0b600/md",
+      "video": "https://api.cinai.tv/uploads/227977d8-4c96-4727-82bc-f1393dcc745c.mp4"
+    },
+    {
+      "id": "6abd025a86b3646f770001b9",
+      "slug": "warrior-clash-studio",
+      "name": "warrior-clash-studio",
+      "category": "story",
+      "uses": 22,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/36697f5b-b296-4e70-4ede-7c63a4a56f00/md",
+      "video": "https://api.cinai.tv/uploads/ad2f6267-8369-4893-ab9d-1aa5fdfc0219.mp4"
+    },
+    {
+      "id": "6abd022120254c56e4000140",
+      "slug": "combat-style-director",
+      "name": "Combat Style Director",
+      "category": "explainer",
+      "uses": 34,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/985d6866-5ea4-4eeb-e57f-ba49c23be600/md",
+      "video": "https://api.cinai.tv/uploads/46d60b37-72d0-4e61-baa7-27686b55dd96.mp4"
+    },
+    {
+      "id": "6abd02608feadb8cc20001c7",
+      "slug": "agejourney",
+      "name": "AgeJourney",
+      "category": "explainer",
+      "uses": 20,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/7c7040f0-04f1-49eb-73dd-1de239ffb800/md",
+      "video": "https://api.cinai.tv/uploads/777c861d-ade2-4740-a001-4107293dcdaf.mp4"
+    },
+    {
+      "id": "6abd027d94f284f50100020e",
+      "slug": "apresentadora-virtual-realista",
+      "name": "Apresentadora Virtual Realista",
+      "category": "explainer",
+      "uses": 17,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/08f51023-d878-4322-d5ed-65c8253c8000/md",
+      "video": "https://api.cinai.tv/uploads/5877b141-a265-40fe-9856-4516df9edc11.mp4"
+    },
+    {
+      "id": "6abd0357827442339500040e",
+      "slug": "faceless-viral-documentary-director",
+      "name": "Faceless Viral Documentary Director",
+      "category": "explainer",
+      "uses": 6,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/1035b12b-f044-4bc8-f565-941c9ddfbb00/md",
+      "video": "https://api.cinai.tv/uploads/a50c671d-1bf8-46d6-8f88-23ecf4cd7440.mp4"
+    },
+    {
+      "id": "6a9cd8f6b655afb16b000001",
+      "slug": "vox-explainer",
+      "name": "Vox-Style Explainer",
+      "category": "explainer",
+      "uses": 6,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/7ed61f79-9698-4f29-9c78-6b48aff72700/md",
+      "video": "https://api.cinai.tv/uploads/6ed1c753-aba5-4685-b002-7262c9d50a0b.mp4"
+    },
+    {
+      "id": "6abd03c6c7a7efb45d000505",
+      "slug": "faceless-history-events-director",
+      "name": "Faceless History & Events Director",
+      "category": "explainer",
+      "uses": 4,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/ebc99f47-477b-4db7-34e5-8ea90ede5c00/md",
+      "video": "https://api.cinai.tv/uploads/c31648e7-13a7-462d-921e-0e57edc72a34.mp4"
+    },
+    {
+      "id": "6abd022091a122dbe900013e",
+      "slug": "digen-dance-version",
+      "name": "Digen Dance Version",
+      "category": "music",
+      "uses": 39,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/82379944-822e-43df-e46d-a6d71907ed00/md",
+      "video": "https://api.cinai.tv/uploads/f3b03926-12b4-48ae-a9a1-a862c711705d.mp4"
+    },
+    {
+      "id": "6abd023a8bf389761400017e",
+      "slug": "realistic-dance-movement",
+      "name": "Realistic DANCE Movement",
+      "category": "music",
+      "uses": 26,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/03e5ee3e-d151-4b47-8335-ca9a7e732900/md",
+      "video": "https://api.cinai.tv/uploads/80fc7c9f-4fb1-4017-95e6-88be3c9f904e.mp4"
+    },
+    {
+      "id": "6abd029405959e2239000242",
+      "slug": "digen-music-master",
+      "name": "Digen Music Master",
+      "category": "music",
+      "uses": 15,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/d0d18ea6-8e11-4917-f339-d877ff4adc00/md",
+      "video": "https://api.cinai.tv/uploads/34eb5a4b-bb00-435f-842d-0b2b9c6f6a64.mp4"
+    },
+    {
+      "id": "6abd0292e50a93be1b00023d",
+      "slug": "rockstar-performance-video",
+      "name": "Rockstar Performance Video",
+      "category": "music",
+      "uses": 15,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/60d6138f-e073-4915-643d-e996a1e7e100/md",
+      "video": "https://api.cinai.tv/uploads/ff1730a3-c754-437a-a1b9-9e88d803c238.mp4"
+    },
+    {
+      "id": "6abd034744dc475a4f0003e1",
+      "slug": "automatic-storyboard-scheduler",
+      "name": "Automatic Storyboard Scheduler",
+      "category": "music",
+      "uses": 6,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/634a94ed-a953-48b3-5e72-5fd9a9bfe000/md",
+      "video": "https://api.cinai.tv/uploads/7c1e61e9-4eb9-4b2e-bb83-48944a59d826.mp4"
+    },
+    {
+      "id": "6abd037c3ea35d22f900045d",
+      "slug": "music-video-clip-assembler",
+      "name": "Music Video Clip Assembler",
+      "category": "music",
+      "uses": 5,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/9bd7a9c3-c200-4040-cf3b-a9ccd482cd00/md",
+      "video": "https://api.cinai.tv/uploads/d463a861-f85b-434d-a171-c525e6ffef95.mp4"
+    },
+    {
+      "id": "6a9cd928da725db5ed000001",
+      "slug": "sub-localize",
+      "name": "Subtitle Localize",
+      "category": "remake",
+      "uses": 0,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/ba0137cb-ed93-44c0-427b-abac4b866d00/md",
+      "video": "https://api.cinai.tv/uploads/15c0f7af-a72f-4b08-a0e3-3f00aa5259a9.mp4"
+    },
+    {
+      "id": "6abd027d8efb55a47c00020b",
+      "slug": "movie-maker",
+      "name": "movie maker",
+      "category": "cinematic",
+      "uses": 16,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/5cb9d235-b71f-430d-7cd2-0ec597a66400/md",
+      "video": "https://api.cinai.tv/uploads/ce9cb622-025c-4c52-ac93-ccf8bb20f89f.mp4"
+    },
+    {
+      "id": "6abd02a7818c3f17b000026c",
+      "slug": "viralshort-studio",
+      "name": "ViralShort Studio",
+      "category": "cinematic",
+      "uses": 15,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/7b4d6f53-c789-4b08-ac81-74bcc8c71800/md",
+      "video": "https://api.cinai.tv/uploads/47560e71-c9c6-48b1-96b4-43b6ffd25145.mp4"
+    },
+    {
+      "id": "6abd02c772af00e0e30002b1",
+      "slug": "screamframe",
+      "name": "SCREAMFRAME",
+      "category": "cinematic",
+      "uses": 13,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/80b299a4-a2b0-4512-b537-781650b14d00/md",
+      "video": "https://api.cinai.tv/uploads/f6cbaba0-2317-4721-aac7-61beba9d1606.mp4"
+    },
+    {
+      "id": "6abd02bd2717fe475a000299",
+      "slug": "director-flow-storyboard-drama-and-series",
+      "name": "Director Flow Storyboard Drama and Series",
+      "category": "cinematic",
+      "uses": 12,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/022eb657-ff81-4aa5-3163-9fd00b7aac00/md",
+      "video": "https://api.cinai.tv/uploads/588772ad-a0b9-4871-adf4-a7befcab8e41.mp4"
+    },
+    {
+      "id": "6abd02da9c483a1cb20002e8",
+      "slug": "professional-movie-maker",
+      "name": "Professional Movie Maker",
+      "category": "cinematic",
+      "uses": 10,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/c3f91db2-55ef-4d62-52d4-cb0fe0b96a00/md",
+      "video": "https://api.cinai.tv/uploads/c1430f81-3c35-4e21-a969-456c8e4998ac.mp4"
+    },
+    {
+      "id": "6abd02d733763d07390002df",
+      "slug": "velocity-skill",
+      "name": "Velocity Skill",
+      "category": "cinematic",
+      "uses": 10,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/cd94497a-04ad-42a2-21e5-bcfa8dd65500/md",
+      "video": "https://api.cinai.tv/uploads/a92bae3c-30a7-41b3-8afa-071901689da6.mp4"
+    },
+    {
+      "id": "6abd03341b4f41f4a00003b6",
+      "slug": "dark-paper-cut-style",
+      "name": "Dark Paper-Cut Style",
+      "category": "cinematic",
+      "uses": 7,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/79ee249e-86ad-410a-3ba4-34be9c48d600/md",
+      "video": "https://api.cinai.tv/uploads/5905f3fb-5f21-4b73-afb1-d056b7404878.mp4"
+    },
+    {
+      "id": "6abd01dff73b3bbbbe0000a8",
+      "slug": "motionriseaitm-commercial-advert-creator",
+      "name": "MotionRiseAI™ Commercial Advert Creator",
+      "category": "video",
+      "uses": 102,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/76795dc1-f025-4684-1f3a-3db0c048a100/md",
+      "video": "https://api.cinai.tv/uploads/900e8543-c4e5-4313-847a-bbdef0752da0.mp4"
+    },
+    {
+      "id": "6abd02082fd23d926b0000ff",
+      "slug": "cinematic-3d-animation-director",
+      "name": "Cinematic 3D Animation Director",
+      "category": "video",
+      "uses": 50,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/9d97d0af-bf7c-4879-aa8a-17066f656200/md",
+      "video": "https://api.cinai.tv/uploads/eeb463d9-bb7a-430f-bf4b-4808214064a5.mp4"
+    },
+    {
+      "id": "6abd020a2a78e06e4d000104",
+      "slug": "panda-life-story",
+      "name": "Panda Life Story",
+      "category": "video",
+      "uses": 49,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/b2d8f613-a7ef-4edf-05ab-fa97bae49400/md",
+      "video": "https://api.cinai.tv/uploads/f2a7ab1d-1cc2-42b3-81bc-f780e09d2aa7.mp4"
+    },
+    {
+      "id": "6abd02493452954ddc00019a",
+      "slug": "cartoon",
+      "name": "Cartoon",
+      "category": "video",
+      "uses": 21,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/43a06daa-9557-4527-548c-3d306c84a200/md",
+      "video": "https://api.cinai.tv/uploads/0ec2476d-e8c0-4547-ab00-93d43d08364c.mp4"
+    },
+    {
+      "id": "6abd025daaea3097ae0001c1",
+      "slug": "ai-story-creator",
+      "name": "AI Story Creator",
+      "category": "video",
+      "uses": 20,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/a5c8246b-9d74-4d2c-8631-1ac9d765f900/md",
+      "video": "https://api.cinai.tv/uploads/5796e3d0-1e81-432c-8724-8572f897c07a.mp4"
+    },
+    {
+      "id": "6abd02ec7448fb5e96000315",
+      "slug": "anime-movie-studio",
+      "name": "Anime Movie Studio",
+      "category": "video",
+      "uses": 9,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/5366448f-8f5d-4813-29cf-7bb506428000/md",
+      "video": "https://api.cinai.tv/uploads/87740ec2-889b-405d-89a8-046d3996f0aa.mp4"
+    },
+    {
+      "id": "6abd0303a1683d343100034b",
+      "slug": "trading-card-animation",
+      "name": "Trading card animation",
+      "category": "video",
+      "uses": 8,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/101909d3-d069-49d1-2010-fed62c748700/md",
+      "video": "https://api.cinai.tv/uploads/518085ab-02ff-4066-8c50-84712e7ccb7d.mp4"
+    },
+    {
+      "id": "6abd0314bfe63761a1000375",
+      "slug": "police-simulator-video",
+      "name": "Police Simulator Video",
+      "category": "video",
+      "uses": 7,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/4dd7bde5-1c47-4d57-8223-7baf672a4600/md",
+      "video": "https://api.cinai.tv/uploads/78a61741-b150-4f6b-b44e-9eaf44350c63.mp4"
+    },
+    {
+      "id": "6abd028689de63688c000222",
+      "slug": "timelapse-konstruksi-treehouse",
+      "name": "Timelapse Konstruksi (Treehouse)",
+      "category": "social",
+      "uses": 15,
+      "image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/8a022f1f-89e5-463c-4604-63f1d2259f00/md",
+      "video": "https://api.cinai.tv/uploads/2e6e2cbd-e5d5-4421-941a-5d259d69601a.mp4"
+    }
+  ]
+}

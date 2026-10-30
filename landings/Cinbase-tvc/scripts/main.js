@@ -1,390 +1,647 @@
-/* main.js — tương tác UI cho bản clone mstudio.ai (Pha 5)
-   Theo extraction/behavior-map.md: reveal · header scroll · tabs · FAQ · carousel · sticky VFL · lazy video · marquee. */
 (() => {
   'use strict';
-  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- 1. Scroll reveal (IntersectionObserver) ---------- */
-  const revealEls = document.querySelectorAll('[data-reveal]');
-  if (revealEls.length) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    revealEls.forEach((el) => io.observe(el));
-    // stagger children
-    document.querySelectorAll('[data-stagger]').forEach((grid) => {
-      [...grid.querySelectorAll('[data-reveal]')].forEach((c, i) => { c.style.animationDelay = (i * 80) + 'ms'; });
+  const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const desktopNavQuery = window.matchMedia('(min-width: 900px)');
+  const root = document.documentElement;
+
+  const setAnnouncementHeight = (announcement) => {
+    const height = announcement && !announcement.hidden ? announcement.offsetHeight : 0;
+    const value = `${height}px`;
+    root.style.setProperty('--announcement-h', value);
+    root.style.setProperty('--announcement-height', value);
+    root.style.setProperty('--announcement-current-h', value);
+  };
+
+  const initAnnouncement = () => {
+    const announcement = document.querySelector('[data-announcement]');
+    const closeButton = document.querySelector('[data-announcement-close]');
+    if (!announcement) {
+      setAnnouncementHeight(null);
+      return;
+    }
+
+    const sync = () => setAnnouncementHeight(announcement);
+    const observer = 'ResizeObserver' in window ? new ResizeObserver(sync) : null;
+    observer?.observe(announcement);
+    window.addEventListener('resize', sync, { passive: true });
+    closeButton?.addEventListener('click', () => {
+      announcement.hidden = true;
+      sync();
     });
-  }
+    sync();
+  };
 
-  /* ---------- 2. Header: scrolled bg + hide-on-scroll-down / show-on-scroll-up ---------- */
-  const header = document.getElementById('site-header');
-  if (header) {
-    let lastY = window.scrollY;
-    let ticking = false;
-    const REVEAL_AT_TOP = 90; // luôn hiện khi gần đỉnh
+  const initHeader = () => {
+    const header = document.querySelector('[data-site-header]');
+    if (!header) return;
+    let scheduled = false;
     const update = () => {
-      const y = window.scrollY;
-      header.classList.toggle('is-scrolled', y > 24);
-      const goingDown = y > lastY;
-      if (y > REVEAL_AT_TOP && goingDown) {
-        header.classList.add('header-hidden');   // cuộn xuống → ẩn
-      } else {
-        header.classList.remove('header-hidden'); // cuộn lên / gần đỉnh → hiện
-      }
-      lastY = y;
-      ticking = false;
+      header.classList.toggle('is-scrolled', window.scrollY > 16);
+      scheduled = false;
     };
     update();
-    addEventListener('scroll', () => {
-      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    window.addEventListener('scroll', () => {
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(update);
     }, { passive: true });
-  }
+  };
 
-  /* ---------- 3. Tabs (tools + guided) ---------- */
-  document.querySelectorAll('[data-tabs]').forEach((group) => {
-    if (group.getAttribute('role') !== 'tablist') return;
-    const key = group.dataset.tabs;
-    const tabs = [...group.querySelectorAll('[role="tab"]')];
-    const panels = [...document.querySelectorAll(`[role="tabpanel"][data-tabs="${key}"]`)];
-    const select = (idx) => {
-      tabs.forEach((t, i) => t.setAttribute('aria-selected', i === idx ? 'true' : 'false'));
-      panels.forEach((p, i) => {
-        p.hidden = i !== idx;
-        const v = p.querySelector('video');
-        if (!v) return;
-        if (i === idx) { if (v.dataset.loaded !== '1') { v.load(); v.dataset.loaded = '1'; } tryPlay(v); }
-        else v.pause();
-      });
+  const initMobileNavigation = () => {
+    const toggle = document.querySelector('[data-nav-toggle]');
+    const navigation = document.querySelector('[data-mobile-nav]');
+    if (!toggle || !navigation) return;
+
+    if (!navigation.id) navigation.id = 'mobile-navigation';
+    toggle.setAttribute('aria-controls', navigation.id);
+    const setOpen = (open, returnFocus = false) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu');
+      navigation.classList.toggle('is-open', open);
+      navigation.hidden = !open;
+      if (returnFocus) toggle.focus();
     };
-    tabs.forEach((tab, i) => {
-      tab.addEventListener('click', () => select(i));
-      tab.addEventListener('keydown', (ev) => {
-        if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') {
-          ev.preventDefault();
-          const next = (i + (ev.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length;
-          tabs[next].focus(); select(next);
-        }
-      });
+
+    setOpen(false);
+    toggle.addEventListener('click', () => {
+      const willOpen = toggle.getAttribute('aria-expanded') !== 'true';
+      setOpen(willOpen);
+      if (willOpen) navigation.querySelector('a, button')?.focus();
     });
-  });
-
-  /* ---------- 3b. Hero feature cards (accordion mở rộng khi hover/focus) ---------- */
-  const heroCards = [...document.querySelectorAll('[data-hero-card]')];
-  if (heroCards.length) {
-    const activate = (idx) => {
-      heroCards.forEach((c, i) => {
-        const on = i === idx;
-        c.classList.toggle('is-active', on);
-        const v = c.querySelector('video');
-        if (v) {
-          if (on) { if (v.dataset.loaded !== '1') { v.load(); v.dataset.loaded = '1'; } const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-          else { v.pause(); }
-        }
-      });
-    };
-    heroCards.forEach((card, i) => {
-      card.addEventListener('mouseenter', () => activate(i));
-      card.addEventListener('focusin', () => activate(i));
+    navigation.addEventListener('click', (event) => {
+      if (event.target.closest('a')) setOpen(false);
     });
-    activate(0); // card đầu mở mặc định
-  }
-
-  /* ---------- 4. FAQ accordion (single-open) ---------- */
-  const faqWrap = document.querySelector('[data-faq]');
-  if (faqWrap) {
-    const items = [...faqWrap.querySelectorAll('.faq-item')];
-    items.forEach((item) => {
-      const btn = item.querySelector('button');
-      btn.setAttribute('aria-expanded', 'false');
-      btn.addEventListener('click', () => {
-        const open = item.getAttribute('aria-expanded') === 'true';
-        items.forEach((it) => { it.setAttribute('aria-expanded', 'false'); it.querySelector('button').setAttribute('aria-expanded', 'false'); });
-        if (!open) { item.setAttribute('aria-expanded', 'true'); btn.setAttribute('aria-expanded', 'true'); }
-      });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false, true);
+      }
     });
-  }
+    const handleBreakpoint = () => setOpen(false);
+    if (desktopNavQuery.addEventListener) desktopNavQuery.addEventListener('change', handleBreakpoint);
+    else desktopNavQuery.addListener(handleBreakpoint);
+  };
 
-  /* ---------- 5. Horizontal carousel ---------- */
-  const track = document.querySelector('[data-carousel]');
-  if (track) {
-    const step = () => Math.min(track.clientWidth * 0.8, 400);
-    const prev = document.querySelector('[data-car-prev]');
-    const next = document.querySelector('[data-car-next]');
-    prev && prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
-    next && next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
-  }
-
-  /* ---------- 6. Vertical Feature List (sticky: lens xoay + số trượt liên tục + panel crossfade) ---------- */
-  const vfl = document.querySelector('[data-vfl]');
-  if (vfl) {
-    const panels = [...vfl.querySelectorAll('[data-vfl-panel]')];
-    const nums = [...vfl.querySelectorAll('.vfl-num')];
-    const lens = vfl.querySelector('[data-vfl-lens]');
-    const N = panels.length;
-    const STEP = 360 / N;       // 72° giữa các số
-    const RADIUS = 375;         // bán kính vòng số: NẰM NGOÀI rìa lens (lens bán kính ~320px)
-    const norm = (a) => { a = a % 360; if (a > 180) a -= 360; if (a < -180) a += 360; return a; };
-    let current = -1;
-
-    const playActive = (v) => {
-      const go = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
-      if (v.dataset.loaded !== '1') { v.load(); v.dataset.loaded = '1'; }
-      if (v.readyState >= 2) go(); else v.addEventListener('canplay', go, { once: true });
-    };
-    const setActive = (idx) => {
-      if (idx === current) return;
-      current = idx;
-      panels.forEach((p, i) => {
-        const on = i === idx;
-        p.classList.toggle('is-active', on);
-        const v = p.querySelector('video');
-        if (v) { if (on) playActive(v); else v.pause(); }
-      });
-    };
-    const onScroll = () => {
-      const r = vfl.getBoundingClientRect();
-      const total = vfl.offsetHeight - window.innerHeight;
-      const scrolled = Math.min(Math.max(-r.top, 0), total);
-      const progress = total > 0 ? scrolled / total : 0;        // 0..1 liên tục
-      // vòng xoay: số i nằm ở góc (i*72 - progress*(N-1)*72); active = số gần 0° (3 giờ)
-      const ringRot = -progress * (N - 1) * STEP;
-      if (lens) lens.style.transform = `translate(-50%,-50%) rotate(${ringRot}deg)`;
-      let best = 0, bestAbs = 999;
-      nums.forEach((n, i) => {
-        const deg = norm(ringRot + i * STEP);
-        const rad = deg * Math.PI / 180;
-        const x = RADIUS * Math.cos(rad), y = RADIUS * Math.sin(rad);
-        n.style.transform = `translate(-50%,-50%) translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
-        n.style.opacity = (0.2 + 0.8 * Math.max(0, Math.cos(rad))).toFixed(2); // sáng ở phải, mờ ở trái
-        n.style.zIndex = Math.cos(rad) > 0 ? 2 : 1;
-        const ab = Math.abs(deg);
-        if (ab < bestAbs) { bestAbs = ab; best = i; }
-      });
-      setActive(best);
-    };
-    const mq = matchMedia('(min-width: 1024px)');
-    if (mq.matches) { onScroll(); addEventListener('scroll', onScroll, { passive: true }); }
-    else { panels.forEach((p) => p.classList.add('is-active')); }
-    mq.addEventListener && mq.addEventListener('change', () => location.reload());
-  }
-
-  /* ---------- 7. Lazy video play/pause on viewport ---------- */
-  function tryPlay(v) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-  const vids = [...document.querySelectorAll('video[data-lazy-video]')].filter(v => !v.closest('[data-hero-card]'));
-  if (vids.length) {
-    const vio = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        const v = e.target;
-        if (e.isIntersecting) {
-          if (v.dataset.loaded !== '1') { v.load(); v.dataset.loaded = '1'; }
-          if (!v.closest('[hidden]')) tryPlay(v);
-        } else { v.pause(); }
-      });
-    }, { threshold: 0.25 });
-    vids.forEach((v) => vio.observe(v));
-  }
-
-  /* ---------- 8. Mobile nav toggle (dropdown xổ dọc) ---------- */
-  const navToggle = document.getElementById('nav-toggle');
-  const mobileNav = document.querySelector('header nav[aria-label="Main navigation"]');
-  if (navToggle && mobileNav) {
-    const setOpen = (open) => {
-      mobileNav.classList.toggle('nav-open', open);
-      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    };
-    navToggle.setAttribute('aria-expanded', 'false');
-    navToggle.addEventListener('click', () => setOpen(!mobileNav.classList.contains('nav-open')));
-    // đóng menu khi chọn link
-    mobileNav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
-  }
-
-  /* ---------- 8b. Announcement bar: đồng bộ vị trí header + đóng ---------- */
-  const annClose = document.getElementById('announcement-close');
-  const annBar = document.getElementById('announcement-bar');
-  if (annBar && header) {
-    // header bám đúng chiều cao thực của thanh thông báo (mobile xuống dòng cao hơn 48px → tránh đè).
-    const syncHeaderTop = () => {
-      const visible = annBar.style.display !== 'none';
-      header.style.top = (visible ? annBar.offsetHeight : 0) + 'px';
-    };
-    syncHeaderTop();
-    addEventListener('resize', syncHeaderTop);
-    // tự cập nhật khi thanh đổi chiều cao (load webfont, đổi ngôn ngữ, xoay màn hình…)
-    if (window.ResizeObserver) new ResizeObserver(syncHeaderTop).observe(annBar);
-    if (annClose) annClose.addEventListener('click', () => { annBar.style.display = 'none'; syncHeaderTop(); });
-  }
-
-  /* ---------- 8c. Term toggle (ma trận cam kết 1/6/12 tháng) ---------- */
-  const termToggle = document.querySelector('[data-term-toggle]');
-  if (termToggle) {
-    const opts = [...termToggle.querySelectorAll('.term-opt')];
-    const applyTerm = (term) => {
-      document.querySelectorAll('[data-price]').forEach((p) => {
-        const val = p.dataset['m' + term];
-        if (val) p.textContent = val;
-      });
-      document.querySelectorAll('[data-anchor]').forEach((a) => {
-        const val = a.dataset['a' + term];
-        if (val) { a.textContent = val; a.style.display = ''; }
-        else { a.style.display = 'none'; }
-      });
-      document.querySelectorAll('[data-term-suffix]').forEach((s) => { s.textContent = 'cam kết ' + term + ' tháng'; });
-      const note = document.querySelector('[data-term-note]');
-      if (note) note.textContent = 'Giá/video khi cam kết ' + term + ' tháng';
-    };
-    opts.forEach((opt) => {
-      opt.addEventListener('click', () => {
-        const term = opt.dataset.term; // 1 | 6 | 12
-        opts.forEach((o) => {
-          const active = o === opt;
-          o.classList.toggle('is-active', active);
-          o.setAttribute('aria-selected', active ? 'true' : 'false');
-        });
-        applyTerm(term);
-        if (window.cinaiTrack) window.cinaiTrack('SelectTerm', { term });
-      });
-    });
-  }
-
-  /* ---------- 8d. Lead magnet form ---------- */
-  const leadForm = document.querySelector('[data-lead-form]');
-  if (leadForm) {
-    let started = false;
-    const fire = (name, extra) => { if (window.cinaiTrack) window.cinaiTrack(name, extra || {}); };
-    leadForm.addEventListener('focusin', () => { if (!started) { started = true; fire('LeadFormStart'); } }, { once: false });
-    const indSel = leadForm.querySelector('[name="industry"]');
-    const goalSel = leadForm.querySelector('[name="goal"]');
-    const vatSel = leadForm.querySelector('[name="vat_invoice"]');
-    indSel && indSel.addEventListener('change', () => fire('SelectIndustry', { industry: indSel.value }));
-    goalSel && goalSel.addEventListener('change', () => fire('SelectGoal', { goal: goalSel.value }));
-    vatSel && vatSel.addEventListener('change', () => fire('SelectVatInvoice', { vat_invoice: vatSel.value }));
-    leadForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      // bắt buộc email hợp lệ mới cho gửi (form có novalidate nên phải tự kiểm)
-      if (!leadForm.reportValidity()) return;
-      const emailField = leadForm.querySelector('[name="email"]');
-      const email = (emailField && emailField.value || '').trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        if (emailField) { emailField.focus(); if (emailField.reportValidity) emailField.reportValidity(); }
+  const initReveal = () => {
+    const elements = [...document.querySelectorAll('[data-reveal]')];
+    if (!elements.length) return;
+    root.classList.add('reveal-ready');
+    let observer = null;
+    const show = (element) => element.classList.add('is-visible', 'in-view');
+    const observe = () => {
+      if (reduceMotionQuery.matches || !('IntersectionObserver' in window)) {
+        observer?.disconnect();
+        observer = null;
+        elements.forEach(show);
         return;
       }
-      const data = {
-        email: email,
-        industry: indSel ? indSel.value : '',
-        goal: goalSel ? goalSel.value : '',
-        vat_invoice: vatSel ? vatSel.value : '',
-        lead_source: 'landing',
-      };
-      const btn = leadForm.querySelector('[type="submit"]');
-      const ok = leadForm.querySelector('[data-lead-success]');
-      if (btn) { btn.disabled = true; btn.textContent = 'Đang gửi…'; }
-      fire('Lead', { ...data, plan: 'pro' });
-      if (ok) ok.textContent = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
-        ? 'Bản xem thử: thông tin hợp lệ, chưa gửi ra hệ thống. Liên hệ 0962949620 để được tư vấn.'
-        : 'Bạn đã hoàn tất biểu mẫu. Nếu cần xác nhận tư vấn, vui lòng liên hệ 0962949620.';
-      const done = () => { leadForm.querySelector('[data-lead-fields]')?.setAttribute('hidden', ''); if (ok) ok.hidden = false; };
-      setTimeout(done, 600);
-    });
-  }
-
-  /* ---------- 9. Chat widget placeholder ---------- */
-  const chat = document.getElementById('chat-widget');
-  if (chat) chat.addEventListener('click', () => alert('Khung chat (placeholder) — gắn công cụ chat thật khi triển khai.'));
-
-  /* ---------- 10. Demo modal: mở từ mọi CTA → submit đẩy Lark (sale gọi) → redirect CINAI.TV ---------- */
-  const demoModal = document.getElementById('demo-modal');
-  if (demoModal) {
-    const fire = (name, extra) => { if (window.cinaiTrack) window.cinaiTrack(name, extra || {}); };
-    const openModal = (plan) => {
-      demoModal.dataset.plan = plan || '';
-      demoModal.hidden = false;
-      document.body.classList.add('demo-open');
-      const first = demoModal.querySelector('input[name="name"]');
-      setTimeout(() => first && first.focus(), 60);
-      fire('OpenDemoForm', plan ? { plan } : {});
-    };
-    const closeModal = () => { demoModal.hidden = true; document.body.classList.remove('demo-open'); };
-
-    // mọi CTA "nhận video demo / tư vấn" (anchor data-cta=consult) → mở modal thay vì cuộn
-    document.querySelectorAll('a[data-cta="consult"]').forEach((a) => {
-      a.addEventListener('click', (e) => { e.preventDefault(); openModal(a.getAttribute('data-plan')); });
-    });
-    demoModal.querySelectorAll('[data-demo-close]').forEach((el) => el.addEventListener('click', closeModal));
-    addEventListener('keydown', (e) => { if (e.key === 'Escape' && !demoModal.hidden) closeModal(); });
-
-    const demoForm = document.getElementById('demo-form');
-    if (demoForm) {
-      demoForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (!demoForm.reportValidity()) return;
-        const get = (n) => ((demoForm.querySelector('[name="' + n + '"]') || {}).value || '').trim();
-        const data = {
-          name: get('name'), phone: get('phone'), email: get('email'),
-          industry: get('industry'), goal: get('goal'),
-          plan: demoModal.dataset.plan || '', lead_source: 'demo_modal',
-        };
-        const btn = demoForm.querySelector('[type="submit"]');
-        if (btn) { btn.disabled = true; btn.textContent = 'Đang gửi…'; }
-        fire('Lead', { ...data, plan: 'pro' });
-        if (btn) btn.textContent = ['localhost', '127.0.0.1'].includes(location.hostname)
-          ? 'Bản xem thử — chưa gửi dữ liệu'
-          : 'Đã hoàn tất — hotline 0962949620';
+      observer?.disconnect();
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          show(entry.target);
+          observer?.unobserve(entry.target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      elements.forEach((element) => {
+        if (!element.classList.contains('is-visible')) observer.observe(element);
       });
-    }
-  }
-
-  /* ---------- 11. Gift popup: tự bật (cuộn 50% / 25s / exit-intent) — 1 lần/phiên, tắt hẳn sau khi điền ---------- */
-  const giftPopup = document.getElementById('gift-popup');
-  if (giftPopup) {
-    const SEEN_KEY = 'cinai_pro_voucher_seen';   // đã hiện trong phiên (sessionStorage)
-    const DONE_KEY = 'cinai_pro_voucher_done';   // đã điền form (localStorage, vĩnh viễn)
-    const SCROLL_RATIO = 0.5;               // 50% trang
-    const TIME_MS = 25000;                  // 25 giây
-    const fire = (name, extra) => { if (window.cinaiTrack) window.cinaiTrack(name, extra || {}); };
-    let shown = false, timer = null;
-
-    const isDone = () => { try { return localStorage.getItem(DONE_KEY) === '1'; } catch (_) { return false; } };
-    const isSeen = () => { try { return sessionStorage.getItem(SEEN_KEY) === '1'; } catch (_) { return false; } };
-
-    const cleanup = () => {
-      if (timer) { clearTimeout(timer); timer = null; }
-      window.removeEventListener('scroll', onScroll);
-      document.removeEventListener('mouseout', onExit);
     };
-    const openPopup = (trigger) => {
-      if (shown || isDone() || isSeen()) return;
-      shown = true;
-      try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (_) {}
-      cleanup();
-      giftPopup.hidden = false;
-      document.body.classList.add('demo-open');
-      const first = giftPopup.querySelector('input[name="email"]');
-      setTimeout(() => first && first.focus(), 60);
-      fire('OpenGiftPopup', { trigger: trigger || '' });
+    observe();
+    if (reduceMotionQuery.addEventListener) reduceMotionQuery.addEventListener('change', observe);
+    else reduceMotionQuery.addListener(observe);
+  };
+
+  const initCinematicHero = () => {
+    const hero = document.querySelector('[data-cinematic-hero]');
+    if (!hero) return;
+
+    const slides = [...hero.querySelectorAll('[data-cinematic-slide]')];
+    const pagerButtons = [...hero.querySelectorAll('[data-hero-pager]')];
+    const previousButton = hero.querySelector('[data-hero-prev]');
+    const nextButton = hero.querySelector('[data-hero-next]');
+    const toggleButton = hero.querySelector('[data-hero-toggle]');
+    const liveRegion = hero.querySelector('[data-hero-live]');
+    const announcer = hero.querySelector('[data-hero-announcer]');
+    if (!slides.length) return;
+
+    let activeIndex = Math.max(0, slides.findIndex((slide) => (
+      slide.classList.contains('is-active') || slide.getAttribute('aria-hidden') === 'false'
+    )));
+    let heroIsVisible = false;
+    let userPaused = false;
+    let focusPaused = false;
+    let pointerWithin = false;
+    let rotationTimer = 0;
+
+    const normalizedIndex = (index) => (index + slides.length) % slides.length;
+    const getVideo = (slide) => slide?.querySelector('[data-cinematic-video]');
+    const detachVideo = (video) => {
+      if (!video) return;
+      video.pause();
+      if (video.hasAttribute('src')) {
+        video.removeAttribute('src');
+        video.load();
+      }
+      video.removeAttribute('data-loaded');
     };
-    const closePopup = () => { giftPopup.hidden = true; document.body.classList.remove('demo-open'); };
+    const attachVideo = (video) => {
+      if (!video || video.dataset.loaded === 'true') return;
+      const source = video.dataset.src;
+      if (!source) return;
+      video.src = source;
+      video.dataset.loaded = 'true';
+      video.load();
+    };
+    const canAnimate = () => (
+      heroIsVisible && !document.hidden && !reduceMotionQuery.matches && !userPaused
+    );
+    const playActiveVideo = () => {
+      const video = getVideo(slides[activeIndex]);
+      if (!video) return;
+      if (!canAnimate()) {
+        video.pause();
+        return;
+      }
+      attachVideo(video);
+      video.play()?.catch((error) => {
+        if (error?.name === 'AbortError' || video !== getVideo(slides[activeIndex])) return;
+        userPaused = true;
+        clearRotation();
+        syncToggle();
+        if (announcer) announcer.textContent = 'Không thể tự động phát video này. Hãy chọn tác phẩm khác hoặc thử lại.';
+      });
+    };
+    const clearRotation = () => {
+      if (!rotationTimer) return;
+      window.clearTimeout(rotationTimer);
+      rotationTimer = 0;
+    };
+    const scheduleRotation = () => {
+      clearRotation();
+      if (!canAnimate() || focusPaused || pointerWithin || slides.length < 2) return;
+      rotationTimer = window.setTimeout(() => selectSlide(activeIndex + 1, { announce: false }), 6000);
+    };
+    const syncToggle = () => {
+      if (!toggleButton) return;
+      const appearsPaused = userPaused || reduceMotionQuery.matches;
+      toggleButton.disabled = reduceMotionQuery.matches;
+      toggleButton.setAttribute('aria-pressed', String(appearsPaused));
+      toggleButton.setAttribute('aria-label', reduceMotionQuery.matches
+        ? 'Tự động phát đã tắt theo cài đặt giảm chuyển động'
+        : (userPaused ? 'Tiếp tục trình chiếu' : 'Tạm dừng trình chiếu'));
+      toggleButton.dataset.state = appearsPaused ? 'paused' : 'playing';
+    };
+    const itemTitle = (index) => (
+      pagerButtons[index]?.dataset.title
+      || slides[index]?.dataset.title
+      || getVideo(slides[index])?.getAttribute('aria-label')
+      || `Video ${index + 1}`
+    );
 
-    function onScroll() {
-      const sc = window.scrollY || document.documentElement.scrollTop || 0;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (max > 0 && sc / max >= SCROLL_RATIO) openPopup('scroll');
+    function selectSlide(index, options = {}) {
+      activeIndex = normalizedIndex(index);
+      slides.forEach((slide, slideIndex) => {
+        const active = slideIndex === activeIndex;
+        slide.classList.toggle('is-active', active);
+        slide.setAttribute('aria-hidden', String(!active));
+        if (!active) detachVideo(getVideo(slide));
+      });
+      const syncSelectors = (items) => {
+        items.forEach((item, itemIndex) => {
+          const active = itemIndex === activeIndex;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-current', active ? 'true' : 'false');
+          item.setAttribute('aria-pressed', String(active));
+          item.tabIndex = active ? 0 : -1;
+        });
+      };
+      syncSelectors(pagerButtons);
+      if (liveRegion) {
+        const status = `${String(activeIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')} · ${itemTitle(activeIndex)}`;
+        liveRegion.textContent = status;
+        if (announcer && options.announce !== false) announcer.textContent = `Đang chiếu ${status}`;
+      }
+      if (options.focus === 'pager') pagerButtons[activeIndex]?.focus();
+      playActiveVideo();
+      scheduleRotation();
     }
-    function onExit(e) { if (!e.relatedTarget && e.clientY <= 0) openPopup('exit'); }
 
-    // chỉ gắn trigger nếu chưa điền & chưa hiện trong phiên
-    if (!isDone() && !isSeen()) {
-      timer = setTimeout(() => openPopup('time'), TIME_MS);
-      window.addEventListener('scroll', onScroll, { passive: true });
-      if (!('ontouchstart' in window)) document.addEventListener('mouseout', onExit); // exit-intent: desktop only
+    const bindSelectorKeys = (items, focusGroup) => {
+      items.forEach((item, index) => {
+        item.addEventListener('click', () => selectSlide(index));
+        item.addEventListener('keydown', (event) => {
+          let targetIndex = null;
+          if (event.key === 'ArrowRight' || event.key === 'ArrowDown') targetIndex = index + 1;
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') targetIndex = index - 1;
+          if (event.key === 'Home') targetIndex = 0;
+          if (event.key === 'End') targetIndex = slides.length - 1;
+          if (targetIndex === null) return;
+          event.preventDefault();
+          selectSlide(targetIndex, { focus: focusGroup });
+        });
+      });
+    };
+
+    bindSelectorKeys(pagerButtons, 'pager');
+    previousButton?.addEventListener('click', () => selectSlide(activeIndex - 1));
+    nextButton?.addEventListener('click', () => selectSlide(activeIndex + 1));
+    toggleButton?.addEventListener('click', () => {
+      if (reduceMotionQuery.matches) return;
+      userPaused = !userPaused;
+      syncToggle();
+      if (userPaused) {
+        clearRotation();
+        getVideo(slides[activeIndex])?.pause();
+      } else {
+        focusPaused = false;
+        playActiveVideo();
+        scheduleRotation();
+      }
+    });
+
+    hero.addEventListener('focusin', (event) => {
+      if (event.target !== toggleButton) focusPaused = true;
+      clearRotation();
+    });
+    hero.addEventListener('focusout', (event) => {
+      if (event.relatedTarget && hero.contains(event.relatedTarget)) return;
+      focusPaused = false;
+      scheduleRotation();
+    });
+    hero.addEventListener('mouseenter', () => {
+      pointerWithin = true;
+      clearRotation();
+    });
+    hero.addEventListener('mouseleave', () => {
+      pointerWithin = false;
+      scheduleRotation();
+    });
+
+    const pauseAll = () => {
+      slides.forEach((slide) => getVideo(slide)?.pause());
+      clearRotation();
+    };
+    const syncPlayback = () => {
+      syncToggle();
+      if (canAnimate()) {
+        playActiveVideo();
+        scheduleRotation();
+      } else pauseAll();
+    };
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(([entry]) => {
+        heroIsVisible = entry.isIntersecting;
+        syncPlayback();
+      }, { threshold: 0.12 });
+      observer.observe(hero);
+    } else heroIsVisible = true;
+
+    document.addEventListener('visibilitychange', syncPlayback);
+    if (reduceMotionQuery.addEventListener) reduceMotionQuery.addEventListener('change', syncPlayback);
+    else reduceMotionQuery.addListener(syncPlayback);
+    syncToggle();
+    selectSlide(activeIndex, { announce: false });
+  };
+
+  const initMediaLibraries = () => {
+    const legacyAttributes = {
+      'data-skill-filter': 'data-library-filter',
+      'data-skill-card': 'data-library-card',
+      'data-skill-rail': 'data-library-rail',
+      'data-skill-prev': 'data-library-prev',
+      'data-skill-next': 'data-library-next',
+      'data-skill-count': 'data-library-count',
+      'data-skill-preview': 'data-library-preview',
+    };
+    document.querySelectorAll('[data-skill-library]').forEach((library) => {
+      library.setAttribute('data-media-library', '');
+      library.dataset.itemLabel ||= 'Skill';
+      Object.entries(legacyAttributes).forEach(([legacy, current]) => {
+        library.querySelectorAll(`[${legacy}]`).forEach((element) => {
+          element.setAttribute(current, element.getAttribute(legacy) || '');
+        });
+      });
+    });
+    const libraries = [...document.querySelectorAll('[data-media-library]')];
+    if (!libraries.length) return;
+    const allCards = [...document.querySelectorAll('[data-media-library] [data-library-card]')];
+    const hoveredCards = new Set();
+    const interestedCards = new Set();
+    const failedPreviews = new WeakSet();
+    let activePreviewCard = null;
+    let previewGeneration = 0;
+    const hasInteraction = (card) => (
+      hoveredCards.has(card) || card.contains(document.activeElement)
+    );
+    const isCardVisible = (card) => {
+      if (card.hidden || !card.isConnected) return false;
+      const bounds = card.getBoundingClientRect();
+      const railBounds = card.closest('[data-library-rail]')?.getBoundingClientRect();
+      const left = Math.max(0, railBounds?.left ?? 0, bounds.left);
+      const right = Math.min(window.innerWidth, railBounds?.right ?? window.innerWidth, bounds.right);
+      const top = Math.max(0, railBounds?.top ?? 0, bounds.top);
+      const bottom = Math.min(window.innerHeight, railBounds?.bottom ?? window.innerHeight, bounds.bottom);
+      return right > left && bottom > top;
+    };
+    const stopPreview = (card = activePreviewCard) => {
+      if (!card) return;
+      const video = card.querySelector('[data-library-preview]');
+      card.classList.remove('is-previewing');
+      if (video) {
+        video.pause();
+        if (video.hasAttribute('src')) {
+          video.removeAttribute('src');
+          video.load();
+        }
+      }
+      if (activePreviewCard === card) {
+        activePreviewCard = null;
+        previewGeneration += 1;
+      }
+    };
+    const startPreview = (card) => {
+      if (!card || document.hidden || reduceMotionQuery.matches || !isCardVisible(card)) return;
+      if (activePreviewCard === card) return;
+      stopPreview();
+      const video = card.querySelector('[data-library-preview]');
+      const source = video?.dataset.src;
+      if (!video || !source) return;
+      activePreviewCard = card;
+      const generation = ++previewGeneration;
+      video.muted = true;
+      video.src = source;
+      video.load();
+      const playback = video.play();
+      if (!playback) {
+        card.classList.add('is-previewing');
+        return;
+      }
+      playback.then(() => {
+        if (generation === previewGeneration && activePreviewCard === card) {
+          card.classList.add('is-previewing');
+        }
+      }).catch((error) => {
+        if (error?.name === 'AbortError' || generation !== previewGeneration) return;
+        failedPreviews.add(card);
+        if (activePreviewCard === card) stopPreview(card);
+      });
+    };
+    const syncPreview = () => {
+      if (document.hidden || reduceMotionQuery.matches) {
+        stopPreview();
+        return;
+      }
+      const candidate = [...interestedCards].reverse().find((card) => (
+        hasInteraction(card) && !failedPreviews.has(card) && isCardVisible(card)
+      ));
+      if (candidate) startPreview(candidate);
+      else stopPreview();
+    };
+    const rememberInteraction = (card) => {
+      interestedCards.delete(card);
+      interestedCards.add(card);
+      failedPreviews.delete(card);
+      syncPreview();
+    };
+    const releaseInteraction = (card) => {
+      if (!hasInteraction(card)) interestedCards.delete(card);
+      syncPreview();
+    };
+    allCards.forEach((card) => {
+      card.addEventListener('pointerenter', (event) => {
+        if (event.pointerType === 'touch') return;
+        hoveredCards.add(card);
+        rememberInteraction(card);
+      });
+      card.addEventListener('pointerleave', () => {
+        hoveredCards.delete(card);
+        releaseInteraction(card);
+      });
+      card.addEventListener('focusin', () => rememberInteraction(card));
+      card.addEventListener('focusout', (event) => {
+        if (event.relatedTarget && card.contains(event.relatedTarget)) return;
+        if (!hoveredCards.has(card)) interestedCards.delete(card);
+        syncPreview();
+      });
+      card.querySelector('[data-library-preview]')?.addEventListener('error', () => {
+        if (activePreviewCard !== card) return;
+        failedPreviews.add(card);
+        stopPreview(card);
+        syncPreview();
+      });
+    });
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(() => syncPreview(), { threshold: [0, 0.12] });
+      allCards.forEach((card) => observer.observe(card));
+    } else {
+      window.addEventListener('scroll', syncPreview, { passive: true });
     }
+    document.addEventListener('visibilitychange', syncPreview);
+    if (reduceMotionQuery.addEventListener) reduceMotionQuery.addEventListener('change', syncPreview);
+    else reduceMotionQuery.addListener(syncPreview);
 
-    // đóng popup
-    giftPopup.querySelectorAll('[data-gift-close]').forEach((el) => el.addEventListener('click', closePopup));
-    addEventListener('keydown', (e) => { if (e.key === 'Escape' && !giftPopup.hidden) closePopup(); });
+    const categoryFor = (filter) => (
+      filter.dataset.category || filter.dataset.libraryFilter || 'all'
+    ).trim().toLowerCase();
+    const categoriesFor = (card) => (
+      card.dataset.category || ''
+    ).toLowerCase().split(/[\s,|]+/).filter(Boolean);
 
-  }
+    libraries.forEach((library) => {
+      const filters = [...library.querySelectorAll('[data-library-filter]')];
+      const cards = [...library.querySelectorAll('[data-library-card]')];
+      const rail = library.querySelector('[data-library-rail]');
+      const previousButton = library.querySelector('[data-library-prev]');
+      const nextButton = library.querySelector('[data-library-next]');
+      const count = library.querySelector('[data-library-count]');
+      const itemLabel = library.dataset.itemLabel || 'Skill';
+      const updateArrows = () => {
+        if (!rail) return;
+        const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
+        if (previousButton) previousButton.disabled = rail.scrollLeft <= 2;
+        if (nextButton) nextButton.disabled = rail.scrollLeft >= maxScroll - 2;
+      };
+      const applyFilter = (filter, options = {}) => {
+        const category = categoryFor(filter);
+        let visibleCount = 0;
+        cards.forEach((card) => {
+          const visible = category === 'all' || categoriesFor(card).includes(category);
+          if (!visible) stopPreview(card);
+          card.hidden = !visible;
+          if (visible) visibleCount += 1;
+        });
+        filters.forEach((candidate) => {
+          const active = candidate === filter;
+          candidate.classList.toggle('is-active', active);
+          candidate.setAttribute('aria-pressed', String(active));
+          candidate.tabIndex = active ? 0 : -1;
+        });
+        if (count) count.textContent = `${visibleCount} ${itemLabel}`;
+        rail?.scrollTo({ left: 0, behavior: reduceMotionQuery.matches ? 'auto' : 'smooth' });
+        window.requestAnimationFrame(() => {
+          updateArrows();
+          syncPreview();
+        });
+        if (options.focus) filter.focus();
+      };
+
+      filters.forEach((filter, index) => {
+        filter.addEventListener('click', () => applyFilter(filter));
+        filter.addEventListener('keydown', (event) => {
+          let targetIndex = null;
+          if (event.key === 'ArrowRight' || event.key === 'ArrowDown') targetIndex = index + 1;
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') targetIndex = index - 1;
+          if (event.key === 'Home') targetIndex = 0;
+          if (event.key === 'End') targetIndex = filters.length - 1;
+          if (targetIndex === null) return;
+          event.preventDefault();
+          applyFilter(filters[(targetIndex + filters.length) % filters.length], { focus: true });
+        });
+      });
+
+      const scrollRail = (direction) => {
+        if (!rail) return;
+        rail.scrollBy({
+          left: direction * rail.clientWidth * 0.8,
+          behavior: reduceMotionQuery.matches ? 'auto' : 'smooth',
+        });
+      };
+      previousButton?.addEventListener('click', () => scrollRail(-1));
+      nextButton?.addEventListener('click', () => scrollRail(1));
+      rail?.addEventListener('scroll', () => {
+        updateArrows();
+        syncPreview();
+      }, { passive: true });
+      window.addEventListener('resize', updateArrows, { passive: true });
+      const initial = filters.find((filter) => filter.getAttribute('aria-pressed') === 'true') || filters[0];
+      if (initial) applyFilter(initial);
+      else if (count) count.textContent = `${cards.length} ${itemLabel}`;
+      updateArrows();
+    });
+  };
+
+  const initProcessTabs = () => {
+    const tabs = [...document.querySelectorAll('[data-process-tab]')];
+    const panels = [...document.querySelectorAll('[data-process-panel]')];
+    if (!tabs.length || !panels.length) return;
+    const tabList = tabs[0].parentElement;
+    const processMobileQuery = window.matchMedia('(max-width: 767px)');
+    const syncOrientation = () => tabList?.setAttribute(
+      'aria-orientation',
+      processMobileQuery.matches ? 'horizontal' : 'vertical',
+    );
+    syncOrientation();
+    if (processMobileQuery.addEventListener) processMobileQuery.addEventListener('change', syncOrientation);
+    else processMobileQuery.addListener(syncOrientation);
+    tabs.forEach((tab, index) => {
+      if (!tab.id) tab.id = `process-tab-${index + 1}`;
+      const panel = panels[index];
+      if (!panel) return;
+      if (!panel.id) panel.id = `process-panel-${index + 1}`;
+      tab.setAttribute('aria-controls', panel.id);
+      panel.setAttribute('aria-labelledby', tab.id);
+    });
+    const select = (index, focus = false) => {
+      const activeIndex = (index + tabs.length) % tabs.length;
+      tabs.forEach((tab, tabIndex) => {
+        const active = tabIndex === activeIndex;
+        tab.classList.toggle('is-active', active);
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+      });
+      panels.forEach((panel, panelIndex) => {
+        panel.hidden = panelIndex !== activeIndex;
+        panel.classList.toggle('is-active', panelIndex === activeIndex);
+      });
+      if (focus) tabs[activeIndex].focus();
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => select(index));
+      tab.addEventListener('keydown', (event) => {
+        let nextIndex = null;
+        if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = index + 1;
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = index - 1;
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = tabs.length - 1;
+        if (nextIndex === null) return;
+        event.preventDefault();
+        select(nextIndex, true);
+      });
+    });
+    const initialIndex = Math.max(0, tabs.findIndex((tab) => tab.getAttribute('aria-selected') === 'true'));
+    select(initialIndex);
+  };
+
+  const initFaq = () => {
+    const items = [...document.querySelectorAll('details[data-faq-item]')];
+    items.forEach((item) => {
+      item.addEventListener('toggle', () => {
+        if (!item.open) return;
+        items.forEach((candidate) => {
+          if (candidate !== item) candidate.open = false;
+        });
+      });
+    });
+  };
+
+  const initRegistrationForm = () => {
+    const form = document.querySelector('[data-registration-form]');
+    if (!form) return;
+    const audience = form.querySelector('[name="audience"]');
+    const status = form.querySelector('[data-registration-status]');
+
+    document.querySelectorAll('[data-registration-audience]').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (audience) audience.value = link.dataset.registrationAudience || 'business';
+      });
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      status?.classList.remove('is-error');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        if (status) {
+          status.textContent = 'Vui lòng điền đầy đủ họ tên, thông tin liên hệ và đơn vị trước khi mở email đăng ký.';
+          status.classList.add('is-error');
+        }
+        return;
+      }
+
+      const data = new FormData(form);
+      const isEducator = data.get('audience') === 'educator';
+      const subject = isEducator
+        ? 'Đăng ký đối tác giảng viên CinAI'
+        : 'Đăng ký đào tạo video AI miễn phí qua Zoom';
+      const body = [
+        `Họ và tên: ${data.get('name') || ''}`,
+        `Số điện thoại / Zalo: ${data.get('phone') || ''}`,
+        `Email: ${data.get('email') || ''}`,
+        `Doanh nghiệp / đơn vị: ${data.get('organization') || ''}`,
+        `Vai trò: ${isEducator ? 'Giảng viên / đơn vị đào tạo' : 'Doanh nghiệp'}`,
+        '',
+        'Nhu cầu muốn trao đổi:',
+        data.get('need') || 'Chưa cung cấp',
+      ].join('\n');
+      window.cinaiTrack?.('RegistrationIntent', { audience: isEducator ? 'educator' : 'business' });
+      if (status) status.textContent = 'Đang mở ứng dụng email. Vui lòng kiểm tra lại nội dung và bấm Gửi để hoàn tất đăng ký.';
+      window.location.href = `mailto:admin@cinai.tv?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  };
+
+  const init = () => {
+    initAnnouncement();
+    initHeader();
+    initMobileNavigation();
+    initReveal();
+    initCinematicHero();
+    initMediaLibraries();
+    initProcessTabs();
+    initFaq();
+    initRegistrationForm();
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else init();
 })();

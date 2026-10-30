@@ -1,0 +1,299 @@
+{
+  "schema_version": "1.0",
+  "verified_at": "2026-10-07",
+  "source": {
+    "page": "https://cinai.tv/explore",
+    "public_api": "https://api.cinai.tv/api/entities/public/agent-skills",
+    "public_users_api": "https://api.cinai.tv/api/entities/public/users?ids={ids}",
+    "total_enabled_skills": 1143,
+    "note": "Metadata and usage counts are a point-in-time snapshot. Card artwork is stored locally for the landing page; no private token or cookie is recorded."
+  },
+  "category_counts": {
+    "marketing": 161,
+    "game": 31,
+    "story": 235,
+    "explainer": 37,
+    "music": 37,
+    "design": 79,
+    "remake": 11,
+    "cinematic": 351,
+    "video": 139,
+    "studio": 2,
+    "social": 60
+  },
+  "selection": {
+    "count": 24,
+    "categories_represented": 10,
+    "criteria": [
+      "Trải đều các ngách TVC, nội dung, giáo dục, thiết kế và hậu kỳ",
+      "Ưu tiên skill có hình đại diện rõ và metadata công khai",
+      "Giữ số lượng đủ phong phú nhưng không tải toàn bộ 1.143 skill vào landing"
+    ]
+  },
+  "items": [
+    {
+      "id": "6a9cd92f73265eba1f000001",
+      "slug": "ugc-ad-x10",
+      "name": "UGC Product Ad x10",
+      "category": "marketing",
+      "uses": 27,
+      "author": "CinAI",
+      "local_image": "assets/skills/ugc-ad-x10.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/6bbd8d6d-c110-4f5d-937e-4e1a8e11be00/md",
+      "preview_video": "https://api.cinai.tv/uploads/19304b39-fb29-4452-b002-82f976d1b1ae.mp4"
+    },
+    {
+      "id": "6a9cd935ec561dfcc7000001",
+      "slug": "food-tvc",
+      "name": "Food & Beverage TVC",
+      "category": "marketing",
+      "uses": 5,
+      "author": "CinAI",
+      "local_image": "assets/skills/food-tvc.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/67831692-5a84-4fef-51c4-1857f2c86400/md",
+      "preview_video": null
+    },
+    {
+      "id": "6a9cd923890afb936e000001",
+      "slug": "narrative-tvc",
+      "name": "Narrative TVC 15s/30s",
+      "category": "marketing",
+      "uses": 19,
+      "author": "CinAI",
+      "local_image": "assets/skills/narrative-tvc.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/fb5c1b5a-c91c-4031-4058-087b56c83700/md",
+      "preview_video": "https://api.cinai.tv/uploads/8c26958a-aec7-41bb-b576-4031f183b81f.mp4"
+    },
+    {
+      "id": "6abd02116619a196b8000117",
+      "slug": "e-commerce-product-visuals-and-details",
+      "name": "E-Commerce Product Visuals and Details",
+      "category": "marketing",
+      "uses": 227,
+      "author": "Jackpoors",
+      "local_image": "assets/skills/ecommerce-product-visuals.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/e2df34b5-eb48-4396-0ea9-2525c8a39200/md",
+      "preview_video": null
+    },
+    {
+      "id": "6a9cd93878fbc249e5000001",
+      "slug": "card-game-ua",
+      "name": "Card Game UA Ad",
+      "category": "game",
+      "uses": 2,
+      "author": "CinAI",
+      "local_image": "assets/skills/card-game-ua.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/b7217c5c-4983-4bc5-d7e7-80e27d89c700/md",
+      "preview_video": "https://api.cinai.tv/uploads/02eb5598-63aa-416a-a983-aa78a8a0e426.mp4"
+    },
+    {
+      "id": "6a9cd93cc40024267e000001",
+      "slug": "gameplay-pv",
+      "name": "Gameplay PV / Trailer",
+      "category": "game",
+      "uses": 6,
+      "author": "CinAI",
+      "local_image": "assets/skills/gameplay-pv.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/ab602e34-d0fd-4c2d-6284-714bfe663400/md",
+      "preview_video": null
+    },
+    {
+      "id": "6a9d4e042c1fb36266000001",
+      "slug": "ancient-history-tale",
+      "name": "Ancient History / Mythology Teaser",
+      "category": "story",
+      "uses": 12,
+      "author": "CinAI",
+      "local_image": "assets/skills/ancient-history-tale.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/b3a01741-f118-4479-16c0-663f2ce74700/md",
+      "preview_video": null
+    },
+    {
+      "id": "6a9cd93e85cdf0ebd4000001",
+      "slug": "suspense-horror-short",
+      "name": "Suspense / Horror Short",
+      "category": "story",
+      "uses": 0,
+      "author": "CinAI",
+      "local_image": "assets/skills/suspense-horror-short.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/36d83c94-2bca-432d-ccd7-bf3a8f136d00/md",
+      "preview_video": null
+    },
+    {
+      "id": "6a9d4e069a9b6a5b7a000001",
+      "slug": "anthropomorphic-story",
+      "name": "Objects Come Alive",
+      "category": "story",
+      "uses": 0,
+      "author": "CinAI",
+      "local_image": "assets/skills/objects-come-alive.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/b504ab47-2e82-4850-8c06-79f569419900/md",
+      "preview_video": "https://api.cinai.tv/uploads/d0e7789f-cab9-47de-9549-a2fd1df4f1f5.mp4"
+    },
+    {
+      "id": "6a9cd8f6b655afb16b000001",
+      "slug": "vox-explainer",
+      "name": "Vox-Style Explainer",
+      "category": "explainer",
+      "uses": 6,
+      "author": "CinAI",
+      "local_image": "assets/skills/vox-explainer.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/7ed61f79-9698-4f29-9c78-6b48aff72700/md",
+      "preview_video": "https://api.cinai.tv/uploads/6ed1c753-aba5-4685-b002-7262c9d50a0b.mp4"
+    },
+    {
+      "id": "6abd02bf006eed829300029c",
+      "slug": "talking-head-educational-script-generator",
+      "name": "Talking Head Educational Script Generator",
+      "category": "explainer",
+      "uses": 121,
+      "author": "Devilworld",
+      "local_image": "assets/skills/talking-head-education.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/47c30c97-cca3-4848-f67c-65a2fa37e900/md",
+      "preview_video": null
+    },
+    {
+      "id": "6a9cd945c4391e8c48000001",
+      "slug": "history-pov",
+      "name": "History POV",
+      "category": "explainer",
+      "uses": 0,
+      "author": "CinAI",
+      "local_image": "assets/skills/history-pov.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/7d653b11-130d-4158-da00-ed95e0402e00/md",
+      "preview_video": null
+    },
+    {
+      "id": "6a9d5650b453dce621000001",
+      "slug": "music-video",
+      "name": "Music Video",
+      "category": "music",
+      "uses": 4,
+      "author": "CinAI",
+      "local_image": "assets/skills/music-video.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/a19ac9a6-d30c-42ea-8bcd-9c12855e9f00/md",
+      "preview_video": null
+    },
+    {
+      "id": "6abd03534471522dcd000405",
+      "slug": "healing-music-video-creator",
+      "name": "Healing Music Video Creator",
+      "category": "music",
+      "uses": 81,
+      "author": "TTyears",
+      "local_image": "assets/skills/healing-music-video.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/6d56fb37-1027-4e61-36ca-d9f7ee75f400/md",
+      "preview_video": null
+    },
+    {
+      "id": "6a9cd92a03faaba330000001",
+      "slug": "character-design-sheet",
+      "name": "Character Design Sheet",
+      "category": "design",
+      "uses": 1,
+      "author": "CinAI",
+      "local_image": "assets/skills/character-design-sheet.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/1c86bf59-f7b1-4de7-bb4a-f6a0e13e3000/md",
+      "preview_video": null
+    },
+    {
+      "id": "6abd01b92c7265adf3000058",
+      "slug": "multi-angle-environment-concept-sheet",
+      "name": "Multi-Angle Environment Concept Sheet",
+      "category": "design",
+      "uses": 412,
+      "author": "PixelHarbor",
+      "local_image": "assets/skills/multi-angle-environment.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/f2880110-adc2-4bbd-9d14-de3e0dad1a00/md",
+      "preview_video": null
+    },
+    {
+      "id": "6abd038d6ce198321c000482",
+      "slug": "brand-key-visual-poster-designer",
+      "name": "Brand Key Visual Poster Designer",
+      "category": "design",
+      "uses": 69,
+      "author": "Jackpoors",
+      "local_image": "assets/skills/brand-key-visual.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/f65b171d-6fa0-4d95-be08-1a5848d98a00/md",
+      "preview_video": null
+    },
+    {
+      "id": "6a9cd928da725db5ed000001",
+      "slug": "sub-localize",
+      "name": "Subtitle Localize",
+      "category": "remake",
+      "uses": 0,
+      "author": "CinAI",
+      "local_image": "assets/skills/subtitle-localize.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/ba0137cb-ed93-44c0-427b-abac4b866d00/md",
+      "preview_video": "https://api.cinai.tv/uploads/15c0f7af-a72f-4b08-a0e3-3f00aa5259a9.mp4"
+    },
+    {
+      "id": "6abd01d5c7026ee030000091",
+      "slug": "reference-video-remake-workflow",
+      "name": "Reference Video Remake Workflow",
+      "category": "remake",
+      "uses": 317,
+      "author": "VividEcho",
+      "local_image": "assets/skills/reference-video-remake.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/fefa1337-efd6-4fd5-3402-f4ee79183900/md",
+      "preview_video": null
+    },
+    {
+      "id": "6abd0184c77be5a87300001f",
+      "slug": "ai-movie-fight-scene-prompts",
+      "name": "AI Movie Fight Scene Prompts",
+      "category": "cinematic",
+      "uses": 742,
+      "author": "XiaoAIGC",
+      "local_image": "assets/skills/movie-fight-prompts.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/d150a30e-f2de-46f8-fcf5-ddce55d5b700/md",
+      "preview_video": null
+    },
+    {
+      "id": "6abd019c7864a8147f00002c",
+      "slug": "cinematic-storyboard-director",
+      "name": "Cinematic Storyboard Director",
+      "category": "cinematic",
+      "uses": 1,
+      "author": "Tingfeng",
+      "local_image": "assets/skills/cinematic-storyboard.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/94a9485a-e1cc-490a-19d7-1d325262e000/md",
+      "preview_video": null
+    },
+    {
+      "id": "6abd01a4c7a00a877e000032",
+      "slug": "ai-video-lighting-prompts",
+      "name": "AI Video Lighting Prompts",
+      "category": "cinematic",
+      "uses": 547,
+      "author": "XiaoAIGC",
+      "local_image": "assets/skills/video-lighting-prompts.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/781b38c8-8830-4d4e-4c1e-d6aaeb946d00/md",
+      "preview_video": null
+    },
+    {
+      "id": "6abd01e51bbde74b210000b9",
+      "slug": "ai-video-prompt-engineer",
+      "name": "AI Video Prompt Engineer",
+      "category": "video",
+      "uses": 291,
+      "author": "ShiziAICG",
+      "local_image": "assets/skills/video-prompt-engineer.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/b59b2785-69a0-44a0-9b1b-f1f85997c000/md",
+      "preview_video": null
+    },
+    {
+      "id": "6abd02606ceb043e410001cc",
+      "slug": "article-to-viral-short-video",
+      "name": "Article to Viral Short Video",
+      "category": "social",
+      "uses": 169,
+      "author": "Canghe",
+      "local_image": "assets/skills/article-to-viral-short.jpg",
+      "source_image": "https://imagedelivery.net/sTQlh0vxzwH6eJNPizCQsQ/c9fc023a-74f9-48df-a3ed-c2d293b3ae00/md",
+      "preview_video": null
+    }
+  ]
+}

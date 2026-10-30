@@ -1,84 +1,63 @@
-/* tokens.css — Design system trích từ mstudio.ai (Pha 3)
-   Hệ màu HSL (định dạng "H S% L%" để dùng hsl(var(--x) / alpha)). KHÔNG hardcode lặp. */
-
 :root {
-  /* ===== Màu nền ===== */
-  --background: 240 10% 4%;          /* #09090b */
-  --background-elevated: 240 6% 10%; /* #18181b */
-  --background-subtle: 240 5% 15%;   /* #26262b */
-  --card: 240 6% 10%;
-  --card-foreground: 240 5% 96%;
-  --card-elevated: 240 5% 15%;
-  --popover: 240 6% 10%;
+  color-scheme: dark;
 
-  /* ===== Chữ ===== */
-  --foreground: 240 5% 96%;          /* #f4f4f5 */
-  --foreground-muted: 240 4% 58%;    /* #909096 */
-  --muted: 240 5% 15%;
-  --muted-foreground: 240 4% 58%;
+  /* Reference design tokens (Hieu Academy / MagentX style) */
+  --nx-accent: #d8ff00;
+  --nx-acc-tx: #d8ff00;
+  --nx-red: #e8234e;
+  --nx-pg: #050505;
+  --nx-pg2: #0a0a0a;
+  --nx-card: #111111;
+  --nx-paper: #f4f4ef;
+  --nx-tx: #ffffff;
+  --nx-wrgb: 255, 255, 255;
+  --nx-pgrgb: 5, 5, 5;
+  --nx-inkmut: rgba(255, 255, 255, 0.62);
 
-  /* ===== Nhấn (gold/tan) ===== */
-  --primary: 32 47% 80%;             /* vàng kem #e0c9a6 */
-  --primary-hover: 240 5% 86%;
-  --primary-foreground: 0 0% 20%;
-  --accent: 32 47% 80%;
-  --accent-hover: 32 47% 70%;
-  --accent-foreground: 240 10% 4%;
-  --accent-muted: 32 47% 30%;
-  --gold: #ffd277;
-  --gold-2: #77530a;
+  /* Mapped CinBase variables */
+  --canvas: #050505;
+  --canvas-raised: #0a0a0a;
+  --surface: #111111;
+  --surface-strong: #171717;
+  --surface-soft: #f4f4ef;
+  --ink: #ffffff;
+  --ink-dark: #050505;
+  --muted: rgba(255, 255, 255, 0.66);
+  --quiet: rgba(255, 255, 255, 0.45);
+  --line: rgba(255, 255, 255, 0.12);
+  --line-strong: rgba(255, 255, 255, 0.24);
+  --accent: #d8ff00;
+  --accent-strong: #e4ff4d;
+  --signal: #d8ff00;
+  --signal-dark: #050505;
+  --danger: #e8234e;
 
-  /* ===== Phụ ===== */
-  --secondary: 240 5% 15%;
-  --secondary-hover: 240 4% 20%;
-  --secondary-foreground: 240 5% 84%;
+  --font-body: "Be Vietnam Pro", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Anton", sans-serif;
+  --font-editorial: "Anton", sans-serif;
 
-  /* ===== Trạng thái ===== */
-  --success: 160 84% 39%;
-  --warning: 38 92% 50%;
-  --destructive: 0 84% 60%;
-  --info: 217 91% 60%;
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.375rem;
+  --radius-xl: 3.5rem;
+  --radius-pill: 999px;
 
-  /* ===== Viền & focus ===== */
-  --border: 240 5% 15%;
-  --border-subtle: 240 6% 10%;
-  --border-strong: 240 4% 26%;
-  --input: 240 6% 10%;
-  --ring: 32 47% 80%;
+  --shadow-hero: 0 30px 80px rgba(0, 0, 0, 0.65);
+  --shadow-card: 0 22px 54px rgba(0, 0, 0, 0.55);
 
-  /* ===== Bo góc ===== */
-  --radius-sm: 4px;
-  --radius: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
+  --shell: 82rem;
+  --shell-wide: 90rem;
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --section-space: clamp(5.5rem, 8vw, 6.875rem);
+  --announcement-h: 2.75rem;
+  --header-h: 4.75rem;
+}
 
-  /* ===== Shadow ===== */
-  --shadow-xs: 0 1px 2px 0 #00000080;
-  --shadow-sm: 0 1px 3px 0 #0009;
-  --shadow-md: 0 4px 6px -1px #0009;
-  --shadow-lg: 0 10px 15px -3px #0009;
-  --shadow-xl: 0 20px 25px -5px #0009;
-  --shadow-inner: inset 0 2px 4px 0 #0006;
-
-  /* ===== Typography scale ===== */
-  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --text-hero: clamp(2.75rem, 1.2rem + 6.5vw, 4.5rem);   /* ~44 → 72px */
-  --text-h2: clamp(2rem, 1.2rem + 3.2vw, 3rem);          /* ~32 → 48px */
-  --text-h3: clamp(1.25rem, 1.05rem + 0.9vw, 1.5rem);    /* ~20 → 24px */
-  --text-eyebrow: 0.8125rem;                             /* 13px */
-
-  /* ===== Layout ===== */
-  --container-max: 1536px;            /* max-w-screen-2xl */
-  --announcement-h: 48px;
-  --header-h: 76px;
-  --space-section: clamp(4rem, 3rem + 5vw, 7rem);
-
-  /* ===== Motion ===== */
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --dur-fast: 150ms;
-  --dur-normal: 300ms;
-  --dur-reveal: 650ms;
+@media (max-width: 47.99rem) {
+  :root {
+    --announcement-h: 3.75rem;
+    --header-h: 4rem;
+    --section-space: 3.75rem;
+    --radius-xl: 1.875rem;
+  }
 }
